@@ -1,3 +1,4 @@
+import AuthProvider from "./components/auth/AuthProvider";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 
@@ -15,11 +16,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${roboto.className} bg-gradient-to-b from-oxford via-cambridge to-bittersweet min-h-screen`}
-      >
-        {children}
-      </body>
+      <AuthProvider>
+        <body
+          className={`${roboto.className} bg-gradient-to-b from-oxford via-cambridge to-bittersweet min-h-screen`}
+        >
+          {children}
+        </body>
+      </AuthProvider>
     </html>
   );
 }
