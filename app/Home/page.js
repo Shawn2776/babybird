@@ -18,7 +18,7 @@ const Home = () => {
       <div>
         <h1>Home Client Session</h1>
         <p>{session?.user?.email}</p>
-        <p>{session?.user?.role}</p>
+        <p>{session?.user?.name}</p>
       </div>
     </>
   );
