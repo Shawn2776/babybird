@@ -26,10 +26,11 @@ const Home = () => {
 
   return (
     <>
-      <main className="flex flex-col border sm:max-h-screen sm:flex-row sm:w-full">
-        <div className="flex sm:w-full">
-          <div className="sm:hidden">
+      <main>
+        <div className="flex flex-col w-full sm:flex-row">
+          <div className="w-full">
             <Image
+              className="sm:hidden"
               src={mobileLogo}
               style={{
                 maxWidth: "100%",
@@ -37,9 +38,9 @@ const Home = () => {
               }}
               alt="photo"
             />
-          </div>
-          <div className="hidden sm:flex sm:w-full">
+
             <Image
+              className="hidden sm:flex"
               src={logo}
               style={{
                 maxWidth: "100%",
@@ -49,14 +50,14 @@ const Home = () => {
             />
           </div>
 
-          <div className="flex justify-center border sm:w-full sm:items-center">
+          <div className="flex justify-center w-full sm:items-center">
             {session ? (
               <Link className="text-6xl" href={"/api/auth/signout/google"}>
                 <button onClick={handleSignOut}>Sign Out</button>
               </Link>
             ) : (
               <Link
-                className="text-6xl"
+                className="px-6 py-4 text-6xl text-white rounded-full shadow-xl bg-oxford"
                 href={"/api/auth/signin/google?callbackUrl=/Home"}
               >
                 Sign In
