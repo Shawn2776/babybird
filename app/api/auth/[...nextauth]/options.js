@@ -21,7 +21,7 @@ export const options = {
     }),
   ],
   session: {
-    startegy: "jwt",
+    strategy: "jwt",
   },
   callbacks: {
     async signIn({ user, account, profile }) {
