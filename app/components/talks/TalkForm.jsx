@@ -153,14 +153,14 @@ function TalkForm() {
   }
 
   return (
-    <div className="md:p-4 pt-2 mb-2 pb-2 border border-b-transparent border-l-transparent border-r-transparent md:border-none md:my-6 text-white border-gray-600 md:rounded-lg bg-[rgb(24,25,26)] w-full">
+    <div className="w-full pt-2 pb-2 mb-2 text-white bg-gray-600 border border-gray-600 md:p-4 border-b-transparent border-l-transparent border-r-transparent md:border-none md:my-6 md:rounded-lg">
       <form>
         <label htmlFor="talk" className="sr-only">
           What do you want to say?
         </label>
         <textarea
           id="talk"
-          className="w-[96%] pl-4 ml-2 mx-auto p-1 rounded-2xl bg-neutral-700 active:outline-none focus:outline-none"
+          className="w-[96%] pl-4 ml-2 mx-auto p-1 rounded-2xl bg-neutral-800 active:outline-none focus:outline-none"
           placeholder="What do you want to say?"
           value={inText}
           onChange={handleTextChange}
@@ -180,7 +180,7 @@ function TalkForm() {
                 accept="image/png, image/jpeg, image/jpg, image/webp, image/gif"
               />
               <button type="button" onClick={triggerImageInput}>
-                <GrImage className="text-xl text-orange-400" />
+                <GrImage className="text-xl text-zomp" />
               </button>
             </label>
             <label htmlFor="videoToUpload">
@@ -193,7 +193,7 @@ function TalkForm() {
                 accept="video/mp4, video/avi, video/mov"
               />
               <button type="button" onClick={triggerVideoInput}>
-                <TbPhotoVideo className="text-xl text-orange-400" />
+                <TbPhotoVideo className="text-xl text-zomp" />
               </button>
             </label>
           </div>
@@ -201,7 +201,7 @@ function TalkForm() {
             type="submit"
             onClick={handleSubmit}
             className={
-              "p-1 px-6 font-extrabold text-black bg-orange-500 rounded-2xl"
+              "p-1 px-6 font-extrabold text-white bg-zomp  rounded-2xl"
             }
           >
             {uploading ? "talking..." : "Talk"}
