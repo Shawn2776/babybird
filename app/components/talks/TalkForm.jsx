@@ -80,9 +80,10 @@ function TalkForm() {
           body: formData,
         });
 
-        imageFileName = await response.json();
+        const returnFileName = await response.json();
         imageFileName =
-          "https://utalkto.s3.us-west-2.amazonaws.com/" + imageFileName;
+          "https://utalkto.s3.us-west-2.amazonaws.com/" +
+          returnFileName.fileName;
       } catch (error) {
         setUploading(false);
       }
@@ -99,15 +100,17 @@ function TalkForm() {
           body: formData,
         });
 
-        videoFileName = await response.json();
+        const returnFileName = await response.json();
         videoFileName =
-          "https://utalkto.s3.us-west-2.amazonaws.com/" + videoFileName;
+          "https://utalkto.s3.us-west-2.amazonaws.com/" +
+          returnFileName.fileName;
       } catch (error) {
         setUploading(false);
       }
     }
 
     try {
+      console.log("VIDEOFILENAME>: ", videoFileName);
       const res = await fetch("/api/talks", {
         method: "POST",
         headers: {

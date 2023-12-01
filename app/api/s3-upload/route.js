@@ -52,7 +52,7 @@ export async function POST(request) {
 
     const fileName = await uploadFileToS3(buffer, file.name);
 
-    return NextResponse.json(fileName);
+    return NextResponse.json({ fileName });
   } catch (error) {
     return NextResponse.json({ error });
   }
