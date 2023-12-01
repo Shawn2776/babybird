@@ -1,5 +1,5 @@
 export default function convertFileName(fileNameIn) {
-  console.log("7. in convertFileName", fileNameIn);
+  
   const fileExtension = fileNameIn.substring(fileNameIn.lastIndexOf("."));
   const fileExtensionCompare = fileNameIn.substring(
     fileNameIn.lastIndexOf(".") + 1
@@ -50,6 +50,6 @@ export default function convertFileName(fileNameIn) {
     //   paramContentType = "text/pdf";
   }
 
-  console.log("8. before convertFileName return", newFileName);
+  
   return { newFileName: newFileName, paramContentType: paramContentType };
 }

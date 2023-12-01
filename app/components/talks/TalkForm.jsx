@@ -71,20 +71,18 @@ function TalkForm() {
 
     let imageFileName = "";
     if (image) {
-      console.log("1. talkform in");
       const formData = new FormData();
       formData.append("file", image);
 
       try {
-        console.log("2. try fetch");
         const response = await fetch("/api/s3-upload", {
           method: "POST",
           body: formData,
         });
 
-        console.log("13. after fetch in talkform");
         imageFileName = await response.json();
-        console.log("IMAGEFILENAME>>>>>LOOK!!!!", imageFileName);
+        imageFileName =
+          "https://utalkto.s3.us-west-2.amazonaws.com/" + imageFileName;
       } catch (error) {
         setUploading(false);
       }
@@ -102,14 +100,14 @@ function TalkForm() {
         });
 
         videoFileName = await response.json();
+        videoFileName =
+          "https://utalkto.s3.us-west-2.amazonaws.com/" + videoFileName;
       } catch (error) {
         setUploading(false);
       }
     }
 
-    console.log("14. right before send to talk route>>>");
     try {
-      console.log("15. in try for  send to talk route>>>");
       const res = await fetch("/api/talks", {
         method: "POST",
         headers: {
@@ -124,7 +122,6 @@ function TalkForm() {
 
       if (res.ok) {
         const returnObj = await res.json();
-        console.log("Return Obj>>>", returnObj);
 
         setUploading(false);
         setInText("");

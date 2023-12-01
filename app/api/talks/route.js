@@ -13,7 +13,6 @@ export async function GET(request) {
 // export async function HEAD(request) {}
 
 export async function POST(request) {
-  console.log("15. in POST talk route>>>");
   const session = await getServerSession(options);
 
   if (!session) {
@@ -29,8 +28,6 @@ export async function POST(request) {
   let owner = await prisma.user.findUnique({
     where: { email: email },
   });
-
-  console.log("ownerId>>>", owner.id);
 
   const ownerId = owner.id;
 

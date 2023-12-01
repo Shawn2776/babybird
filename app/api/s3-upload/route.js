@@ -11,12 +11,9 @@ const s3Client = new S3Client({
 });
 
 async function uploadFileToS3(file, fileName) {
-  console.log("5. in uploadtoS3");
   const fileBuffer = file;
 
-  console.log("6. before convertFileName");
   const { newFileName, paramContentType } = convertFileName(fileName);
-  console.log("9. after convertfilename", newFileName);
 
   const params = {
     Bucket: process.env.AWS_S3_BUCKET_NAME,
@@ -25,26 +22,22 @@ async function uploadFileToS3(file, fileName) {
     ContentType: paramContentType,
   };
 
-  console.log("10. before send to s3!!!>>>");
   const command = new PutObjectCommand(params);
   try {
     const res = await s3Client.send(command);
 
     if (res.ok) {
       const truck = res.json();
-      console.log("truck>>", truck);
     }
   } catch (error) {
     console.log("error. res wasn't ok", error);
   }
 
-  console.log("11. after send to s3!!!>>>");
   return newFileName;
 }
 
 export async function POST(request) {
   try {
-    console.log("3. in s3upload");
     const formData = await request.formData();
     const file = formData.get("file");
 
@@ -56,9 +49,8 @@ export async function POST(request) {
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
-    console.log("4. before uploadtoS3");
+
     const fileName = await uploadFileToS3(buffer, file.name);
-    console.log("11. after uploadtoS3, right before return to Talk POST!!!>>>");
 
     return NextResponse.json(fileName);
   } catch (error) {
