@@ -110,7 +110,6 @@ function TalkForm() {
     }
 
     try {
-      console.log("VIDEOFILENAME>: ", videoFileName);
       const res = await fetch("/api/talks", {
         method: "POST",
         headers: {

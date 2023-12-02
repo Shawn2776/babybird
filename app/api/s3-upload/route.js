@@ -30,7 +30,7 @@ async function uploadFileToS3(file, fileName) {
       const truck = res.json();
     }
   } catch (error) {
-    console.log("error. res wasn't ok", error);
+    console.log("error. ", error);
   }
 
   return newFileName;
