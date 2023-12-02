@@ -9,13 +9,15 @@ datasource db {
 }
 
 model BackTalk {
-  id       Int     @id @default(autoincrement())
-  content  String
-  talkId   Int
-  ownerId  Int
-  tags     String?
-  isNSFW   Boolean @default(false)
-  is18Plus Boolean @default(false)
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+  content   String
+  talkId    Int
+  ownerId   Int
+  tags      String
+  isNSFW    Boolean
+  is18Plus  Boolean
 
   @@index([ownerId])
   @@index([talkId])
@@ -27,54 +29,64 @@ model Category {
 }
 
 model Dislike {
-  id      Int @id @default(autoincrement())
-  ownerId Int
-  talkId  Int
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+  ownerId   Int
+  talkId    Int
 
   @@index([ownerId])
   @@index([talkId])
 }
 
 model Like {
-  id      Int @id @default(autoincrement())
-  ownerId Int
-  talkId  Int
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+  ownerId   Int
+  talkId    Int
 
   @@index([ownerId])
   @@index([talkId])
 }
 
 model Role {
-  id     Int     @id @default(autoincrement())
-  name   String  @unique
-  userId String?
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+  name      String    @unique
+  userId    String?
 }
 
 model Talk {
-  id       Int     @id @default(autoincrement())
-  text     String?
-  image    String?
-  video    String?
-  ownerId  Int
-  tags     String?
-  isNSFW   Boolean @default(false)
-  is18Plus Boolean @default(false)
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+  text      String?
+  image     String?
+  video     String?
+  ownerId   Int
+  tags      String?
+  isNSFW    Boolean   @default(false)
+  is18Plus  Boolean   @default(false)
 
   @@index([ownerId])
 }
 
 model User {
-  id            Int     @id @default(autoincrement())
-  email         String  @unique
+  id            Int       @id @default(autoincrement())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime?
+  email         String    @unique
   name          String
   profilePic    String?
-  emailVerified Boolean @default(false)
+  emailVerified Boolean
   roleId        Int
-  username      String  @unique
+  username      String    @unique
   location      String?
   description   String?
   url           String?
-  lang          String  @default("en")
+  lang          String    @default("en")
 
   @@index([roleId])
 }
