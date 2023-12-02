@@ -52,7 +52,10 @@ const Home = () => {
 
           <div className="flex justify-center w-full sm:items-center">
             {session ? (
-              <Link className="text-6xl" href={"/api/auth/signout/google"}>
+              <Link
+                className="text-6xl"
+                href={"/api/auth/signout/google?callbackUrl=/"}
+              >
                 <button onClick={handleSignOut}>Sign Out</button>
               </Link>
             ) : (
