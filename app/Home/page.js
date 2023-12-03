@@ -6,11 +6,6 @@ import TalkFeed2 from "../components/talks/TalkFeed2";
 
 const { data: session, status } = getServerSession(options);
 
-const talks = await fetch("https://www.utalkto.com/api/talks", {
-  method: "GET",
-  cache: "no-store",
-});
-
 const Home = async () => {
   return (
     <>
