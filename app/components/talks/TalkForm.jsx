@@ -108,8 +108,15 @@ function TalkForm() {
         });
 
         videoFileName = await response.json();
+        console.log(
+          "IMAGEFILENAME AFTER AWAIT",
+          typeof videoFileName,
+          videoFileName
+        );
       } catch (error) {
         setUploading(false);
+        console.log(error);
+        return NextResponse.json({ error });
       }
     }
 
