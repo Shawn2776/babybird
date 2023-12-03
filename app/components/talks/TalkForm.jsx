@@ -114,7 +114,7 @@ function TalkForm() {
     }
 
     try {
-      const res = await fetch("/api/talks", {
+      const res = await fetch("https://www.utalkto.com/api/talks", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
