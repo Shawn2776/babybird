@@ -79,7 +79,10 @@ function Talk2({
             <></>
           )}
         </div>
-        <div id="talkVideo" className={`${inVideo ? "default" : "pt-4"}`}>
+        <div
+          id="talkVideo"
+          className={`${inVideo ? "max-w-2xl h-64 ml-14 mb-10" : "pt-4"}`}
+        >
           {inVideo ? <EmbedPlayer src={videoUrl} /> : <></>}
         </div>
         <div id="talkInteractBar" className="px-6 pb-4 mt-4 md:pb-0 md:px-2">

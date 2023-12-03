@@ -8,7 +8,7 @@ function EmbedPlayer({ src }) {
       src={src}
       allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share;"
       allowFullScreen
-      className="border-0"
+      className="pb-10 border-0"
     ></iframe>
   );
 }
