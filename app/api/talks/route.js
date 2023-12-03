@@ -2,12 +2,56 @@ import { getServerSession } from "next-auth";
 import { options } from "../auth/[...nextauth]/options";
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+
 const prisma = new PrismaClient();
 
-export async function GET(request) {
-  const { searchParams } = new URL(request.url);
-  const obj = Object.fromEntries(searchParams.entries());
-  return NextResponse.json(obj);
+const s3Client = new S3Client({
+  region: process.env.AWS_S3_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY,
+  },
+});
+
+// const { searchParams } = new URL(request.url);
+// const obj = Object.fromEntries(searchParams.entries());
+// return NextResponse.json(obj);
+
+export async function GET() {
+  const session = await getServerSession(options);
+
+  const talks = await prisma.talk.findMany({
+    include: {
+      owner: true, // Includes the owner details
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  for (const talk of talks) {
+    if (talk.image) {
+      const getObjectParams = {
+        Bucket: process.env.AWS_S3_BUCKET_NAME,
+        Key: talk.image,
+      };
+      const command = new GetObjectCommand(getObjectParams);
+      const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+      talk.imageUrl = url;
+    } else if (talk.video) {
+      const getObjectParams = {
+        Bucket: process.env.AWS_S3_BUCKET_NAME,
+        Key: talk.video,
+      };
+      const command = new GetObjectCommand(getObjectParams);
+      const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+      talk.videoUrl = url;
+    }
+  }
+
+  return NextResponse.json(talks);
 }
 
 // export async function HEAD(request) {}

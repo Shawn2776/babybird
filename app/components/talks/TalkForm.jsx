@@ -6,6 +6,7 @@ import { TbPhotoVideo } from "react-icons/tb";
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { NextResponse } from "next/server";
 
 function TalkForm() {
   const textAreaRef = useRef(null);
@@ -73,6 +74,7 @@ function TalkForm() {
     if (image) {
       const formData = new FormData();
       formData.append("file", image);
+      formData.append("isImage", true);
 
       try {
         const response = await fetch("/api/s3-upload", {
@@ -80,12 +82,16 @@ function TalkForm() {
           body: formData,
         });
 
-        const returnFileName = await response.json();
-        imageFileName =
-          "https://utalkto.s3.us-west-2.amazonaws.com/" +
-          returnFileName.fileName;
+        imageFileName = await response.json();
+        console.log(
+          "IMAGEFILENAME AFTER AWAIT",
+          typeof imageFileName,
+          imageFileName
+        );
       } catch (error) {
         setUploading(false);
+        console.log(error);
+        return NextResponse.json({ error });
       }
     }
 
@@ -93,6 +99,7 @@ function TalkForm() {
     if (video) {
       const formData = new FormData();
       formData.append("file", video);
+      formData.append("isImage", false);
 
       try {
         const response = await fetch("/api/s3-upload", {
@@ -100,10 +107,7 @@ function TalkForm() {
           body: formData,
         });
 
-        const returnFileName = await response.json();
-        videoFileName =
-          "https://utalkto.s3.us-west-2.amazonaws.com/" +
-          returnFileName.fileName;
+        videoFileName = await response.json();
       } catch (error) {
         setUploading(false);
       }
@@ -129,9 +133,7 @@ function TalkForm() {
         setInText("");
         setImage(null);
         setVideo(null);
-        router.push("/Home", undefined, {
-          unstable_skipClientCache: true,
-        });
+        router.refresh();
       }
     } catch (error) {
       alert("Unable to upload Talk. Please try again later.");

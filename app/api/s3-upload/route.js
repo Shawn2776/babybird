@@ -10,8 +10,18 @@ const s3Client = new S3Client({
   },
 });
 
-async function uploadFileToS3(file, fileName) {
-  const fileBuffer = file;
+export async function POST(request) {
+  const formData = await request.formData();
+  const file = formData.get("file");
+  // const isImage = formData.get("isImage");
+
+  if (!file) {
+    return NextResponse.json({ error: "File not uploaded." }, { status: 400 });
+  }
+
+  const buffer = Buffer.from(await file.arrayBuffer());
+  const fileBuffer = buffer;
+  let fileName = file.name;
 
   const { newFileName, paramContentType } = convertFileName(fileName);
 
@@ -23,37 +33,7 @@ async function uploadFileToS3(file, fileName) {
   };
 
   const command = new PutObjectCommand(params);
-  try {
-    const res = await s3Client.send(command);
+  await s3Client.send(command);
 
-    if (res.ok) {
-      const truck = res.json();
-    }
-  } catch (error) {
-    console.log("error. ", error);
-  }
-
-  return newFileName;
-}
-
-export async function POST(request) {
-  try {
-    const formData = await request.formData();
-    const file = formData.get("file");
-
-    if (!file) {
-      return NextResponse.json(
-        { error: "File not uploaded." },
-        { status: 400 }
-      );
-    }
-
-    const buffer = Buffer.from(await file.arrayBuffer());
-
-    const fileName = await uploadFileToS3(buffer, file.name);
-
-    return NextResponse.json({ fileName });
-  } catch (error) {
-    return NextResponse.json({ error });
-  }
+  return NextResponse.json(newFileName);
 }

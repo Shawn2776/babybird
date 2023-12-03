@@ -1,3 +1,5 @@
+import crypto from "crypto";
+
 export default function convertFileName(fileNameIn) {
   const fileExtension = fileNameIn.substring(fileNameIn.lastIndexOf("."));
   const fileExtensionCompare = fileNameIn.substring(
@@ -6,7 +8,9 @@ export default function convertFileName(fileNameIn) {
 
   let fileName = fileNameIn.substring(0, fileNameIn.lastIndexOf("."));
 
-  fileName = fileName + Date.now();
+  const randomFileName = crypto.randomBytes(32).toString("hex");
+
+  fileName = randomFileName + Date.now();
 
   const newFileName = fileName.replace(/ /g, "_") + fileExtension;
 

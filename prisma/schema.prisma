@@ -13,6 +13,7 @@ model BackTalk {
   createdAt DateTime  @default(now())
   updatedAt DateTime?
   content   String
+  talk      Talk     @relation(fields: [talkId], references: [id])
   talkId    Int
   ownerId   Int
   tags      String
@@ -33,6 +34,7 @@ model Dislike {
   createdAt DateTime  @default(now())
   updatedAt DateTime?
   ownerId   Int
+  talk      Talk     @relation(fields: [talkId], references: [id])
   talkId    Int
 
   @@index([ownerId])
@@ -45,6 +47,7 @@ model Like {
   updatedAt DateTime?
   ownerId   Int
   talkId    Int
+  talk      Talk     @relation(fields: [talkId], references: [id])
 
   @@index([ownerId])
   @@index([talkId])
@@ -65,10 +68,15 @@ model Talk {
   text      String?
   image     String?
   video     String?
+  owner User @relation(fields: [ownerId], references: [id])
   ownerId   Int
   tags      String?
   isNSFW    Boolean   @default(false)
   is18Plus  Boolean   @default(false)
+  likes    Like[]    // One-to-many relation with Like
+dislikes Dislike[] // One-to-many relation with Dislike
+backTalks BackTalk[] // One-to-many relation with BackTalk
+retalks Retalks[]
 
   @@index([ownerId])
 }
@@ -87,17 +95,20 @@ model User {
   description   String?
   url           String?
   lang          String    @default("en")
+  talks Talk[]
+  retalks Retalks[]
 
   @@index([roleId])
 }
 
 model Retalks {
-  A Int
-  B Int
+  id        Int    @id @default(autoincrement())
+  talk      Talk   @relation(fields: [talkId], references: [id])
+  talkId    Int
+  user      User   @relation(fields: [userId], references: [id])
+  userId    Int
 
-  @@unique([A, B], map: "_Retalks_AB_unique")
-  @@index([B], map: "_Retalks_B_index")
-  @@map("_Retalks")
+  @@unique([talkId, userId], name: "retalks_user_talk_unique")
 }
 
 model TalksToCategories {
