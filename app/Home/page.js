@@ -6,7 +6,7 @@ import TalkFeed2 from "../components/talks/TalkFeed2";
 
 const { data: session, status } = getServerSession(options);
 
-const talks = await fetch("http://localhost:3000/api/talks", {
+const talks = await fetch("http://utalkto/api/talks", {
   method: "GET",
   cache: "no-store",
 });
