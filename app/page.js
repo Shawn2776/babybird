@@ -6,13 +6,27 @@ import mobileLogo from "../public/logos/uTalkTo-logos_white.png";
 import logo from "../public/logos/uTalkTo-logos_black.png";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
+import DevModal from "../app/components/dev/DevModal"; // Adjust the path as needed
 
 const Home = () => {
   const { data: session, status } = useSession();
+  const [showModal, setShowModal] = useState(false);
 
   const handleSignOut = async () => {
     await signOut({ redirect: false });
     window.location.href = "/"; // Change to your sign-in page
+  };
+
+  useEffect(() => {
+    if (!sessionStorage.getItem("modalShown")) {
+      setShowModal(true);
+      sessionStorage.setItem("modalShown", "true");
+    }
+  }, []);
+
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   // Optional: handle loading status
@@ -26,6 +40,7 @@ const Home = () => {
 
   return (
     <>
+      {showModal && <DevModal onClose={handleCloseModal} />}
       <main>
         <div className="flex flex-col w-full sm:flex-row">
           <div className="w-full">
