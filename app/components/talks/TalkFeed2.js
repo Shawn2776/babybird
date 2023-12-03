@@ -8,7 +8,10 @@ function TalkFeed2() {
 
   useEffect(() => {
     async function fetchTalks() {
-      const response = await fetch("http://localhost:3000/api/talks");
+      const response = await fetch("https://www.utalkto.com/api/talks", {
+        method: "GET",
+        cache: "no-store",
+      });
       if (response.ok) {
         const data = await response.json();
         setTalks(data);
