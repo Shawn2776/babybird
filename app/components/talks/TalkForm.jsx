@@ -97,7 +97,7 @@ function TalkForm() {
       formData.append("isImage", false);
 
       try {
-        const response = await fetch("https://www.utalkto/api/s3-upload", {
+        const response = await fetch("https://www.utalkto.com/api/s3-upload", {
           method: "POST",
           body: formData,
         });
