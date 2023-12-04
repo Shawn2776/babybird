@@ -15,6 +15,25 @@ function TalkForm() {
   const [video, setVideo] = useState(null);
   const [uploading, setUploading] = useState(false);
 
+  async function uploadFile(file, isImage) {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("isImage", isImage);
+
+    try {
+      const response = await fetch("/api/s3-upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.log("Error in image try/catch: ", error);
+      return NextResponse.json({ error });
+    }
+  }
+
   const router = useRouter();
 
   const { data: session, status } = useSession();
@@ -70,48 +89,24 @@ function TalkForm() {
 
     setUploading(true);
 
+    if (!inText && !image && !video) {
+      alert("Please enter some text or upload an image or video.");
+      setUploading(false);
+      return;
+    }
+
     let imageFileName = "";
     if (image) {
-      const formData = new FormData();
-      formData.append("file", image);
-      formData.append("isImage", true);
-
-      try {
-        const response = await fetch("https://www.utalkto.com/api/s3-upload", {
-          method: "POST",
-          body: formData,
-        });
-
-        imageFileName = await response.json();
-      } catch (error) {
-        setUploading(false);
-        console.log("Error in image try/catch: ", error);
-        return NextResponse.json({ error });
-      }
+      imageFileName = await uploadFile(image, true);
     }
 
     let videoFileName = "";
     if (video) {
-      const formData = new FormData();
-      formData.append("file", video);
-      formData.append("isImage", false);
-
-      try {
-        const response = await fetch("https://www.utalkto.com/api/s3-upload", {
-          method: "POST",
-          body: formData,
-        });
-
-        videoFileName = await response.json();
-      } catch (error) {
-        setUploading(false);
-        console.log("Error in video try/catch: ", error);
-        return NextResponse.json({ error });
-      }
+      videoFileName = await uploadFile(video, false);
     }
 
     try {
-      const res = await fetch("https://www.utalkto.com/api/talks", {
+      const res = await fetch("/api/talks", {
         method: "POST",
         headers: {
           "Content-type": "application/json",

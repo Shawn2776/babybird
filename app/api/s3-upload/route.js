@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import convertFileName from "@/utils/s3Helpers/convertFileName";
-const sharp = require('sharp');
+import sharp from "sharp";
 
 const s3Client = new S3Client({
   region: process.env.AWS_S3_REGION,
@@ -22,8 +22,6 @@ export async function POST(request) {
 
   let fileName = file.name;
   let resizedBuffer;
-
-  console.log(isImage);
 
   if (isImage === true) {
     console.log("in isimage?");
