@@ -98,7 +98,7 @@ export async function POST(request) {
     },
   });
 
-  return NextResponse.json({ dataToSend });
+  return NextResponse.json({ message: "Talk Successfully created." });
 }
 
 //   const { email, text, image, video } = await request.json();
