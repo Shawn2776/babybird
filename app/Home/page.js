@@ -6,7 +6,7 @@ import TalkFeed2 from "../components/talks/TalkFeed2";
 
 const { data: session, status } = getServerSession(options);
 
-const Home = async () => {
+const Homes = async () => {
   return (
     <>
       <Nav session={session} />
@@ -18,4 +18,4 @@ const Home = async () => {
   );
 };
 
-export default Home;
+export default Homes;
