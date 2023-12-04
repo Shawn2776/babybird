@@ -70,15 +70,14 @@ function TalkForm() {
 
     setUploading(true);
 
-    const s3ApiUrl = process.env.S3_API_URL;
-    const PostTalkUrl = process.env.POST_TALK_URL;
     let imageFileName = "";
     if (image) {
       const formData = new FormData();
       formData.append("file", image);
+      formData.append("isImage", true);
 
       try {
-        const response = await fetch(s3ApiUrl, {
+        const response = await fetch("http://localhost:3000/api/s3-upload", {
           method: "POST",
           body: formData,
         });
@@ -95,9 +94,10 @@ function TalkForm() {
     if (video) {
       const formData = new FormData();
       formData.append("file", video);
+      formData.append("isImage", false);
 
       try {
-        const response = await fetch(s3ApiUrl, {
+        const response = await fetch("http://localhost:3000/api/s3-upload", {
           method: "POST",
           body: formData,
         });
@@ -111,7 +111,7 @@ function TalkForm() {
     }
 
     try {
-      const res = await fetch(PostTalkUrl, {
+      const res = await fetch("http://localhost:3000/api/talks", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -130,7 +130,7 @@ function TalkForm() {
         setInText("");
         setImage(null);
         setVideo(null);
-        router.reload();
+        router.push("/Home");
       }
     } catch (error) {
       alert("Unable to upload Talk. Please try again later.");
@@ -139,7 +139,7 @@ function TalkForm() {
       setInText("");
       setImage(null);
       setVideo(null);
-      router.reload();
+      router.push("/Home");
     }
   };
 
