@@ -1,6 +1,7 @@
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaClient } from "@prisma/client";
 import createUniqueUsername from "@/utils/createUniqueUsername";
+import defaultProfilePic from "../../../../public/defaultProfilePic.jpg";
 const prisma = new PrismaClient();
 
 export const options = {
@@ -34,9 +35,7 @@ export const options = {
 
       const email = user.email;
       const profilePic =
-        user.picture === user.picture
-          ? user.picture
-          : "https://utalkto.s3.us-west-2.amazonaws.com/defaultProfilePic.png";
+        user.picture === user.picture ? user.picture : defaultProfilePic;
       const emailVerified = profile.email_verified;
 
       // Check if role exists in db

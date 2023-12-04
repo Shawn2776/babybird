@@ -22,9 +22,21 @@ const s3Client = new S3Client({
 export async function GET() {
   const session = await getServerSession(options);
 
+  if (!session?.user) {
+    res.status(401).json({
+      message: "Error. User not authemticated. Please log in and try again.",
+    });
+  }
+
   const talks = await prisma.talk.findMany({
     include: {
       owner: true, // Includes the owner details
+      _count: {
+        select: {
+          likes: true,
+          dislikes: true,
+        },
+      },
     },
     orderBy: {
       createdAt: "desc",

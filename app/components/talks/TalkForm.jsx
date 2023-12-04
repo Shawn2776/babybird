@@ -70,27 +70,23 @@ function TalkForm() {
 
     setUploading(true);
 
+    const s3ApiUrl = process.env.S3_API_URL;
+    const PostTalkUrl = process.env.POST_TALK_URL;
     let imageFileName = "";
     if (image) {
       const formData = new FormData();
       formData.append("file", image);
-      formData.append("isImage", true);
 
       try {
-        const response = await fetch("/api/s3-upload", {
+        const response = await fetch(s3ApiUrl, {
           method: "POST",
           body: formData,
         });
 
         imageFileName = await response.json();
-        console.log(
-          "IMAGEFILENAME AFTER AWAIT",
-          typeof imageFileName,
-          imageFileName
-        );
       } catch (error) {
         setUploading(false);
-        console.log(error);
+        console.log("Error in image try/catch: ", error);
         return NextResponse.json({ error });
       }
     }
@@ -99,10 +95,9 @@ function TalkForm() {
     if (video) {
       const formData = new FormData();
       formData.append("file", video);
-      formData.append("isImage", false);
 
       try {
-        const response = await fetch("/api/s3-upload", {
+        const response = await fetch(s3ApiUrl, {
           method: "POST",
           body: formData,
         });
@@ -110,11 +105,13 @@ function TalkForm() {
         videoFileName = await response.json();
       } catch (error) {
         setUploading(false);
+        console.log("Error in video try/catch: ", error);
+        return NextResponse.json({ error });
       }
     }
 
     try {
-      const res = await fetch("/api/talks", {
+      const res = await fetch(PostTalkUrl, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -133,7 +130,7 @@ function TalkForm() {
         setInText("");
         setImage(null);
         setVideo(null);
-        router.refresh();
+        router.reload();
       }
     } catch (error) {
       alert("Unable to upload Talk. Please try again later.");
@@ -142,6 +139,7 @@ function TalkForm() {
       setInText("");
       setImage(null);
       setVideo(null);
+      router.reload();
     }
   };
 

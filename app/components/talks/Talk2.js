@@ -6,13 +6,11 @@ import Link from "next/link";
 import { ProfileImage } from "./ProfileImage";
 
 function Talk2({
-  talk: { id, text, image, video, imageUrl, videoUrl, createdAt },
+  talk: { id, text, image, video, imageUrl, videoUrl, createdAt, profilePic },
   owner,
 }) {
   const inImage = image ? imageUrl : null;
   const inVideo = video ? videoUrl : null;
-  const tempSource =
-    "https://utalkto.s3.us-west-2.amazonaws.com/defaultProfilePic.png";
 
   const readableDate = new Date(createdAt).toLocaleString("en-US", {
     year: "numeric",
@@ -31,23 +29,13 @@ function Talk2({
       >
         <div className="flex gap-4">
           <div className="pl-2 md:p-0">
-            {owner.profilePic ? (
-              <Image
-                src={owner.profilePic}
-                height={40}
-                width={40}
-                alt=""
-                className="rounded-full"
-              />
-            ) : (
-              <Image
-                src={tempSource}
-                height={40}
-                width={40}
-                alt=""
-                className="rounded-full"
-              />
-            )}
+            <Image
+              src={owner.profilePic}
+              height={40}
+              width={40}
+              alt=""
+              className="rounded-full"
+            />
           </div>
           <div className="leading-4">
             <p className="text-md">{owner.name}</p>
