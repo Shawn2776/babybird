@@ -76,8 +76,10 @@ function TalkForm() {
       formData.append("file", image);
       formData.append("isImage", true);
 
+      const s3_api_url = process.env.S3_API_URL;
+
       try {
-        const response = await fetch("/api/s3-upload", {
+        const response = await fetch(s3_api_url, {
           method: "POST",
           body: formData,
         });
@@ -102,7 +104,7 @@ function TalkForm() {
       formData.append("isImage", false);
 
       try {
-        const response = await fetch("/api/s3-upload", {
+        const response = await fetch(process.env.s3_api_url, {
           method: "POST",
           body: formData,
         });
