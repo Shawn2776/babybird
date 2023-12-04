@@ -77,7 +77,7 @@ function TalkForm() {
       formData.append("isImage", true);
 
       try {
-        const response = await fetch("http://localhost:3000/api/s3-upload", {
+        const response = await fetch("https://www.utalkto.com/api/s3-upload", {
           method: "POST",
           body: formData,
         });
@@ -97,7 +97,7 @@ function TalkForm() {
       formData.append("isImage", false);
 
       try {
-        const response = await fetch("http://localhost:3000/api/s3-upload", {
+        const response = await fetch("https://www.utalkto/api/s3-upload", {
           method: "POST",
           body: formData,
         });
@@ -111,7 +111,7 @@ function TalkForm() {
     }
 
     try {
-      const res = await fetch("http://localhost:3000/api/talks", {
+      const res = await fetch("https://www.utalkto.com/api/talks", {
         method: "POST",
         headers: {
           "Content-type": "application/json",

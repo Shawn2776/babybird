@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 const getTalks = async () => {
   try {
-    const response = await fetch("http://localhost:3000/api/talks", {
+    const response = await fetch("https://www.utalkto.com/api/talks", {
       method: "GET",
       cache: "no-store",
     });
