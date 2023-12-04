@@ -12,7 +12,7 @@ const Home = async () => {
       <Nav session={session} />
       <div className="w-full max-w-2xl mx-auto">
         <TalkForm session={session} />
-        <TalkFeed2 />
+        {/* <TalkFeed2 /> */}
       </div>
     </>
   );
