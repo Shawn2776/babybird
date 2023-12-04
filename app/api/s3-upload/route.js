@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import convertFileName from "@/utils/s3Helpers/convertFileName";
-const sharp = require("sharp");
 
 const s3Client = new S3Client({
   region: process.env.AWS_S3_REGION,
@@ -23,25 +22,25 @@ export async function POST(request) {
   let fileName = file.name;
   let resizedBuffer;
 
-  if (isImage === true) {
-    console.log("in isimage?");
-    const arrayBuffer = await file.arrayBuffer();
-    const fileBuffer = Buffer.from(arrayBuffer);
+  // if (isImage === true) {
+  //   console.log("in isimage?");
+  //   const arrayBuffer = await file.arrayBuffer();
+  //   const fileBuffer = Buffer.from(arrayBuffer);
 
-    resizedBuffer = await sharp(fileBuffer)
-      .resize({ height: 1920, width: 1080, fit: "contain" })
-      .toBuffer();
-  } else {
-    const buffer = Buffer.from(await file.arrayBuffer());
-    resizedBuffer = buffer;
-  }
+  //   resizedBuffer = await sharp(fileBuffer)
+  //     .resize({ height: 1920, width: 1080, fit: "contain" })
+  //     .toBuffer();
+  // } else {
+  const buffer = Buffer.from(await file.arrayBuffer());
+  // resizedBuffer = buffer;
+  // }
 
   const { newFileName, paramContentType } = convertFileName(fileName);
 
   const params = {
     Bucket: process.env.AWS_S3_BUCKET_NAME,
     Key: `${newFileName}`,
-    Body: resizedBuffer,
+    Body: buffer,
     ContentType: paramContentType,
   };
 
