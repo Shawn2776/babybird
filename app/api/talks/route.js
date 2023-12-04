@@ -32,6 +32,7 @@ export async function GET() {
   });
 
   for (const talk of talks) {
+    console.log("TALK.IMAGE>>", talk.image);
     if (talk.image) {
       const getObjectParams = {
         Bucket: process.env.AWS_S3_BUCKET_NAME,
@@ -41,6 +42,7 @@ export async function GET() {
       const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
       talk.imageUrl = url;
     } else if (talk.video) {
+      console.log("TALK.VIDEO>>", talk.video);
       const getObjectParams = {
         Bucket: process.env.AWS_S3_BUCKET_NAME,
         Key: talk.video,
