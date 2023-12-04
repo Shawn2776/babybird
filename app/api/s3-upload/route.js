@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import convertFileName from "@/utils/s3Helpers/convertFileName";
-import sharp from "sharp";
+const sharp = require("sharp");
 
 const s3Client = new S3Client({
   region: process.env.AWS_S3_REGION,
