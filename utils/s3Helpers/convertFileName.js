@@ -1,6 +1,7 @@
 import crypto from "crypto";
 
 export default function convertFileName(fileNameIn) {
+  
   const fileExtension = fileNameIn.substring(fileNameIn.lastIndexOf("."));
   const fileExtensionCompare = fileNameIn.substring(
     fileNameIn.lastIndexOf(".") + 1
@@ -53,6 +54,8 @@ export default function convertFileName(fileNameIn) {
     // default:
     //   paramContentType = "text/pdf";
   }
+  
+  
 
   return { newFileName: newFileName, paramContentType: paramContentType };
 }

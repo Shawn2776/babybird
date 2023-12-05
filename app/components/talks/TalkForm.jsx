@@ -6,7 +6,6 @@ import { TbPhotoVideo } from "react-icons/tb";
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { NextResponse } from "next/server";
 
 function TalkForm() {
   const textAreaRef = useRef(null);
@@ -14,25 +13,6 @@ function TalkForm() {
   const [image, setImage] = useState(null);
   const [video, setVideo] = useState(null);
   const [uploading, setUploading] = useState(false);
-
-  async function uploadFile(file, isImage) {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("isImage", isImage);
-
-    try {
-      const response = await fetch("/api/s3-upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.log("Error in image try/catch: ", error);
-      return NextResponse.json({ error });
-    }
-  }
 
   const router = useRouter();
 
@@ -97,30 +77,110 @@ function TalkForm() {
 
     let imageFileName = "";
     if (image) {
-      imageFileName = await uploadFile(image, true);
+      try {
+        // get secure url from our server
+        const response = await fetch(
+          `/api/s3?fileName=${image.name}&fileType=${image.type}`
+        );
+
+        if (response.ok) {
+          const { uploadURL } = await response.json();
+
+          // post image directly to s3 bucket
+          await fetch(uploadURL, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+            body: image,
+          });
+
+          const imageUrl = uploadURL.split("?")[0];
+          imageFileName = imageUrl;
+        } else {
+          console.log("Error: ", error);
+          setUploading(false);
+          setInText("");
+          setImage(null);
+          setVideo(null);
+          router.push("/Home");
+        }
+      } catch (error) {
+        alert("Unable to upload Talk. Please try again later.");
+        console.log(error);
+        setUploading(false);
+        setInText("");
+        setImage(null);
+        setVideo(null);
+        router.push("/Home");
+      }
     }
 
     let videoFileName = "";
     if (video) {
-      videoFileName = await uploadFile(video, false);
+      try {
+        // get secure url from our server
+        const response = await fetch(
+          `/api/s3?fileName=${video.name}&fileType=${video.type}`
+        );
+
+        if (response.ok) {
+          const { uploadURL } = await response.json();
+
+          // post image directly to s3 bucket
+          await fetch(uploadURL, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+            body: video,
+          });
+
+          const videoUrl = uploadURL.split("?")[0];
+          videoFileName = videoUrl;
+        } else {
+          console.log("Error: ", error);
+          setUploading(false);
+          setInText("");
+          setImage(null);
+          setVideo(null);
+          router.push("/Home");
+        }
+      } catch (error) {
+        alert("Unable to upload Talk. Please try again later.");
+        console.log(error);
+        setUploading(false);
+        setInText("");
+        setImage(null);
+        setVideo(null);
+        router.push("/Home");
+      }
     }
 
+    const talk = {
+      email,
+      text: inText,
+      image: imageFileName,
+      video: videoFileName,
+    };
+
     try {
-      const res = await fetch("/api/talks", {
+      const response = await fetch("/api/talks", {
         method: "POST",
         headers: {
-          "Content-type": "application/json",
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          text: inText,
-          image: imageFileName,
-          video: videoFileName,
-        }),
+        body: JSON.stringify(talk),
       });
 
-      if (res.ok) {
-        const returnObj = await res.json();
-
+      if (response.ok) {
+        setUploading(false);
+        setInText("");
+        setImage(null);
+        setVideo(null);
+        router.push("/Home");
+      } else {
+        console.log("Error: ", error);
         setUploading(false);
         setInText("");
         setImage(null);

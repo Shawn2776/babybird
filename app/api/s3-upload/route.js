@@ -10,6 +10,19 @@ const s3Client = new S3Client({
   },
 });
 
+export async function generateUploadURL() {
+  const imageName = "random image name";
+
+  const params = {
+    Bucket: process.env.AWS_S3_BUCKET_NAME,
+    Key: imageName,
+    Expires: 60 * 10,
+  };
+
+  const uploadURL = await s3Client.getSignedUrlPromise("putObject", params);
+  return uploadURL;
+}
+
 export async function POST(request) {
   const formData = await request.formData();
   const file = formData.get("file");
