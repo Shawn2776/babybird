@@ -96,7 +96,10 @@ function TalkForm() {
           });
 
           const imageUrl = uploadURL.split("?")[0];
-          imageFileName = imageUrl;
+          const nameSplit = imageUrl.split("/");
+          imageFileName = nameSplit[nameSplit.length - 1];
+
+          console.log("imageFileName", imageFileName);
         } else {
           console.log("Error: ", error);
           setUploading(false);
@@ -137,7 +140,8 @@ function TalkForm() {
           });
 
           const videoUrl = uploadURL.split("?")[0];
-          videoFileName = videoUrl;
+          const nameSplit = videoUrl.split("/");
+          videoFileName = nameSplit[nameSplit.length - 1];
         } else {
           console.log("Error: ", error);
           setUploading(false);
@@ -178,6 +182,7 @@ function TalkForm() {
         setInText("");
         setImage(null);
         setVideo(null);
+        router.refresh();
         router.push("/Home");
       } else {
         console.log("Error: ", error);
@@ -185,6 +190,7 @@ function TalkForm() {
         setInText("");
         setImage(null);
         setVideo(null);
+        router.refresh();
         router.push("/Home");
       }
     } catch (error) {
@@ -194,6 +200,7 @@ function TalkForm() {
       setInText("");
       setImage(null);
       setVideo(null);
+      router.refresh();
       router.push("/Home");
     }
   };

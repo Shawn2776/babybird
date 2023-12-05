@@ -69,7 +69,7 @@ function Talk2({
         </div>
         <div
           id="talkVideo"
-          className={`${inVideo ? "max-w-2xl h-64 ml-14 mb-10" : "pt-4"}`}
+          className={`${inVideo ? "max-w-2xl ml-14" : "pt-4"}`}
         >
           {inVideo ? <EmbedPlayer src={videoUrl} /> : <></>}
         </div>

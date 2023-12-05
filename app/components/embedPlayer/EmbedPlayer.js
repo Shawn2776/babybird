@@ -2,14 +2,13 @@ import React from "react";
 
 function EmbedPlayer({ src }) {
   return (
-    <iframe
-      width="100%"
-      height="315"
-      src={src}
-      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share;"
-      allowFullScreen
-      className="pb-10 border-0"
-    ></iframe>
+    <>
+      <video controls width="100%">
+        <source src="/media/cc0-videos/flower.webm" type="video/webm" />
+
+        <source src={src} type="video/mp4" />
+      </video>
+    </>
   );
 }
 
