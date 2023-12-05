@@ -31,6 +31,8 @@ export async function GET() {
   const talks = await prisma.talk.findMany({
     include: {
       owner: true, // Includes the owner details
+      likes: true, // Includes the likes details
+      dislikes: true, // Includes the dislikes details
       _count: {
         select: {
           likes: true,

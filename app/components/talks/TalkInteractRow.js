@@ -9,32 +9,23 @@ import {
   AiFillDislike,
 } from "react-icons/ai";
 
-function TalkInteractRow({
-  likes,
-  dislikes,
-  retalks,
-  backtalks,
-  likeCount,
-  dislikeCount,
-  retalkCount,
-  backtalkCount,
-}) {
+function TalkInteractRow({ likes, dislikes, retalks, backtalks }) {
   return (
     <div className="flex justify-between text-sm">
       <div className="flex items-center gap-1">
-        <span className="text-gray-600">{backtalkCount}</span>
+        <span className="text-gray-600">0</span>
         <FaRegComments className="text-gray-600" />
       </div>
       <div className="flex items-center gap-1">
-        <span className="text-gray-600">{retalkCount}</span>
+        <span className="text-gray-600">0</span>
         <PiArrowsCounterClockwise className="text-gray-600" />
       </div>
       <div className="flex items-center gap-1">
-        <span className="">{likeCount}</span>
+        <span className="">{likes + 1}</span>
         <AiFillLike className="" />
       </div>
       <div className="flex items-center gap-1">
-        <span className="text-gray-600">{dislikeCount}</span>
+        <span className="text-gray-600">{dislikes}</span>
         <AiOutlineDislike className="text-gray-600" />
       </div>
 

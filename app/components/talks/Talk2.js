@@ -6,7 +6,18 @@ import Link from "next/link";
 import { ProfileImage } from "./ProfileImage";
 
 function Talk2({
-  talk: { id, text, image, video, imageUrl, videoUrl, createdAt, profilePic },
+  talk,
+  talk: {
+    id,
+    text,
+    image,
+    video,
+    imageUrl,
+    videoUrl,
+    createdAt,
+    profilePic,
+    _count,
+  },
   owner,
 }) {
   const inImage = image ? imageUrl : null;
@@ -73,17 +84,18 @@ function Talk2({
         >
           {inVideo ? <EmbedPlayer src={videoUrl} /> : <></>}
         </div>
+        {console.log("TALK2 LIKES>", talk)}
         <div id="talkInteractBar" className="px-6 pb-4 mt-4 md:pb-0 md:px-2">
-          {/* <TalkInteractRow
-            likes={likes}
-            dislikes={dislikes}
-            retalks={retalks}
-            backtalks={backtalks}
-            likeCount={likeCount}
-            dislikeCount={dislikeCount}
-            retalkCount={retalkCount}
-            backtalkCount={backtalkCount}
-          />*/}
+          <TalkInteractRow
+            likes={_count.likes}
+            dislikes={_count.dislikes}
+            // retalks={retalks}
+            // backtalks={backtalks}
+            // likeCount={likeCount}
+            // dislikeCount={dislikeCount}
+            // retalkCount={retalkCount}
+            // backtalkCount={backtalkCount}
+          />
         </div>
       </div>
     </div>
