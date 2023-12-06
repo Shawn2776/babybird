@@ -3,6 +3,7 @@ const prisma = new PrismaClient();
 
 async function createUniqueUsername() {
   // Keep trying to append random numbers to the username until it's unique
+  let uniqueUsername = "";
   let userExists = true;
   while (userExists) {
     // Get a random noun and adjective from the arrays
@@ -10,7 +11,7 @@ async function createUniqueUsername() {
     let randomAdjective =
       adjectives[Math.floor(Math.random() * adjectives.length)];
 
-    let uniqueUsername = `${randomAdjective.toUpperCase()}${randomNoun.toUpperCase()}`;
+    uniqueUsername = `${randomAdjective.toUpperCase()}${randomNoun.toUpperCase()}`;
 
     // Check if the username already exists in the database
     userExists = await prisma.user.findUnique({
