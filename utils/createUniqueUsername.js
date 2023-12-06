@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-async function createUniqueUsername() {
+async function createUniqueUsername(adjectives, nouns) {
   let uniqueUsername = "";
-  // Keep trying to append random numbers to the username until it's unique
+  // Keep trying to create a username until it's unique
   let userExists = true;
   while (userExists) {
     // Get a random noun and adjective from the arrays
@@ -11,11 +11,21 @@ async function createUniqueUsername() {
     let randomAdjective =
       adjectives[Math.floor(Math.random() * adjectives.length)];
 
-    uniqueUsername = `${randomAdjective.toUpperCase()}${randomNoun.toUpperCase()}`;
+    // Capitalize the first letter of the adjective and the first letter of the noun
+    let capitalizedAdjective =
+      randomAdjective.charAt(0).toUpperCase() +
+      randomAdjective.slice(1).toLowerCase();
+    let capitalizedNoun =
+      randomNoun.charAt(0).toUpperCase() + randomNoun.slice(1).toLowerCase();
+
+    uniqueUsername = `${capitalizedAdjective}${capitalizedNoun}`;
+
+    // Convert the username to lowercase for comparison
+    let lowercaseUsername = uniqueUsername.toLowerCase();
 
     // Check if the username already exists in the database
     userExists = await prisma.user.findUnique({
-      where: { username: uniqueUsername },
+      where: { username: lowercaseUsername },
     });
 
     // If not, break out of the loop
