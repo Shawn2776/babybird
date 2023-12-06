@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-async function createUniqueUsername(adjectives, nouns) {
+async function createUniqueUsername() {
   let uniqueUsername = "";
   // Keep trying to create a username until it's unique
   let userExists = true;
