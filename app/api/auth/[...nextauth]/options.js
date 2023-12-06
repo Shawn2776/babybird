@@ -62,7 +62,7 @@ export const options = {
 
       // If user doesn't exist, create a new user record
       if (!userInDb) {
-        const username = await createUniqueUsername(email);
+        const username = await createUniqueUsername();
         const roleId = roleInDb.id;
         const usersActualName = user.name;
         userInDb = await prisma.user.create({
