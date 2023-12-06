@@ -10,7 +10,7 @@ async function createUniqueUsername() {
     let randomAdjective =
       adjectives[Math.floor(Math.random() * adjectives.length)];
 
-    let uniqueUsername = `${randomAdjective.toCapitalize()}${randomNoun.toCapitalize()}`;
+    let uniqueUsername = `${randomAdjective.toUpperCase()}${randomNoun.toUpperCase()}`;
 
     // Check if the username already exists in the database
     userExists = await prisma.user.findUnique({
