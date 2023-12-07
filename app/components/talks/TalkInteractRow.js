@@ -14,7 +14,7 @@ const TalkInteractRow = ({ likes, dislikes, retalks, backtalks, talkId }) => {
 
   const handleLike = async () => {
     const response = await fetch(
-      `http://localhost:3000/api/talks?id=${id}&like=true`,
+      `/api/talks?id=${id}&like=true`,
       {
         method: "PUT",
         headers: {
@@ -26,7 +26,7 @@ const TalkInteractRow = ({ likes, dislikes, retalks, backtalks, talkId }) => {
 
   const handleDislike = async () => {
     const response = await fetch(
-      `http://localhost:3000/api/talks?id=${id}&dislike=${true}`,
+      `/api/talks?id=${id}&dislike=${true}`,
       {
         method: "PUT",
         headers: {
