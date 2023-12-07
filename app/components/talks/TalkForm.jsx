@@ -99,7 +99,7 @@ function TalkForm() {
           const nameSplit = imageUrl.split("/");
           imageFileName = nameSplit[nameSplit.length - 1];
 
-          console.log("imageFileName", imageFileName);
+
         } else {
           console.log("Error: ", error);
           setUploading(false);

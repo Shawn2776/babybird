@@ -13,12 +13,12 @@ model BackTalk {
   createdAt DateTime  @default(now())
   updatedAt DateTime?
   content   String
-  talk      Talk     @relation(fields: [talkId], references: [id])
   talkId    Int
   ownerId   Int
   tags      String
   isNSFW    Boolean
   is18Plus  Boolean
+  talk      Talk      @relation(fields: [talkId], references: [id])
 
   @@index([ownerId])
   @@index([talkId])
@@ -34,8 +34,8 @@ model Dislike {
   createdAt DateTime  @default(now())
   updatedAt DateTime?
   ownerId   Int
-  talk      Talk     @relation(fields: [talkId], references: [id])
   talkId    Int
+  talk      Talk      @relation(fields: [talkId], references: [id])
 
   @@index([ownerId])
   @@index([talkId])
@@ -47,7 +47,7 @@ model Like {
   updatedAt DateTime?
   ownerId   Int
   talkId    Int
-  talk      Talk     @relation(fields: [talkId], references: [id])
+  talk      Talk      @relation(fields: [talkId], references: [id])
 
   @@index([ownerId])
   @@index([talkId])
@@ -62,21 +62,22 @@ model Role {
 }
 
 model Talk {
-  id        Int       @id @default(autoincrement())
-  createdAt DateTime  @default(now())
+  id        Int        @id @unique @default(autoincrement())
+  createdAt DateTime   @default(now())
   updatedAt DateTime?
   text      String?
   image     String?
   video     String?
-  owner User @relation(fields: [ownerId], references: [id])
   ownerId   Int
   tags      String?
-  isNSFW    Boolean   @default(false)
-  is18Plus  Boolean   @default(false)
-  likes    Like[]    // One-to-many relation with Like
-dislikes Dislike[] // One-to-many relation with Dislike
-backTalks BackTalk[] // One-to-many relation with BackTalk
-retalks Retalks[]
+  isNSFW    Boolean    @default(false)
+  is18Plus  Boolean    @default(false)
+  talkId    Int?
+  owner     User       @relation(fields: [ownerId], references: [id])
+  likes     Like[]
+  dislikes  Dislike[]
+  backTalks BackTalk[]
+  retalks   Retalks[]
 
   @@index([ownerId])
 }
@@ -95,20 +96,21 @@ model User {
   description   String?
   url           String?
   lang          String    @default("en")
-  talks Talk[]
-  retalks Retalks[]
+  talks         Talk[]
+  retalks       Retalks[]
 
   @@index([roleId])
 }
 
 model Retalks {
-  id        Int    @id @default(autoincrement())
-  talk      Talk   @relation(fields: [talkId], references: [id])
-  talkId    Int
-  user      User   @relation(fields: [userId], references: [id])
-  userId    Int
+  id     Int  @id @default(autoincrement())
+  talkId Int
+  userId Int
+  talk   Talk @relation(fields: [talkId], references: [id])
+  user   User @relation(fields: [userId], references: [id])
 
   @@unique([talkId, userId], name: "retalks_user_talk_unique")
+  @@index([userId])
 }
 
 model TalksToCategories {

@@ -9,7 +9,33 @@ import {
   AiFillDislike,
 } from "react-icons/ai";
 
-function TalkInteractRow({ likes, dislikes, retalks, backtalks }) {
+const TalkInteractRow = ({ likes, dislikes, retalks, backtalks, talkId }) => {
+  const id = talkId;
+
+  const handleLike = async () => {
+    const response = await fetch(
+      `http://localhost:3000/api/talks?id=${id}&like=true`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  };
+
+  const handleDislike = async () => {
+    const response = await fetch(
+      `http://localhost:3000/api/talks?id=${id}&dislike=${true}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  };
+
   return (
     <div className="flex justify-between text-sm">
       <div className="flex items-center gap-1">
@@ -20,13 +46,17 @@ function TalkInteractRow({ likes, dislikes, retalks, backtalks }) {
         <span className="text-gray-600">0</span>
         <PiArrowsCounterClockwise className="text-gray-600" />
       </div>
-      <div className="flex items-center gap-1">
-        <span className="">{likes + 1}</span>
-        <AiFillLike className="" />
+      <div>
+        <button onClick={handleLike} className="flex items-center gap-1">
+          <span className="">{likes}</span>
+          <AiFillLike className="" />
+        </button>
       </div>
-      <div className="flex items-center gap-1">
-        <span className="text-gray-600">{dislikes}</span>
-        <AiOutlineDislike className="text-gray-600" />
+      <div>
+        <button onClick={handleDislike} className="flex items-center gap-1">
+          <span className="text-gray-600">{dislikes}</span>
+          <AiOutlineDislike className="text-gray-600" />
+        </button>
       </div>
 
       <div className="flex items-center gap-1">
@@ -43,7 +73,7 @@ function TalkInteractRow({ likes, dislikes, retalks, backtalks }) {
       </div>
     </div>
   );
-}
+};
 
 export default TalkInteractRow;
 
