@@ -84,11 +84,11 @@ function Talk2({
         >
           {inVideo ? <EmbedPlayer src={videoUrl} /> : <></>}
         </div>
-        {console.log("TALK2 LIKES>", talk)}
         <div id="talkInteractBar" className="px-6 pb-4 mt-4 md:pb-0 md:px-2">
           <TalkInteractRow
             likes={_count.likes}
             dislikes={_count.dislikes}
+            talkId={id}
             // retalks={retalks}
             // backtalks={backtalks}
             // likeCount={likeCount}

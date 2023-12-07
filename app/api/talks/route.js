@@ -106,7 +106,112 @@ export async function POST(request) {
 //   const user = await prisma.find;
 // }
 
-// export async function PUT(request) {}
+export async function PUT(request) {
+  const requestUrl = new URL(request.url);
+
+  const talkId = parseInt(requestUrl.searchParams.get("id"));
+  const userLikes = requestUrl.searchParams.get("dislike");
+  const userDislikes = requestUrl.searchParams.get("like");
+
+  const session = await getServerSession(options);
+
+  if (!session) {
+    res.status(401).json({ message: "You must be logged in." });
+    return;
+  }
+
+  const email = session?.user?.email;
+
+  // find the uer by email in the db
+  const user = await prisma.user.findUnique({
+    where: { email },
+  });
+
+  const userId = user.id;
+
+  // find the talk by talk id
+  const talk = await prisma.talk.findUnique({
+    where: { id: talkId },
+    select: {
+      likes: true,
+      dislikes: true,
+    },
+  });
+
+  // check if the talk exists
+  if (!talk) {
+    return NextResponse.error({
+      status: 404,
+      message: "Talk not found",
+    });
+  }
+
+  if (!userLikes) {
+    // check if the talk has been liked by the user
+    const likesArray = talk.likes;
+
+    const userLikes = likesArray.find((like) => like.ownerId === userId);
+
+    try {
+      if (userLikes) {
+        // remove the like
+        await prisma.like.delete({
+          where: {
+            id: userLikes.id, // use the id of the like to delete it
+          },
+        });
+
+        return NextResponse.json({ message: "Talk Successfully un-liked." });
+      } else {
+        // create and add the like
+        const newLike = await prisma.like.create({
+          data: {
+            ownerId: userId,
+            talkId: talkId,
+          },
+        });
+      }
+
+      return NextResponse.json({ message: "Talk Successfully liked." });
+    } catch (error) {
+      console.log("error", error);
+    }
+  } else {
+    // check if the talk has been disliked by the user
+    const dislikesArray = talk.dislikes;
+
+    const userDislikes = dislikesArray.find(
+      (dislike) => dislike.ownerId === userId
+    );
+
+    try {
+      if (userDislikes) {
+        // remove the dislike
+        await prisma.dislike.delete({
+          where: {
+            id: userDislikes.id, // use the id of the like to delete it
+          },
+        });
+
+        return NextResponse.json({ message: "Talk Successfully un-disliked." });
+      } else {
+        // create and add the like
+        const newDislike = await prisma.dislike.create({
+          data: {
+            ownerId: userId,
+            talkId: talkId,
+          },
+        });
+      }
+
+      return NextResponse.json({ message: "Talk Successfully disliked." });
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
+  return NextResponse.json({ message: "Talk Successfully created." });
+}
 
 // export async function DELETE(request) {}
 

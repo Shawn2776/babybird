@@ -12,13 +12,16 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.462.0",
     "@aws-sdk/s3-request-presigner": "^3.465.0",
+<<<<<<< HEAD
     "@prisma/client": "^5.6.0",
     "@tanstack/react-query": "^5.12.2",
     "@tanstack/react-query-devtools": "^5.12.2",
+=======
+    "@prisma/client": "^5.7.0",
+>>>>>>> @{-1}
     "aws-sdk": "^2.1511.0",
     "next": "14.0.3",
     "next-auth": "^4.24.5",
-    "prisma": "^5.6.0",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^4.12.0",
@@ -29,6 +32,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
     "postcss": "^8",
+    "prisma": "^5.7.0",
     "tailwindcss": "^3.3.0"
   }
 }

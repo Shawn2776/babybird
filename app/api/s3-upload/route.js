@@ -35,18 +35,7 @@ export async function POST(request) {
   let fileName = file.name;
   let resizedBuffer;
 
-  // if (isImage === true) {
-  //   console.log("in isimage?");
-  //   const arrayBuffer = await file.arrayBuffer();
-  //   const fileBuffer = Buffer.from(arrayBuffer);
-
-  //   resizedBuffer = await sharp(fileBuffer)
-  //     .resize({ height: 1920, width: 1080, fit: "contain" })
-  //     .toBuffer();
-  // } else {
   const buffer = Buffer.from(await file.arrayBuffer());
-  // resizedBuffer = buffer;
-  // }
 
   const { newFileName, paramContentType } = convertFileName(fileName);
 
