@@ -72,7 +72,6 @@ model Talk {
   tags      String?
   isNSFW    Boolean    @default(false)
   is18Plus  Boolean    @default(false)
-  talkId    Int?
   owner     User       @relation(fields: [ownerId], references: [id])
   likes     Like[]
   dislikes  Dislike[]
