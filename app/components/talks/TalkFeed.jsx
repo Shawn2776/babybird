@@ -27,7 +27,7 @@ export default async function TalkFeed() {
   }
 
   const talks = await getTalks();
-
+console.log("talks", talks);
   return (
     <>
       {talks.map((talk) => (

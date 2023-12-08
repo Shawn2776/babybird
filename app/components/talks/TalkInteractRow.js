@@ -1,3 +1,5 @@
+"use client";
+
 import { FaRegComments, FaChartLine } from "react-icons/fa6";
 import { PiArrowsCounterClockwise } from "react-icons/pi";
 import { MdSaveAlt } from "react-icons/md";
@@ -9,35 +11,46 @@ import {
   AiFillDislike,
 } from "react-icons/ai";
 
-const TalkInteractRow = ({ likes, dislikes, retalks, backtalks, talkId }) => {
+const TalkInteractRow = ({
+  likes,
+  dislikes,
+  retalks,
+  backtalks,
+  talkId,
+  likeArray,
+  dislikeArray,
+}) => {
   const id = talkId;
 
   const handleLike = async () => {
-    const response = await fetch(
-      `/api/talks?id=${id}&like=true`,
-      {
+    try {
+      const response = await fetch(`/api/talks?id=${id}&like=true`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-      }
-    );
+      });
+    } catch (error) {
+      console.log("handleLike error", error);
+    }
   };
 
   const handleDislike = async () => {
-    const response = await fetch(
-      `/api/talks?id=${id}&dislike=${true}`,
-      {
+    try {
+      const response = await fetch(`/api/talks?id=${id}&dislike=${true}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-      }
-    );
+      });
+    } catch (error) {
+      console.log("handleDislike error", error);
+    }
   };
 
   return (
     <div className="flex justify-between text-sm">
+      {console.log("likeArray", likeArray)}
       <div className="flex items-center gap-1">
         <span className="text-gray-600">0</span>
         <FaRegComments className="text-gray-600" />
@@ -76,4 +89,3 @@ const TalkInteractRow = ({ likes, dislikes, retalks, backtalks, talkId }) => {
 };
 
 export default TalkInteractRow;
-
