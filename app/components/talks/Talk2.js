@@ -89,6 +89,8 @@ function Talk2({
             likes={_count.likes}
             dislikes={_count.dislikes}
             talkId={id}
+            likeArray={talk.likes}
+            dislikeArray={talk.dislikes}
             // retalks={retalks}
             // backtalks={backtalks}
             // likeCount={likeCount}

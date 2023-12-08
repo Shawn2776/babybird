@@ -24,7 +24,10 @@ function TalkFeed2() {
   return (
     <div>
       {talks.map((talk) => (
-        <Talk2 key={talk.id} talk={talk} owner={talk.owner} />
+        <>
+          <Talk2 key={talk.id} talk={talk} owner={talk.owner} />
+          <span>{console.log("talk", talk)}</span>
+        </>
       ))}
     </div>
   );
