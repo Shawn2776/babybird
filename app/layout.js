@@ -1,4 +1,4 @@
-import AuthProvider from "./components/auth/AuthProvider";
+import AuthProvider from "./providers/auth/AuthProvider";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 
