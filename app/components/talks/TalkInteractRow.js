@@ -50,7 +50,6 @@ const TalkInteractRow = ({
 
   return (
     <div className="flex justify-between text-sm">
-      {console.log("likeArray", likeArray)}
       <div className="flex items-center gap-1">
         <span className="text-gray-600">0</span>
         <FaRegComments className="text-gray-600" />

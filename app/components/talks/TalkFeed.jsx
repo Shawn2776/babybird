@@ -1,50 +1,33 @@
-import { options } from "@/app/api/auth/[...nextauth]/options";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Talk from "./Talk";
-import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
 
-const getTalks = async () => {
-  try {
-    const response = await fetch("/api/talks", {
-      method: "GET",
-      cache: "no-store",
-    });
+function TalkFeed() {
+  const [talks, setTalks] = useState([]);
 
-    if (response.ok) {
-      return response.json();
+  useEffect(() => {
+    async function fetchTalks() {
+      const response = await fetch("/api/talks", {
+        method: "GET",
+        cache: "no-store",
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setTalks(data);
+      }
     }
-  } catch (error) {
-    console.log("ERROR>>", error);
-    return NextResponse.json({ message: error });
-  }
-};
 
-export default async function TalkFeed() {
-  const { data: session, status } = getServerSession(options);
+    fetchTalks();
+  }, []);
 
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
-
-  const talks = await getTalks();
-console.log("talks", talks);
   return (
-    <>
+    <div>
       {talks.map((talk) => (
-        <div key={talk.id} className="">
-          <Talk
-            owner={talk.owner}
-            likes={talk.likes}
-            dislikes={talk.dislikes}
-            retalks={talk.retalkedBy}
-            backtalks={talk.backTalks}
-            likeCount={talk._count.likes}
-            dislikeCount={talk._count.dislikes}
-            retalkCount={talk._count.retalkedBy}
-            backtalkCount={talk._count.backTalks}
-          />
-        </div>
+        <Talk key={talk.id} talk={talk} owner={talk.owner} />
       ))}
-    </>
+    </div>
   );
 }
+
+export default TalkFeed;

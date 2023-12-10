@@ -1,8 +1,6 @@
 import AuthProvider from "./components/auth/AuthProvider";
 import { Roboto } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/Nav/tempNav";
-import ReduxProvider from "./redux/provider/Provider";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -22,12 +20,7 @@ export default function RootLayout({ children }) {
         <body
           className={`${roboto.className} bg-gradient-to-b from-oxford via-cambridge to-bittersweet min-h-screen`}
         >
-          <ReduxProvider>
-            <div>
-              {/* <Navbar /> */}
-              {children}
-            </div>
-          </ReduxProvider>
+          <div>{children}</div>
         </body>
       </AuthProvider>
     </html>
