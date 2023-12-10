@@ -1,5 +1,4 @@
 import GoogleProvider from "next-auth/providers/google";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "../../../lib/prisma";
 import createUniqueUsername from "@/utils/createUniqueUsername";
 import defaultProfilePic from "../../../../public/defaultProfilePic.jpg";
@@ -27,7 +26,6 @@ export const options = {
   session: {
     strategy: "jwt",
   },
-  adapter: PrismaAdapter(prisma),
   callbacks: {
     async signIn({ user, account, profile }) {
       const adminEmail = process.env.ADMIN_EMAIL;
