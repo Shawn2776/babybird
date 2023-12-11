@@ -8,10 +8,16 @@ import {
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
-
-const { data: session, status } = getServerSession(options);
+import User from "../user/page";
+import { redirect } from "next/navigation";
 
 const Homes = async () => {
+  const session = await getServerSession(options);
+
+  if (!session) {
+    redirect("/api/auth/signin?callbackUrl=/Home");
+  }
+
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: ["talks"],
@@ -26,9 +32,12 @@ const Homes = async () => {
       }
     },
   });
+
   return (
     <>
       <Nav session={session} />
+      <pre>{JSON.stringify(session)}</pre>
+      <User />
       <div className="w-full max-w-2xl mx-auto">
         <HydrationBoundary state={dehydrate(queryClient)}>
           <TalkForm session={session} />

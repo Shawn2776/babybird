@@ -2,6 +2,7 @@ import Image from "next/image";
 import { BiDotsHorizontal } from "react-icons/bi";
 import TalkInteractRow from "./TalkInteractRow";
 import EmbedPlayer from "../embedPlayer/EmbedPlayer";
+import defaultProfilePic from "../../../public/defaultProfilePic.jpg";
 
 function Talk({
   talk,
@@ -39,11 +40,13 @@ function Talk({
         <div className="flex gap-4">
           <div className="pl-2 md:p-0">
             <Image
-              src={owner.profilePic}
+              src={
+                owner.profilePic === null ? defaultProfilePic : owner.profilePic
+              }
               height={40}
               width={40}
               alt=""
-              className="rounded-full"
+              className="bg-black rounded-full"
             />
           </div>
           <div className="leading-4">
@@ -72,6 +75,7 @@ function Talk({
               alt=""
               className="rounded-2xl"
               priority={true}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           ) : (
             <></>

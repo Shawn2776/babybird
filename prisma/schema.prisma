@@ -86,6 +86,7 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime?
   email         String    @unique
+  hPassword      String? 
   name          String
   profilePic    String?
   emailVerified Boolean
