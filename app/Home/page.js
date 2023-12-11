@@ -36,8 +36,6 @@ const Homes = async () => {
   return (
     <>
       <Nav session={session} />
-      <pre>{JSON.stringify(session)}</pre>
-      <User />
       <div className="w-full max-w-2xl mx-auto">
         <HydrationBoundary state={dehydrate(queryClient)}>
           <TalkForm session={session} />
