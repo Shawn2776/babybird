@@ -2,6 +2,7 @@ import AuthProvider from "../utils/providers/auth/AuthProvider";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import QueryProvider from "@/utils/providers/query/QueryProvider";
+import Script from "next/script";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -17,6 +18,20 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      {/* Google Analytics */}
+      <Script
+        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=G-TN1GYE9DZ3`}
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-TN1GYE9DZ3');
+        `}
+      </Script>
       <AuthProvider>
         <body
           className={`${roboto.className} bg-gradient-to-b from-oxford via-cambridge to-bittersweet min-h-screen`}
