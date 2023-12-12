@@ -17,7 +17,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <>
       {/* Google Analytics */}
       <Script
         strategy="afterInteractive"
@@ -32,15 +32,17 @@ export default function RootLayout({ children }) {
           gtag('config', 'G-TN1GYE9DZ3');
         `}
       </Script>
-      <AuthProvider>
-        <body
-          className={`${roboto.className} bg-gradient-to-b from-oxford via-cambridge to-bittersweet min-h-screen`}
-        >
-          <div>
-            <QueryProvider>{children}</QueryProvider>
-          </div>
-        </body>
-      </AuthProvider>
-    </html>
+      <html lang="en">
+        <AuthProvider>
+          <body
+            className={`${roboto.className} bg-gradient-to-b from-oxford via-cambridge to-bittersweet min-h-screen`}
+          >
+            <div>
+              <QueryProvider>{children}</QueryProvider>
+            </div>
+          </body>
+        </AuthProvider>
+      </html>
+    </>
   );
 }
