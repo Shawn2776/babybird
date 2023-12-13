@@ -20,18 +20,22 @@ function TalkForm() {
   const router = useRouter();
 
   const { data: session, status } = useSession();
-  const email = session?.user?.email;
+  
 
   const { data, error, isLoading } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
-      const response = await fetch("/api/user/", {
-        method: "GET",
-        cache: "no-store",
-      });
-      if (response.ok) {
-        const data = await response.json();
-        return data;
+      try {
+        const response = await fetch("/api/user/", {
+          method: "GET",
+          cache: "no-store",
+        });
+        if (response.ok) {
+          const data = await response.json();
+          return data;
+        }
+      } catch (error) {
+        console.log("error fetching user", error);
       }
     },
   });
@@ -47,7 +51,7 @@ function TalkForm() {
   if (status === "loading") {
     return (
       <div role="status" className="animate-pulse">
-        <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 px-5 max-w-[640px] mb-2.5 mx-auto"></div>
+        <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 ml-1 mr-1 px-5 max-w-[640px] mb-2.5 mx-auto"></div>
         <div className="h-2.5 mx-auto bg-gray-300 rounded-full dark:bg-gray-700 max-w-[540px]"></div>
         <div className="flex items-center justify-center mt-4">
           <svg
@@ -66,6 +70,12 @@ function TalkForm() {
       </div>
     );
   }
+
+  if (status === "unauthenticated") {
+    router.replace("/Login");
+  }
+
+  const email = session?.user?.email;
 
   const srcProfilePic =
     data?.profilePic === null ? defaultProfilePic : data?.profilePic;
@@ -236,7 +246,10 @@ function TalkForm() {
       <form className="w-full">
         <div className="flex w-full gap-2">
           <div className="flex items-center justify-center">
-            <Link href={`/talker/`} className="ml-2">
+            <Link
+              href={`/talker/${data?.username}?username=${data?.username}`}
+              className="ml-2"
+            >
               <Image
                 src={srcProfilePic}
                 height={40}

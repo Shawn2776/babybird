@@ -58,8 +58,8 @@ function Profile({ params }) {
           alt={""}
           className="rounded-full"
         />
-        <p className="mt-2 text-xl font-bold">{data.name}</p>
-        <p className="mb-2">@{data.username}</p>
+        <p className="mt-2 text-xl font-bold">{data?.name}</p>
+        <p className="mb-2">@{data?.username}</p>
       </div>
       <hr />
       <div className="flex px-2 mt-2 text-xl justify-evenly">
