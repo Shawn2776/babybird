@@ -3,12 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import { GrImage } from "react-icons/gr";
 import { TbPhotoVideo } from "react-icons/tb";
-import { useSession } from "next-auth/react";
+
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import defaultProfilePic from "../../../public/defaultProfilePic.jpg";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 function TalkForm() {
   const textAreaRef = useRef(null);
@@ -20,7 +21,6 @@ function TalkForm() {
   const router = useRouter();
 
   const { data: session, status } = useSession();
-  
 
   const { data, error, isLoading } = useQuery({
     queryKey: ["user"],
@@ -46,7 +46,7 @@ function TalkForm() {
       textAreaRef.current.style.height =
         textAreaRef.current.scrollHeight + "px";
     }
-  }, [inText]);
+  }, [inText, router, session, status, isLoading, data, error]);
 
   if (status === "loading") {
     return (
