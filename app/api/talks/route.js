@@ -1,9 +1,11 @@
 import { getServerSession } from "next-auth";
-import { options } from "../auth/[...nextauth]/options";
+
 import { NextResponse } from "next/server";
-import prisma from "@/app/lib/prisma";
+
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { options } from "../auth/[...nextauth]/options";
+import prisma from "@/lib/prisma";
 
 const s3Client = new S3Client({
   region: process.env.AWS_S3_REGION,
@@ -22,7 +24,7 @@ export async function GET() {
 
   if (!session?.user) {
     res.status(401).json({
-      message: "Error. User not authemticated. Please log in and try again.",
+      message: "Error. User not authenticated. Please log in and try again.",
     });
   }
 
@@ -44,7 +46,6 @@ export async function GET() {
   });
 
   for (const talk of talks) {
-
     if (talk.image) {
       const getObjectParams = {
         Bucket: process.env.AWS_S3_BUCKET_NAME,

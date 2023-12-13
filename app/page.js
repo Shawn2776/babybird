@@ -1,89 +1,48 @@
-"use client";
+import { getServerSession } from "next-auth";
+// import Nav from "../components/Nav/tempNav";
 
-import { useSession, signOut } from "next-auth/react";
-import Image from "next/image";
-import mobileLogo from "../public/logos/uTalkTo-logos_white.png";
-import logo from "../public/logos/uTalkTo-logos_black.png";
-import Link from "next/link";
+// import TalkFeed from "../components/talks/TalkFeed";
+import {
+  HydrationBoundary,
+  QueryClient,
+  dehydrate,
+} from "@tanstack/react-query";
 import { redirect } from "next/navigation";
-import { useEffect, useState } from "react";
-import DevModal from "./components/dev/DevModal"; // Adjust the path as needed
+import TalkForm from "./components/talks/TalkForm";
+import { options } from "./api/auth/[...nextauth]/options";
+import TalkFeed from "./components/talks/TalkFeed";
 
-const Home = () => {
-  const { data: session, status } = useSession();
-  const [showModal, setShowModal] = useState(false);
+const Home = async () => {
+  const session = await getServerSession(options);
 
-  const handleSignOut = async () => {
-    await signOut({ redirect: false });
-    window.location.href = "/"; // Change to your sign-in page
-  };
-
-  useEffect(() => {
-    if (!sessionStorage.getItem("modalShown")) {
-      setShowModal(true);
-      sessionStorage.setItem("modalShown", "true");
-    }
-  }, []);
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
-  // Optional: handle loading status
-  if (status === "loading") {
-    return <p>Loading...</p>;
+  if (!session) {
+    redirect("/Login");
   }
 
-  if (session) {
-    redirect("/Home");
-  }
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: ["talks"],
+    queryFn: async () => {
+      const response = await fetch("/api/talks", {
+        method: "GET",
+        cache: "no-store",
+      });
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      }
+    },
+  });
 
   return (
     <>
-      {showModal && <DevModal onClose={handleCloseModal} />}
-      <main>
-        <div className="flex flex-col w-full sm:flex-row">
-          <div className="w-full">
-            <Image
-              className="sm:hidden"
-              src={mobileLogo}
-              style={{
-                maxWidth: "100%",
-                height: "auto",
-              }}
-              alt="photo"
-            />
-
-            <Image
-              className="hidden sm:flex"
-              src={logo}
-              style={{
-                maxWidth: "100%",
-                height: "auto",
-              }}
-              alt="photo"
-            />
-          </div>
-
-          <div className="flex justify-center w-full sm:items-center">
-            {session ? (
-              <Link
-                className="text-6xl"
-                href={"/api/auth/signout/google?callbackUrl=/"}
-              >
-                <button onClick={handleSignOut}>Sign Out</button>
-              </Link>
-            ) : (
-              <Link
-                className="px-6 py-4 text-6xl text-white rounded-full shadow-xl bg-oxford"
-                href={"/api/auth/signin/google?callbackUrl=/Home"}
-              >
-                Sign In
-              </Link>
-            )}
-          </div>
-        </div>
-      </main>
+      {/* <Nav session={session} /> */}
+      <div className="w-full max-w-2xl mx-auto">
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <TalkForm session={session} />
+          <TalkFeed />
+        </HydrationBoundary>
+      </div>
     </>
   );
 };

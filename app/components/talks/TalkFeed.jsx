@@ -1,15 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import Talk from "./Talk";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import Talk2 from "./Talk2";
+import Talk from "./TalkCard";
 
 function TalkFeed() {
   const { data, error, isLoading } = useQuery({
     queryKey: ["talks"],
     queryFn: async () => {
-      const response = await fetch("/api/talks", {
+      const response = await fetch("/api/talks/", {
         method: "GET",
         cache: "no-store",
       });

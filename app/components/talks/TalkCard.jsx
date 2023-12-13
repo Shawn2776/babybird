@@ -3,6 +3,7 @@ import { BiDotsHorizontal } from "react-icons/bi";
 import TalkInteractRow from "./TalkInteractRow";
 import EmbedPlayer from "../embedPlayer/EmbedPlayer";
 import defaultProfilePic from "../../../public/defaultProfilePic.jpg";
+import Link from "next/link";
 
 function Talk({
   talk,
@@ -39,15 +40,19 @@ function Talk({
       >
         <div className="flex gap-4">
           <div className="pl-2 md:p-0">
-            <Image
-              src={
-                owner.profilePic === null ? defaultProfilePic : owner.profilePic
-              }
-              height={40}
-              width={40}
-              alt=""
-              className="bg-black rounded-full"
-            />
+            <Link href={`/profile/${owner.username}`}>
+              <Image
+                src={
+                  owner.profilePic === null
+                    ? defaultProfilePic
+                    : owner.profilePic
+                }
+                height={40}
+                width={40}
+                alt=""
+                className="bg-black rounded-full"
+              />
+            </Link>
           </div>
           <div className="leading-4">
             <p className="text-md">{owner.name}</p>
@@ -87,7 +92,7 @@ function Talk({
         >
           {inVideo ? <EmbedPlayer src={videoUrl} /> : <></>}
         </div>
-        <div id="talkInteractBar" className="px-6 pb-4 mt-4 md:pb-0 md:px-2">
+        {/* <div id="talkInteractBar" className="px-6 pb-4 mt-4 md:pb-0 md:px-2">
           <TalkInteractRow
             likes={_count.likes}
             dislikes={_count.dislikes}
@@ -101,7 +106,7 @@ function Talk({
             // retalkCount={retalkCount}
             // backtalkCount={backtalkCount}
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );

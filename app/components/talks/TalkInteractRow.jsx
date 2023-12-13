@@ -10,6 +10,7 @@ import {
   AiFillLike,
   AiFillDislike,
 } from "react-icons/ai";
+import { useMutation } from "@tanstack/react-query";
 
 const TalkInteractRow = ({
   likes,
@@ -20,32 +21,44 @@ const TalkInteractRow = ({
   likeArray,
   dislikeArray,
 }) => {
+  const likeMutation = useMutation({
+    mutationFn: (addLike) => {
+      try {
+        const response = fetch(`/api/talks?id=${id}&like=true`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+      } catch (error) {
+        console.log("handleLike error", error);
+      }
+    },
+  });
+
+  const dislikeMutation = useMutation({
+    mutationFn: (addDislike) => {
+      try {
+        const response = fetch(`/api/talks?id=${id}&dislike=${true}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+      } catch (error) {
+        console.log("handleDislike error", error);
+      }
+    },
+  });
+
   const id = talkId;
 
   const handleLike = async () => {
-    try {
-      const response = await fetch(`/api/talks?id=${id}&like=true`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-    } catch (error) {
-      console.log("handleLike error", error);
-    }
+    await likeMutation.mutateAsync({});
   };
 
   const handleDislike = async () => {
-    try {
-      const response = await fetch(`/api/talks?id=${id}&dislike=${true}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-    } catch (error) {
-      console.log("handleDislike error", error);
-    }
+    await dislikeMutation.mutateAsync({});
   };
 
   return (

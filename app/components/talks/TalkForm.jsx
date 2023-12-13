@@ -3,9 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { GrImage } from "react-icons/gr";
 import { TbPhotoVideo } from "react-icons/tb";
-
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import Image from "next/image";
+import defaultProfilePic from "../../../public/defaultProfilePic.jpg";
+import Link from "next/link";
 
 function TalkForm() {
   const textAreaRef = useRef(null);
@@ -19,6 +22,20 @@ function TalkForm() {
   const { data: session, status } = useSession();
   const email = session?.user?.email;
 
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const response = await fetch("/api/user/", {
+        method: "GET",
+        cache: "no-store",
+      });
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      }
+    },
+  });
+
   useEffect(() => {
     if (textAreaRef.current) {
       textAreaRef.current.style.height = "auto";
@@ -30,7 +47,7 @@ function TalkForm() {
   if (status === "loading") {
     return (
       <div role="status" className="animate-pulse">
-        <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 max-w-[640px] mb-2.5 mx-auto"></div>
+        <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 px-5 max-w-[640px] mb-2.5 mx-auto"></div>
         <div className="h-2.5 mx-auto bg-gray-300 rounded-full dark:bg-gray-700 max-w-[540px]"></div>
         <div className="flex items-center justify-center mt-4">
           <svg
@@ -49,6 +66,9 @@ function TalkForm() {
       </div>
     );
   }
+
+  const srcProfilePic =
+    data?.profilePic === null ? defaultProfilePic : data?.profilePic;
 
   const handleTextChange = (e) => {
     setInText(e.target.value);
@@ -98,8 +118,6 @@ function TalkForm() {
           const imageUrl = uploadURL.split("?")[0];
           const nameSplit = imageUrl.split("/");
           imageFileName = nameSplit[nameSplit.length - 1];
-
-
         } else {
           console.log("Error: ", error);
           setUploading(false);
@@ -214,22 +232,35 @@ function TalkForm() {
   }
 
   return (
-    <div className="w-full pt-2 pb-2 mb-2 text-white bg-gray-600 border border-gray-600 md:p-4 border-b-transparent border-l-transparent border-r-transparent md:border-none md:my-6 md:rounded-lg">
-      <form>
-        <label htmlFor="talk" className="sr-only">
-          What do you want to say?
-        </label>
-        <textarea
-          id="talk"
-          className="w-[96%] pl-4 ml-2 mx-auto p-1 rounded-2xl bg-neutral-800 active:outline-none focus:outline-none"
-          placeholder="What do you want to say?"
-          value={inText}
-          onChange={handleTextChange}
-          rows="1"
-          ref={textAreaRef}
-          type="text"
-        ></textarea>
-        <div className="flex items-center justify-between pt-4 pl-4 pr-4">
+    <div className="w-full pt-2 pb-2 mb-2 text-white bg-gray-600 border border-gray-600 md:p-4 border-b-transparent border-l-transparent border-r-transparent md:border-none md:my-6 md:rounded-lg flex gap-2">
+      <form className="w-full">
+        <div className="flex w-full gap-2">
+          <div className="flex justify-center items-center">
+            <Link href={`/talker/`} className="ml-2">
+              <Image
+                src={srcProfilePic}
+                height={40}
+                width={40}
+                alt=""
+                className="bg-black rounded-full shadow-lg hover:border"
+              />
+            </Link>
+          </div>
+          <label htmlFor="talk" className="sr-only">
+            What do you want to say?
+          </label>
+          <textarea
+            id="talk"
+            className="w-[96%] pl-4 ml-2 mx-auto p-1 rounded-2xl bg-neutral-800 active:outline-none focus:outline-none mr-4"
+            placeholder="What do you want to say?"
+            value={inText}
+            onChange={handleTextChange}
+            rows="1"
+            ref={textAreaRef}
+            type="text"
+          ></textarea>
+        </div>
+        <div className="flex items-center justify-between pt-4 pl-12 pr-4">
           <div className="flex gap-4">
             <label htmlFor="imageToUpload">
               <input
@@ -240,8 +271,20 @@ function TalkForm() {
                 className="hidden"
                 accept="image/png, image/jpeg, image/jpg, image/webp, image/gif"
               />
-              <button type="button" onClick={triggerImageInput}>
-                <GrImage className="text-xl text-zomp" />
+              <button
+                type="button"
+                onClick={triggerImageInput}
+                className={`${
+                  image !== null ? "bg-oxford p-1 px-2 rounded-md" : "p-1"
+                }`}
+              >
+                <GrImage
+                  className={`text-xl hover:text-bittersweet ${
+                    image !== null
+                      ? "text-bittersweet hover:text-white"
+                      : "text-neutral-900"
+                  }`}
+                />
               </button>
             </label>
             <label htmlFor="videoToUpload">
@@ -253,8 +296,20 @@ function TalkForm() {
                 className="hidden"
                 accept="video/mp4, video/avi, video/mov"
               />
-              <button type="button" onClick={triggerVideoInput}>
-                <TbPhotoVideo className="text-xl text-zomp" />
+              <button
+                type="button"
+                onClick={triggerVideoInput}
+                className={`${
+                  video !== null ? "bg-oxford p-1 px-2 rounded-md" : "p-1"
+                } flex flex-col`}
+              >
+                <TbPhotoVideo
+                  className={`text-xl hover:text-bittersweet ${
+                    video !== null
+                      ? "text-bittersweet hover:text-white"
+                      : "text-neutral-900"
+                  }`}
+                />
               </button>
             </label>
           </div>
@@ -262,7 +317,7 @@ function TalkForm() {
             type="submit"
             onClick={handleSubmit}
             className={
-              "p-1 px-6 font-extrabold text-white bg-zomp  rounded-2xl"
+              "p-1 px-6 font-extrabold text-white bg-zomp  rounded-2xl hover:bg-bittersweet"
             }
           >
             {uploading ? "talking..." : "Talk"}
