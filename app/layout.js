@@ -1,7 +1,8 @@
 import AuthProvider from "../utils/providers/auth/AuthProvider";
 import { Roboto } from "next/font/google";
 import "./globals.css";
-import QueryProvider from "@/utils/providers/auth/query/QueryProvider";
+import QueryProvider from "@/utils/providers/query/QueryProvider";
+
 
 const roboto = Roboto({
   subsets: ["latin"],

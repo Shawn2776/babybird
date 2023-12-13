@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import Nav from "../components/Nav/tempNav";
+
 import TalkForm from "../components/talks/TalkForm";
 import { options } from "../api/auth/[...nextauth]/options";
 import TalkFeed from "../components/talks/TalkFeed";
@@ -8,8 +8,8 @@ import {
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
-import User from "../user/page";
 import { redirect } from "next/navigation";
+import Nav from "../components/nav/tempNav";
 
 const Homes = async () => {
   const session = await getServerSession(options);

@@ -124,7 +124,7 @@ function TalkForm() {
           setInText("");
           setImage(null);
           setVideo(null);
-          router.push("/Home");
+          router.push("/");
         }
       } catch (error) {
         alert("Unable to upload Talk. Please try again later.");
@@ -133,7 +133,7 @@ function TalkForm() {
         setInText("");
         setImage(null);
         setVideo(null);
-        router.push("/Home");
+        router.push("/");
       }
     }
 
@@ -166,7 +166,7 @@ function TalkForm() {
           setInText("");
           setImage(null);
           setVideo(null);
-          router.push("/Home");
+          router.push("/");
         }
       } catch (error) {
         alert("Unable to upload Talk. Please try again later.");
@@ -175,7 +175,7 @@ function TalkForm() {
         setInText("");
         setImage(null);
         setVideo(null);
-        router.push("/Home");
+        router.push("/");
       }
     }
 
@@ -201,7 +201,7 @@ function TalkForm() {
         setImage(null);
         setVideo(null);
         router.refresh();
-        router.push("/Home");
+        router.push("/");
       } else {
         console.log("Error: ", error);
         setUploading(false);
@@ -209,7 +209,7 @@ function TalkForm() {
         setImage(null);
         setVideo(null);
         router.refresh();
-        router.push("/Home");
+        router.push("/");
       }
     } catch (error) {
       alert("Unable to upload Talk. Please try again later.");
@@ -219,7 +219,7 @@ function TalkForm() {
       setImage(null);
       setVideo(null);
       router.refresh();
-      router.push("/Home");
+      router.push("/");
     }
   };
 
@@ -232,10 +232,10 @@ function TalkForm() {
   }
 
   return (
-    <div className="w-full pt-2 pb-2 mb-2 text-white bg-gray-600 border border-gray-600 md:p-4 border-b-transparent border-l-transparent border-r-transparent md:border-none md:my-6 md:rounded-lg flex gap-2">
+    <div className="flex w-full gap-2 pt-2 pb-2 mb-2 text-white bg-gray-600 border border-gray-600 md:p-4 border-b-transparent border-l-transparent border-r-transparent md:border-none md:my-6 md:rounded-lg">
       <form className="w-full">
         <div className="flex w-full gap-2">
-          <div className="flex justify-center items-center">
+          <div className="flex items-center justify-center">
             <Link href={`/talker/`} className="ml-2">
               <Image
                 src={srcProfilePic}
