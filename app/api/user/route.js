@@ -6,13 +6,15 @@ export async function GET() {
   try {
     const session = await getServerSession(options);
 
+    const email = session?.user?.email;
+
     if (!session?.user) {
       return NextResponse.redirect("/Login");
     }
 
     const user = await prisma.user.findUnique({
       where: {
-        email: session.user.email,
+        email: email,
       },
     });
 
