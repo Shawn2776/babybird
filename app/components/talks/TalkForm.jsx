@@ -21,23 +21,25 @@ function TalkForm() {
 
   const { data: session, status } = useSession();
 
+  console.log("1. before userQuery", session?.user?.email);
+
   const userQuery = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
       try {
+        console.log("2. inside userQuery");
         const response = await fetch("/api/user/", {
           method: "GET",
           cache: "no-store",
         });
         if (response.ok) {
           const data = await response.json();
+          console.log("data from userQuery", data);
           return data;
         }
       } catch (error) {
         console.log("error fetching user", error);
       }
-
-      return data;
     },
   });
 
@@ -76,7 +78,13 @@ function TalkForm() {
     router.replace("/Login");
   }
 
+  console.log(
+    "7 - after status if statement in TalkForm",
+    userQuery?.data?.username
+  );
+
   const email = session?.user?.email;
+  console.log("8 - email in TalkForm", email);
 
   const srcProfilePic =
     userQuery?.data?.profilePic === null
