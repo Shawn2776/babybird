@@ -3,13 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { GrImage } from "react-icons/gr";
 import { TbPhotoVideo } from "react-icons/tb";
-
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import defaultProfilePic from "../../../public/defaultProfilePic.jpg";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import defaultProfilePic from "../../../public/defaultProfilePic.jpg";
 
 function TalkForm() {
   const textAreaRef = useRef(null);
@@ -22,7 +21,7 @@ function TalkForm() {
 
   const { data: session, status } = useSession();
 
-  const { data, error, isLoading } = useQuery({
+  const userQuery = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
       try {
@@ -46,7 +45,7 @@ function TalkForm() {
       textAreaRef.current.style.height =
         textAreaRef.current.scrollHeight + "px";
     }
-  }, [inText, router, session, status, isLoading, data, error]);
+  }, [inText, router]);
 
   if (status === "loading") {
     return (
@@ -78,7 +77,9 @@ function TalkForm() {
   const email = session?.user?.email;
 
   const srcProfilePic =
-    data?.profilePic === null ? defaultProfilePic : data?.profilePic;
+    userQuery?.data?.profilePic === null
+      ? defaultProfilePic
+      : userQuery?.data?.profilePic;
 
   const handleTextChange = (e) => {
     setInText(e.target.value);
@@ -247,7 +248,7 @@ function TalkForm() {
         <div className="flex w-full gap-2">
           <div className="flex items-center justify-center">
             <Link
-              href={`/talker/${data?.username}?username=${data?.username}`}
+              href={`/talker/${userQuery?.data?.username}?username=${userQuery?.data?.username}`}
               className="ml-2"
             >
               <Image

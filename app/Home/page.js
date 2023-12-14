@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-
+import NavMenu from "../components/nav/NavMenu";
 import TalkForm from "../components/talks/TalkForm";
 import { options } from "../api/auth/[...nextauth]/options";
 import TalkFeed from "../components/talks/TalkFeed";
@@ -9,7 +9,7 @@ import {
   dehydrate,
 } from "@tanstack/react-query";
 import { redirect } from "next/navigation";
-import Nav from "../components/nav/tempNav";
+import Nav from "../components/nav/NavMenu";
 
 const Homes = async () => {
   const session = await getServerSession(options);
@@ -35,7 +35,7 @@ const Homes = async () => {
 
   return (
     <>
-      <Nav session={session} />
+      <NavMenu />
       <div className="w-full max-w-2xl mx-auto">
         <HydrationBoundary state={dehydrate(queryClient)}>
           <TalkForm session={session} />

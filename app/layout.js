@@ -2,7 +2,7 @@ import AuthProvider from "../utils/providers/auth/AuthProvider";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import QueryProvider from "@/utils/providers/query/QueryProvider";
-
+import NavMenu from "./components/nav/NavMenu";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -23,7 +23,12 @@ export default function RootLayout({ children }) {
           className={`${roboto.className} bg-gradient-to-b from-oxford via-cambridge to-bittersweet min-h-screen`}
         >
           <div>
-            <QueryProvider>{children}</QueryProvider>
+            <QueryProvider>
+              <div>
+                <NavMenu />
+                {children}
+              </div>
+            </QueryProvider>
           </div>
         </body>
       </AuthProvider>
