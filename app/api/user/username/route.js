@@ -20,6 +20,7 @@ export async function GET(request) {
       const username = requestUrl.searchParams.get("username");
 
     console.log("username", username);
+    console.log("username type", typeof username);
 
     const user = await prisma.user.findUnique({
       where: {

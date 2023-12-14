@@ -27,7 +27,7 @@ function Profile({ params }) {
     queryKey: ["userProfile"],
     queryFn: async () => {
       const response = await fetch(
-        `/api/user/${newUsername}?username=${newUsername}`,
+        `/api/user/username?username=${newUsername}`,
         {
           method: "GET",
           cache: "no-store",
