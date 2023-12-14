@@ -6,16 +6,20 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function GET(request) {
-  const requestUrl = new URL(request.url);
-
-  const username = requestUrl.searchParams.get("username");
-
   try {
     const session = await getServerSession(options);
+
+    console.log("session", session);
 
     if (!session?.user) {
       return NextResponse.json({ error: "Not Authorized" });
     }
+
+    const requestUrl = new URL(request.url);
+
+      const username = requestUrl.searchParams.get("username");
+
+    console.log("username", username);
 
     const user = await prisma.user.findUnique({
       where: {
