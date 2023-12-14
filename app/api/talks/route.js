@@ -97,6 +97,13 @@ export async function POST(request) {
     },
   });
 
+  if (!dataToSend) {
+    return NextResponse.error({
+      status: 500,
+      message: "Error! Talk not created.",
+    });
+  }
+
   return NextResponse.json({ message: "Talk Successfully created." });
 }
 
