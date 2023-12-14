@@ -36,6 +36,8 @@ function TalkForm() {
       } catch (error) {
         console.log("error fetching user", error);
       }
+
+      return data;
     },
   });
 
