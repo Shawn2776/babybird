@@ -76,7 +76,7 @@ export async function GET(request) {
     }
 
     if (!talks) {
-      return NextResponse.error(new Error("No talks found"));
+      return NextResponse.json({ message: "No talks found" });
     }
 
     return NextResponse.json({ talks });

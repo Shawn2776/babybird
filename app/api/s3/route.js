@@ -10,13 +10,13 @@ export async function GET(request) {
   const session = await getServerSession(options);
 
   if (!session) {
-    return NextResponse.redirect("/api/auth/signin");
+    return NextResponse.json({ message: "Error. User not authenticated." });
   }
 
   const uploadURL = await generateUploadURL(fileName);
 
   if (!uploadURL) {
-    return NextResponse.redirect("/api/auth/signin");
+    return NextResponse.json({ message: "Error. User not authenticated." });
   }
 
   return NextResponse.json({ message: "success", uploadURL: uploadURL });

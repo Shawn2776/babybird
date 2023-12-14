@@ -28,7 +28,7 @@ export async function GET(request) {
       },
     });
 
-    return NextResponse.json(user);
+    return NextResponse.json({ user });
   } catch (error) {
     console.log("error fetching user", error);
     return NextResponse.json(error);

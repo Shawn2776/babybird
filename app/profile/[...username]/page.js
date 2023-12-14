@@ -36,15 +36,19 @@ function Profile({ params }) {
       if (response.ok) {
         const data = await response.json();
         return data;
+      } else {
+        return "error";
       }
     },
   });
+
+  console.log("data from userQuery", userQuery);
 
   const talkQuery = useQuery({
     queryKey: ["talksProfile"],
     queryFn: async () => {
       const response = await fetch(
-        `/api/user/talks/:${username}?username=${username}`,
+        `/api/user/talks/${newUsername}?username=${newUsername}`,
         {
           method: "GET",
           cache: "no-store",
