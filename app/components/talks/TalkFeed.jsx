@@ -1,7 +1,7 @@
 "use client";
 
-import { useQuery, useMutation } from "@tanstack/react-query";
-import Talk from "./TalkCard";
+import Talk from "./Talk";
+import { useQuery } from "@tanstack/react-query";
 
 function TalkFeed() {
   const { data, error, isLoading } = useQuery({
@@ -11,9 +11,13 @@ function TalkFeed() {
         method: "GET",
         cache: "no-store",
       });
+
       if (response.ok) {
         const data = await response.json();
         return data;
+      }
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
     },
   });

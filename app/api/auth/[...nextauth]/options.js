@@ -1,10 +1,17 @@
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+<<<<<<< HEAD
 
+=======
+>>>>>>> @{-1}
 import createUniqueUsername from "@/utils/createUniqueUsername";
-import defaultProfilePic from "../../../../public/defaultProfilePic.jpg";
+import defaultProfilePic from "@/public/defaultProfilePic.jpg";
 import { compare, hash } from "bcrypt";
+<<<<<<< HEAD
 import prisma from "@/lib/prisma";
+=======
+import prisma from "@/app/lib/prisma";
+>>>>>>> @{-1}
 
 export const options = {
   providers: [
@@ -164,6 +171,7 @@ export const options = {
 
     secret: process.env.NEXTAUTH_SECRET,
   },
+<<<<<<< HEAD
 };
 
 // callbacks: {
@@ -243,3 +251,6 @@ export const options = {
 //     return session;
 //   },
 // },
+=======
+};
+>>>>>>> @{-1}
