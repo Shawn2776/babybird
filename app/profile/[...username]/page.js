@@ -21,7 +21,7 @@ function Profile({ params }) {
     queryKey: ["userProfile"],
     queryFn: async () => {
       const response = await fetch(
-        `/api/user/${username}?username=${username}`,
+        `/api/user/:${username}?username=${username}`,
         {
           method: "GET",
           cache: "no-store",
@@ -30,10 +30,6 @@ function Profile({ params }) {
       if (response.ok) {
         const data = await response.json();
         return data;
-      }
-      if (response.status === 404) {
-        console.log("user not found");
-        return null;
       }
     },
   });
@@ -42,7 +38,7 @@ function Profile({ params }) {
     queryKey: ["talksProfile"],
     queryFn: async () => {
       const response = await fetch(
-        `/api/user/talks/${username}?username=${username}`,
+        `/api/user/talks/:${username}?username=${username}`,
         {
           method: "GET",
           cache: "no-store",
@@ -51,10 +47,6 @@ function Profile({ params }) {
       if (response.ok) {
         const data = await response.json();
         return data;
-      }
-      if (response.status === 404) {
-        console.log("user not found");
-        return null;
       }
     },
   });

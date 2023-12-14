@@ -9,13 +9,12 @@ export async function GET(request) {
   const requestUrl = new URL(request.url);
 
   const username = requestUrl.searchParams.get("username");
-  console.log("username", username);
 
   try {
     const session = await getServerSession(options);
 
     if (!session?.user) {
-      return NextResponse.redirect("/Login");
+      return NextResponse.json({ error: "Not Authorized" });
     }
 
     const user = await prisma.user.findUnique({
