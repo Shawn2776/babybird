@@ -81,7 +81,7 @@ function Profile({ params }) {
             className="flex items-center gap-2 my-1 ml-4 text-xl font-bold"
           >
             <FaLongArrowAltLeft />
-            {userQuery?.data?.name}
+            {userQuery?.data?.user?.name}
           </Link>
           <Link href={"/api/auth/signout?callbackUrl=/"} className="font-bold">
             Sign Out
@@ -90,21 +90,24 @@ function Profile({ params }) {
         <div className="w-full pt-4 pl-5 border">
           <Image
             src={
-              userQuery?.data?.profilePic
-                ? userQuery?.data.profilePic
+              userQuery?.data?.user?.profilePic
+                ? userQuery?.data.user?.profilePic
                 : defaultProfilePic
             }
             width={100}
             height={100}
-            alt={`${userQuery?.data?.name}'s profile picture`}
+            alt={`${userQuery?.data?.user?.name}'s profile picture`}
             className="rounded-full"
             priority
           />
           <p className="mt-2 text-xl font-bold">
-            {userQuery?.data?.name ? userQuery?.data?.name : ""}
+            {userQuery?.data?.user?.name ? userQuery?.data?.user?.name : ""}
           </p>
           <p className="mb-2">
-            @{userQuery?.data?.username ? userQuery?.data?.username : ""}
+            @
+            {userQuery?.data?.user?.username
+              ? userQuery?.data?.user?.username
+              : ""}
           </p>
         </div>
         <hr />
