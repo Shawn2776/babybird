@@ -14,10 +14,11 @@ function Profile({ params }) {
   const { status } = useSession();
   const router = useRouter();
   const username = params.username;
+  const newUsername = username[0].replace(":", "");
 
   console.log(
     "username in profile page, before query to /api/user/[...username]",
-    username
+    newUsername
   );
 
   const [about, setAbout] = useState(true);
@@ -26,7 +27,7 @@ function Profile({ params }) {
     queryKey: ["userProfile"],
     queryFn: async () => {
       const response = await fetch(
-        `/api/user/:${username}?username=${username}`,
+        `/api/user/${newUsername}?username=${newUsername}`,
         {
           method: "GET",
           cache: "no-store",
