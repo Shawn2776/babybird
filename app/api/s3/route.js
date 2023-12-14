@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
-import { generateUploadURL } from "../s3-upload/route";
 import { getServerSession } from "next-auth";
 import { options } from "../auth/[...nextauth]/options";
-
+import { generateUploadURL } from "@/utils/s3Helpers/generateUploadURL";
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);

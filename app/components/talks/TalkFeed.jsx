@@ -1,7 +1,7 @@
 "use client";
 
-import Talk from "./Talk";
 import { useQuery } from "@tanstack/react-query";
+import Talk from "./TalkCard";
 
 function TalkFeed() {
   const { data, error, isLoading } = useQuery({
