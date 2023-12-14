@@ -15,6 +15,11 @@ function Profile({ params }) {
   const router = useRouter();
   const username = params.username;
 
+  console.log(
+    "username in profile page, before query to /api/user/[...username]",
+    username
+  );
+
   const [about, setAbout] = useState(true);
 
   const userQuery = useQuery({
