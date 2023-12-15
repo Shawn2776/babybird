@@ -38,7 +38,7 @@ const Homes = async () => {
       <NavMenu />
       <div className="w-full max-w-2xl mx-auto">
         <HydrationBoundary state={dehydrate(queryClient)}>
-          <TalkForm session={session} />
+          <TalkForm />
           <TalkFeed />
         </HydrationBoundary>
       </div>
