@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
-import defaultProfilePic from "../../../public/defaultProfilePic.jpg";
+import ProfileImageHolder from "../linkAndImage/ProfileImageHolder";
 
 function TalkForm() {
   const [data, setData] = useState(null);
@@ -260,28 +260,10 @@ function TalkForm() {
       <form className="w-full">
         <div className="flex w-full gap-2">
           <div className="flex items-center justify-center">
-            <Link
-              href={`/talker/${data?.user?.username}/?username=${data?.user?.username}`}
-              className="ml-2"
-            >
-              {data ? (
-                <Image
-                  src={data?.user?.profilePic}
-                  height={40}
-                  width={40}
-                  alt=""
-                  className="bg-black rounded-full shadow-lg hover:border"
-                />
-              ) : (
-                <Image
-                  src={defaultProfilePic}
-                  height={40}
-                  width={40}
-                  alt=""
-                  className="bg-black rounded-full shadow-lg hover:border"
-                />
-              )}
-            </Link>
+            <ProfileImageHolder
+              link={`/talker/${data?.user?.username}/?username=${data?.user?.username}`}
+              image={data?.user?.profilePic}
+            />
           </div>
           <label htmlFor="talk" className="sr-only">
             What do you want to say?
