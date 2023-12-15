@@ -266,14 +266,20 @@ function TalkForm() {
             >
               {data ? (
                 <Image
-                  src={data.user.profilePic}
+                  src={data?.user?.profilePic}
                   height={40}
                   width={40}
                   alt=""
                   className="bg-black rounded-full shadow-lg hover:border"
                 />
               ) : (
-                defaultProfilePic
+                <Image
+                  src={defaultProfilePic}
+                  height={40}
+                  width={40}
+                  alt=""
+                  className="bg-black rounded-full shadow-lg hover:border"
+                />
               )}
             </Link>
           </div>
