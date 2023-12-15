@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import AuthProvider from "../utils/providers/auth/AuthProvider";
 import { Roboto } from "next/font/google";
 import "./globals.css";
