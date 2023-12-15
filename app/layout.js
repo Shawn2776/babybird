@@ -6,6 +6,7 @@ import "./globals.css";
 import QueryProvider from "@/utils/providers/query/QueryProvider";
 import NavMenu from "./components/nav/NavMenu";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
             <NavMenu />
             {children}
             <SpeedInsights />
+            <Analytics />
           </QueryProvider>
         </body>
       </AuthProvider>
