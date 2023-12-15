@@ -27,7 +27,7 @@ function TalkForm() {
     queryKey: ["user2"],
     queryFn: async () => {
       try {
-        const response = await fetch("/api/user/", {
+        const response = await fetch("/api/user2/", {
           method: "GET",
           cache: "no-store",
         });

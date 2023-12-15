@@ -18,6 +18,11 @@ export async function GET() {
       },
     });
 
+    if (!user) {
+      return NextResponse.redirect("/Login");
+    }
+
+    console.log("user after prisma", user);
     console.log("talkForm > api/user > email from session", email);
     return NextResponse.json(user);
   } catch (error) {
