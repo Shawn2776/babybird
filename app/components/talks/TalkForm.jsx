@@ -265,7 +265,7 @@ function TalkForm() {
         <div className="flex w-full gap-2">
           <div className="flex items-center justify-center">
             <Link
-              href={`/talker/${user2Query?.data?.user?.username}?username=${user2Query?.data?.user?.username}`}
+              href={`/talker/${user2Query?.data?.user?.username}/?username=${user2Query?.data?.user?.username}`}
               className="ml-2"
             >
               <Image
