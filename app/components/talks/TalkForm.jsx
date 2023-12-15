@@ -95,9 +95,7 @@ function TalkForm() {
   }
 
   const srcProfilePic =
-    user2Query?.data?.user?.profilePic === null
-      ? newPic
-      : user2Query.data.profilePic;
+    user2Query?.data?.profilePic === null ? newPic : user2Query.data.profilePic;
 
   const handleTextChange = (e) => {
     setInText(e.target.value);
@@ -265,7 +263,7 @@ function TalkForm() {
         <div className="flex w-full gap-2">
           <div className="flex items-center justify-center">
             <Link
-              href={`/talker/${user2Query?.data?.user?.username}/?username=${user2Query?.data?.user?.username}`}
+              href={`/talker/${user2Query?.data?.username}/?username=${user2Query?.data?.username}`}
               className="ml-2"
             >
               <Image
