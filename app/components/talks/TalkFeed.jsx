@@ -25,12 +25,11 @@ function TalkFeed() {
     },
   });
 
+  if (status === "loading") return <div>Loading...</div>;
+
   if (!session) {
     return <div>Not authenticated</div>;
   }
-
-  if (status === "loading") return <div>Loading...</div>;
-
   if (talkQuery.error) {
     return <div>Error Fetching Talks</div>;
   }
@@ -40,7 +39,7 @@ function TalkFeed() {
   if (talkQuery.data) {
     return (
       <div>
-        {data.map((talk) => (
+        {talkQuery.data.map((talk) => (
           <Talk
             key={talk.id}
             talk={talk}
