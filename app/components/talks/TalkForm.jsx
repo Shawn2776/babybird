@@ -49,7 +49,7 @@ function TalkForm() {
       textAreaRef.current.style.height =
         textAreaRef.current.scrollHeight + "px";
     }
-  }, [inText, router]);
+  }, [inText, router, userQuery]);
 
   if (status === "loading") {
     return (
