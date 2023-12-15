@@ -10,18 +10,21 @@ import Link from "next/link";
 import defaultProfilePic from "../../../public/defaultProfilePic.jpg";
 
 function TalkForm() {
-  const user2Query = useQuery({
+  const { data, error, isLoading } = useQuery({
     queryKey: ["user2"],
     queryFn: async () => {
       const response = await fetch("/api/user2/", {
         method: "GET",
         cache: "no-store",
       });
-      if (response.ok) {
-        const data = await response.json();
-        console.log("data", data);
-        return data;
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
+
+      const data = await response.json();
+      console.log("data in talkform", data);
+      return data;
     },
   });
 
@@ -68,7 +71,7 @@ function TalkForm() {
   //   router.replace("/Login");
   // }
 
-  if (user2Query?.isLoading) {
+  if (isLoading) {
     return (
       <div role="status" className="animate-pulse">
         <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 ml-1 mr-1 px-5 max-w-[640px] mb-2.5 mx-auto"></div>
@@ -89,6 +92,11 @@ function TalkForm() {
         <span className="sr-only">Loading...</span>
       </div>
     );
+  }
+
+  if (error) {
+    console.log("error in talkform", error);
+    return <div>Error Loading User</div>;
   }
 
   const handleTextChange = (e) => {
@@ -257,11 +265,11 @@ function TalkForm() {
         <div className="flex w-full gap-2">
           <div className="flex items-center justify-center">
             <Link
-              href={`/talker/${user2Query?.data?.user?.username}/?username=${user2Query?.data?.user?.username}`}
+              href={`/talker/${data?.user?.username}/?username=${data?.user?.username}`}
               className="ml-2"
             >
               <Image
-                src={user2Query?.data?.user?.profilePic}
+                src={data?.user?.profilePic}
                 height={40}
                 width={40}
                 alt=""
