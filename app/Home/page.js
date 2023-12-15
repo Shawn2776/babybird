@@ -10,6 +10,7 @@ import {
 } from "@tanstack/react-query";
 import { redirect } from "next/navigation";
 import Nav from "../components/nav/NavMenu";
+import { getAllProducts } from "@/server/actions";
 
 const Homes = async () => {
   const session = await getServerSession(options);
@@ -21,16 +22,7 @@ const Homes = async () => {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: ["talks"],
-    queryFn: async () => {
-      const response = await fetch("/api/talks", {
-        method: "GET",
-        cache: "no-store",
-      });
-      if (response.ok) {
-        const data = await response.json();
-        return data;
-      }
-    },
+    queryFn: getAllTalks(),
   });
 
   return (

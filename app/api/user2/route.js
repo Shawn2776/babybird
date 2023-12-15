@@ -22,8 +22,6 @@ export async function GET() {
       return NextResponse.redirect("/Login");
     }
 
-    console.log("user after prisma", user);
-    console.log("talkForm > api/user > email from session", email);
     return NextResponse.json(user);
   } catch (error) {
     console.log("error fetching user", error);

@@ -100,14 +100,9 @@ function TalkForm() {
       </div>
     );
   }
-  console.log("user2Query", user2Query);
-  console.log("user2Query Datta", user2Query?.data);
-  console.log("user2Query.dta.username", user2Query.data.username);
 
   if (status === "authenticated") {
     const email = session?.user?.email;
-    console.log(session);
-    console.log("talkform email > session", email);
 
     const srcProfilePic =
       user2Query?.data?.profilePic === null
