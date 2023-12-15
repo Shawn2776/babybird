@@ -13,20 +13,17 @@ function TalkForm() {
   const user2Query = useQuery({
     queryKey: ["user2"],
     queryFn: async () => {
- 
-        const response = await fetch("/api/user2/", {
-          method: "GET",
-          cache: "no-store",
-        });
-        if (response.ok) {
-          const data = await response.json();
-          console.log("data", data);
-          return data;
-        }
+      const response = await fetch("/api/user2/", {
+        method: "GET",
+        cache: "no-store",
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("data", data);
+        return data;
+      }
     },
   });
-
-  const newPic = defaultProfilePic;
 
   const textAreaRef = useRef(null);
   const [inText, setInText] = useState("");
@@ -71,7 +68,7 @@ function TalkForm() {
   //   router.replace("/Login");
   // }
 
-  if (user2Query?.isLoading) {
+  if (user2Query.isLoading) {
     return (
       <div role="status" className="animate-pulse">
         <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 ml-1 mr-1 px-5 max-w-[640px] mb-2.5 mx-auto"></div>
@@ -93,9 +90,6 @@ function TalkForm() {
       </div>
     );
   }
-
-  const srcProfilePic =
-    user2Query?.data?.profilePic === null ? newPic : user2Query.data.profilePic;
 
   const handleTextChange = (e) => {
     setInText(e.target.value);
@@ -263,11 +257,11 @@ function TalkForm() {
         <div className="flex w-full gap-2">
           <div className="flex items-center justify-center">
             <Link
-              href={`/talker/${user2Query?.data?.username}/?username=${user2Query?.data?.username}`}
+              href={`/talker/${user2Query.data.user.username}/?username=${user2Query.data.user.username}`}
               className="ml-2"
             >
               <Image
-                src={srcProfilePic}
+                src={user2Query?.data?.user?.profilePic}
                 height={40}
                 width={40}
                 alt=""

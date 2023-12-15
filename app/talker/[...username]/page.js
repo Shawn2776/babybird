@@ -14,9 +14,9 @@ function Talker({ params }) {
   const username = params.username;
 
   const userQuery = useQuery({
-    queryKey: ["user"],
+    queryKey: ["user2"],
     queryFn: async () => {
-      const response = await fetch(`/api/user/?username=${username}`, {
+      const response = await fetch(`/api/user/username/?username=${username}`, {
         method: "GET",
         cache: "no-store",
       });
@@ -35,6 +35,8 @@ function Talker({ params }) {
   }, [status, router]);
 
   if (status === "loading") return <div>Loading...</div>;
+
+  if (userQuery.isLoading) return <div>Loading...</div>;
 
   return (
     <div>

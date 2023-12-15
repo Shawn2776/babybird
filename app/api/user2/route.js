@@ -13,6 +13,7 @@ export async function GET() {
 
     const email = session.user.email;
 
+    console.log("email in user2", email);
     const user = await prisma.user.findUnique({
       where: {
         email: email,
