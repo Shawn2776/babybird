@@ -13,6 +13,8 @@ import defaultProfilePic from "../../../public/defaultProfilePic.jpg";
 function TalkForm() {
   const { data: session, status } = useSession();
 
+  const newPic = defaultProfilePic;
+
   const textAreaRef = useRef(null);
   const [inText, setInText] = useState("");
   const [image, setImage] = useState(null);
@@ -98,6 +100,8 @@ function TalkForm() {
       </div>
     );
   }
+  console.log("userQuery", userQuery);
+  console.log("userQuery Datta", userQuery?.data);
 
   if (status === "authenticated") {
     const email = session?.user?.email;
@@ -105,9 +109,7 @@ function TalkForm() {
     console.log("talkform email > session", email);
 
     const srcProfilePic =
-      userQuery?.data?.profilePic === null
-        ? defaultProfilePic
-        : userQuery.data.profilePic;
+      userQuery?.data?.profilePic === null ? newPic : userQuery.data.profilePic;
 
     const handleTextChange = (e) => {
       setInText(e.target.value);
