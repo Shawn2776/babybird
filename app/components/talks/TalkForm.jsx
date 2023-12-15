@@ -33,12 +33,13 @@ function TalkForm() {
         });
         if (response.ok) {
           const data = await response.json();
+          console.log("data", data);
           return data;
         } else {
-          console.log("error fetching user");
+          return "error fetching user";
         }
       } catch (error) {
-        console.log("error fetching user");
+        return error;
       }
     },
   });
