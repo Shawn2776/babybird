@@ -22,7 +22,7 @@ function Profile({ params }) {
     queryKey: ["userProfile"],
     queryFn: async () => {
       const response = await fetch(
-        `/api/user/username?username=${newUsername}`,
+        `/api/user/username/?username=${newUsername}`,
         {
           method: "GET",
           cache: "no-store",
@@ -40,13 +40,10 @@ function Profile({ params }) {
   const talkQuery = useQuery({
     queryKey: ["talksProfile"],
     queryFn: async () => {
-      const response = await fetch(
-        `/api/user/talks/${newUsername}?username=${newUsername}`,
-        {
-          method: "GET",
-          cache: "no-store",
-        }
-      );
+      const response = await fetch(`/api/user/talks/?username=${newUsername}`, {
+        method: "GET",
+        cache: "no-store",
+      });
       if (response.ok) {
         const data = await response.json();
         return data;
