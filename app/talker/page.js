@@ -4,25 +4,18 @@ import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 
-function Talker({ params }) {
+function Talker() {
   const { status } = useSession();
-  // const router = useRouter();
-  const username = params.username;
-  const newUsername = username[0].replace(":", "");
 
   const userQuery = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
-      const response = await fetch(
-        `/api/user/username/?username=${newUsername}`,
-        {
-          method: "GET",
-          cache: "no-store",
-        }
-      );
+      const response = await fetch(`/api/user/`, {
+        method: "GET",
+        cache: "no-store",
+      });
       if (response.ok) {
         const data = await response.json();
         return data;

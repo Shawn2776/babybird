@@ -31,8 +31,6 @@ export const TalkForm = () => {
     },
   });
 
-  const [isLoading, setIsLoading] = useState(true);
-
   const textAreaRef = useRef(null);
   const [inText, setInText] = useState("");
   const [image, setImage] = useState(null);
@@ -237,10 +235,7 @@ export const TalkForm = () => {
       <form className="w-full">
         <div className="flex w-full gap-2">
           <div className="flex items-center justify-center">
-            <ProfileImageHolder
-              link={`/talker/${user?.user?.username}/`}
-              image={user?.user?.profilePic}
-            />
+            <ProfileImageHolder link={`/talker/`} />
           </div>
           <label htmlFor="talk" className="sr-only">
             What do you want to say?
