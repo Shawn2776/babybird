@@ -10,23 +10,8 @@ import Link from "next/link";
 import defaultProfilePic from "../../../public/defaultProfilePic.jpg";
 
 function TalkForm() {
-  const { data, error, isLoading } = useQuery({
-    queryKey: ["user2"],
-    queryFn: async () => {
-      const response = await fetch("/api/user2/", {
-        method: "GET",
-        cache: "no-store",
-      });
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const data = await response.json();
-      console.log("data in talkform", data);
-      return data;
-    },
-  });
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const textAreaRef = useRef(null);
   const [inText, setInText] = useState("");
@@ -42,6 +27,16 @@ function TalkForm() {
       textAreaRef.current.style.height =
         textAreaRef.current.scrollHeight + "px";
     }
+
+    fetch("/api/user2/", {
+      method: "GET",
+      cache: "no-store",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data);
+        setIsLoading(false);
+      });
   }, [inText]);
 
   // if (status === "loading") {
@@ -94,10 +89,10 @@ function TalkForm() {
     );
   }
 
-  if (error) {
-    console.log("error in talkform", error);
-    return <div>Error Loading User</div>;
-  }
+  // if (error) {
+  //   console.log("error in talkform", error);
+  //   return <div>Error Loading User</div>;
+  // }
 
   const handleTextChange = (e) => {
     setInText(e.target.value);
@@ -261,6 +256,7 @@ function TalkForm() {
 
   return (
     <div className="flex w-full gap-2 pt-2 pb-2 mb-2 text-white bg-gray-600 border border-gray-600 md:p-4 border-b-transparent border-l-transparent border-r-transparent md:border-none md:my-6 md:rounded-lg">
+      {console.log("data in talkform", data)}
       <form className="w-full">
         <div className="flex w-full gap-2">
           <div className="flex items-center justify-center">
