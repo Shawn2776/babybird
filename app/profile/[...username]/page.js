@@ -29,9 +29,7 @@ function Profile({ params }) {
       if (response.ok) {
         const data = await response.json();
         return data;
-      } else {
-        return "error";
-      }
+      } 
     },
   });
 
