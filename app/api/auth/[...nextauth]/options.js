@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import createUniqueUsername from "@/utils/createUniqueUsername";
 import defaultProfilePic from "@/public/defaultProfilePic.jpg";
 import { compare, hash } from "bcrypt";
-import prisma from "@/app/lib/prisma";
+import prisma from "@/lib/prisma";
 
 export const options = {
   providers: [
@@ -113,6 +113,7 @@ export const options = {
               roleId: newRoleId,
               username: newUsername,
               emailVerified: false,
+              profilePic: defaultProfilePic,
             },
           });
           return {

@@ -265,7 +265,7 @@ function TalkForm() {
               className="ml-2"
             >
               <Image
-                src={data?.user?.profilePic}
+                src={data ? data.user.profilePic : defaultProfilePic}
                 height={40}
                 width={40}
                 alt=""
