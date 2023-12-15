@@ -264,13 +264,17 @@ function TalkForm() {
               href={`/talker/${data?.user?.username}/?username=${data?.user?.username}`}
               className="ml-2"
             >
-              <Image
-                src={data ? data.user.profilePic : defaultProfilePic}
-                height={40}
-                width={40}
-                alt=""
-                className="bg-black rounded-full shadow-lg hover:border"
-              />
+              {data ? (
+                <Image
+                  src={data.user.profilePic}
+                  height={40}
+                  width={40}
+                  alt=""
+                  className="bg-black rounded-full shadow-lg hover:border"
+                />
+              ) : (
+                defaultProfilePic
+              )}
             </Link>
           </div>
           <label htmlFor="talk" className="sr-only">
