@@ -10,7 +10,27 @@ import Link from "next/link";
 import ProfileImageHolder from "../linkAndImage/ProfileImageHolder";
 
 function TalkForm() {
-  const [data, setData] = useState(null);
+  const {
+    data: user,
+    error,
+    isLoading: dataIsLoading,
+  } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const response = await fetch("/api/user2/", {
+        method: "GET",
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const user = await response.json();
+      return user;
+    },
+  });
+
   const [isLoading, setIsLoading] = useState(true);
 
   const textAreaRef = useRef(null);
@@ -27,53 +47,9 @@ function TalkForm() {
       textAreaRef.current.style.height =
         textAreaRef.current.scrollHeight + "px";
     }
-
-    fetch("/api/user2/", {
-      method: "GET",
-      cache: "no-store",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data);
-        for (let item in data.user) {
-          console.log("item", item);
-          if (item === null) {
-            setData((data.user[item] = ""));
-          }
-        }
-        setIsLoading(false);
-        console.log("data in talkform", data);
-      });
   }, [inText]);
 
-  // if (status === "loading") {
-  //   return (
-  //     <div role="status" className="animate-pulse">
-  //       <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 ml-1 mr-1 px-5 max-w-[640px] mb-2.5 mx-auto"></div>
-  //       <div className="h-2.5 mx-auto bg-gray-300 rounded-full dark:bg-gray-700 max-w-[540px]"></div>
-  //       <div className="flex items-center justify-center mt-4">
-  //         <svg
-  //           className="w-8 h-8 text-gray-200 dark:text-gray-700 me-4"
-  //           aria-hidden="true"
-  //           xmlns="http://www.w3.org/2000/svg"
-  //           fill="currentColor"
-  //           viewBox="0 0 20 20"
-  //         >
-  //           <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
-  //         </svg>
-  //         <div className="w-20 h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 me-3"></div>
-  //         <div className="w-24 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-  //       </div>
-  //       <span className="sr-only">Loading...</span>
-  //     </div>
-  //   );
-  // }
-
-  // if (status === "unauthenticated") {
-  //   router.replace("/Login");
-  // }
-
-  if (isLoading) {
+  if (dataIsLoading) {
     return (
       <div role="status" className="animate-pulse">
         <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 ml-1 mr-1 px-5 max-w-[640px] mb-2.5 mx-auto"></div>
@@ -95,11 +71,6 @@ function TalkForm() {
       </div>
     );
   }
-
-  // if (error) {
-  //   console.log("error in talkform", error);
-  //   return <div>Error Loading User</div>;
-  // }
 
   const handleTextChange = (e) => {
     setInText(e.target.value);
@@ -263,13 +234,13 @@ function TalkForm() {
 
   return (
     <div className="flex w-full gap-2 pt-2 pb-2 mb-2 text-white bg-gray-600 border border-gray-600 md:p-4 border-b-transparent border-l-transparent border-r-transparent md:border-none md:my-6 md:rounded-lg">
-      {console.log("data in talkform", data)}
+      {console.log("data in talkform", user)}
       <form className="w-full">
         <div className="flex w-full gap-2">
           <div className="flex items-center justify-center">
             <ProfileImageHolder
-              link={`/talker/${data?.user?.username}/`}
-              image={data?.user?.profilePic}
+              link={`/talker/${user?.user?.username}/`}
+              image={user?.user?.profilePic}
             />
           </div>
           <label htmlFor="talk" className="sr-only">

@@ -8,12 +8,11 @@ export async function GET() {
     const session = await getServerSession(options);
 
     if (!session) {
-      return NextResponse.redirect("/Login");
+      return NextResponse.json({ message: "Error. User not authenticated." });
     }
 
     const email = session.user.email;
 
-    console.log("email in user2", email);
     const user = await prisma.user.findUnique({
       where: {
         email: email,
@@ -21,10 +20,8 @@ export async function GET() {
     });
 
     if (!user) {
-      return NextResponse.redirect("/Login");
+      return NextResponse.json({ message: "Error. User not found." });
     }
-
-    console.log("user in user2", user);
 
     return NextResponse.json({ user });
   } catch (error) {

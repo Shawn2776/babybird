@@ -9,8 +9,6 @@ import {
   dehydrate,
 } from "@tanstack/react-query";
 import { redirect } from "next/navigation";
-import Nav from "../components/nav/NavMenu";
-import { getAllProducts } from "@/server/actions";
 
 const Homes = async () => {
   const session = await getServerSession(options);
