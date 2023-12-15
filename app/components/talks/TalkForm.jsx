@@ -102,6 +102,7 @@ function TalkForm() {
   }
   console.log("userQuery", userQuery);
   console.log("userQuery Datta", userQuery?.data);
+  console.log(userQuery.data.username);
 
   if (status === "authenticated") {
     const email = session?.user?.email;
