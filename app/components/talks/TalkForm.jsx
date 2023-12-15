@@ -35,7 +35,14 @@ function TalkForm() {
       .then((response) => response.json())
       .then((data) => {
         setData(data);
+        for (let item in data.user) {
+          console.log("item", item);
+          if (item === null) {
+            setData((data.user[item] = ""));
+          }
+        }
         setIsLoading(false);
+        console.log("data in talkform", data);
       });
   }, [inText]);
 
@@ -261,7 +268,7 @@ function TalkForm() {
         <div className="flex w-full gap-2">
           <div className="flex items-center justify-center">
             <ProfileImageHolder
-              link={`/talker/${data?.user?.username}/?username=${data?.user?.username}`}
+              link={`/talker/${data?.user?.username}/`}
               image={data?.user?.profilePic}
             />
           </div>

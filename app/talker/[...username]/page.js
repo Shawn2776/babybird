@@ -13,13 +13,22 @@ function Talker({ params }) {
   const router = useRouter();
   const username = params.username;
 
-  const userQuery = useQuery({
+  console.log("username", username[0]);
+
+  const {
+    data: userData,
+    error,
+    isLoading,
+  } = useQuery({
     queryKey: ["user2"],
     queryFn: async () => {
-      const response = await fetch(`/api/user/username/?username=${username}`, {
-        method: "GET",
-        cache: "no-store",
-      });
+      const response = await fetch(
+        `/api/user/username/?username=${username[0]}`,
+        {
+          method: "GET",
+          cache: "no-store",
+        }
+      );
       if (response.ok) {
         const data = await response.json();
         return data;
@@ -36,7 +45,9 @@ function Talker({ params }) {
 
   if (status === "loading") return <div>Loading...</div>;
 
-  if (userQuery.isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div>Loading...</div>;
+
+  if (error) return <div>{error.message}</div>;
 
   return (
     <div>
@@ -46,7 +57,7 @@ function Talker({ params }) {
           className="flex items-center gap-2 my-1 ml-4 text-xl font-bold"
         >
           <FaLongArrowAltLeft />
-          {userQuery?.data?.name}
+          {userData?.user?.name}
         </Link>
         <Link href={"/api/auth/signout?callbackUrl=/"} className="font-bold">
           Sign Out
@@ -54,14 +65,14 @@ function Talker({ params }) {
       </div>
       <div className="w-full pt-4 ml-5">
         <Image
-          src={userQuery?.data?.profilePic}
+          src={`${userData?.user?.profilePic}`}
           width={100}
           height={100}
           alt={""}
           className="rounded-full"
         />
-        <p className="mt-2 text-xl font-bold">{userQuery?.data?.name}</p>
-        <p className="mb-2">@{userQuery?.data?.username}</p>
+        <p className="mt-2 text-xl font-bold">{userData?.user?.name}</p>
+        <p className="mb-2">@{userData?.user?.username}</p>
       </div>
       <hr />
       <div className="flex px-2 mt-2 text-xl justify-evenly">
