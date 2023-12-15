@@ -18,6 +18,7 @@ export async function GET() {
       },
     });
 
+    console.log("talkForm > api/user > email from session", email);
     return NextResponse.json(user);
   } catch (error) {
     console.log("error fetching user", error);
