@@ -7,10 +7,10 @@ export async function GET() {
   try {
     const session = await getServerSession(options);
 
-    if (!session?.user) {
+    if (!session) {
       return NextResponse.redirect("/Login");
     }
-    const email = session?.user?.email;
+    const email = session.user.email;
 
     const user = await prisma.user.findUnique({
       where: {
