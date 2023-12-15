@@ -16,11 +16,6 @@ function Profile({ params }) {
   const username = params.username;
   const newUsername = username[0].replace(":", "");
 
-  console.log(
-    "username in profile page, before query to /api/user/[...username]",
-    newUsername
-  );
-
   const [about, setAbout] = useState(true);
 
   const userQuery = useQuery({
@@ -41,8 +36,6 @@ function Profile({ params }) {
       }
     },
   });
-
-  console.log("data from userQuery", userQuery);
 
   const talkQuery = useQuery({
     queryKey: ["talksProfile"],

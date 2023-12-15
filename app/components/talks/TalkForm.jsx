@@ -100,7 +100,6 @@ function TalkForm() {
   }
 
   const email = session?.user?.email;
-  console.log(userQuery.data);
 
   const srcProfilePic =
     userQuery?.data?.profilePic === null
@@ -156,7 +155,7 @@ function TalkForm() {
           const nameSplit = imageUrl.split("/");
           imageFileName = nameSplit[nameSplit.length - 1];
         } else {
-          console.log("Error: ", error);
+          console.log("Error: in talk form ", error);
           setUploading(false);
           setInText("");
           setImage(null);
@@ -165,7 +164,7 @@ function TalkForm() {
         }
       } catch (error) {
         alert("Unable to upload Talk. Please try again later.");
-        console.log(error);
+        console.log("error in talkform", error);
         setUploading(false);
         setInText("");
         setImage(null);
@@ -198,7 +197,7 @@ function TalkForm() {
           const nameSplit = videoUrl.split("/");
           videoFileName = nameSplit[nameSplit.length - 1];
         } else {
-          console.log("Error: ", error);
+          console.log("Error: in talk form", error);
           setUploading(false);
           setInText("");
           setImage(null);
@@ -207,7 +206,7 @@ function TalkForm() {
         }
       } catch (error) {
         alert("Unable to upload Talk. Please try again later.");
-        console.log(error);
+        console.log("error in talk form", error);
         setUploading(false);
         setInText("");
         setImage(null);
@@ -240,7 +239,7 @@ function TalkForm() {
         router.refresh();
         router.push("/");
       } else {
-        console.log("Error: ", error);
+        console.log("Error: in talk form", error);
         setUploading(false);
         setInText("");
         setImage(null);

@@ -177,7 +177,7 @@ export async function PUT(request) {
 
       return NextResponse.json({ message: "Talk Successfully liked." });
     } catch (error) {
-      console.log("error", error);
+      console.log("error ib api/talks/fetch route", error);
     }
   } else {
     // check if the talk has been disliked by the user
@@ -209,7 +209,7 @@ export async function PUT(request) {
 
       return NextResponse.json({ message: "Talk Successfully disliked." });
     } catch (error) {
-      console.log("error", error);
+      console.log("error in api/talks/fetch", error);
     }
   }
 
