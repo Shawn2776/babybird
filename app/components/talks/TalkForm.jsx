@@ -23,8 +23,8 @@ function TalkForm() {
 
   const router = useRouter();
 
-  const userQuery = useQuery({
-    queryKey: ["user"],
+  const user2Query = useQuery({
+    queryKey: ["user2"],
     queryFn: async () => {
       try {
         const response = await fetch("/api/user/", {
@@ -100,9 +100,9 @@ function TalkForm() {
       </div>
     );
   }
-  console.log("userQuery", userQuery);
-  console.log("userQuery Datta", userQuery?.data);
-  console.log(userQuery.data.username);
+  console.log("userQuery", user2Query);
+  console.log("userQuery Datta", user2Query?.data);
+  console.log(user2Query.data.username);
 
   if (status === "authenticated") {
     const email = session?.user?.email;
@@ -110,7 +110,9 @@ function TalkForm() {
     console.log("talkform email > session", email);
 
     const srcProfilePic =
-      userQuery?.data?.profilePic === null ? newPic : userQuery.data.profilePic;
+      user2Query?.data?.profilePic === null
+        ? newPic
+        : user2Query.data.profilePic;
 
     const handleTextChange = (e) => {
       setInText(e.target.value);
@@ -279,7 +281,7 @@ function TalkForm() {
           <div className="flex w-full gap-2">
             <div className="flex items-center justify-center">
               <Link
-                href={`/talker/${userQuery?.data?.username}?username=${userQuery?.data?.username}`}
+                href={`/talker/${user2Query?.data?.username}?username=${user2Query?.data?.username}`}
                 className="ml-2"
               >
                 <Image
