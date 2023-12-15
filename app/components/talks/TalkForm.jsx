@@ -78,7 +78,7 @@ function TalkForm() {
     router.replace("/Login");
   }
 
-  if (userQuery?.isLoading) {
+  if (user2Query?.isLoading) {
     return (
       <div role="status" className="animate-pulse">
         <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 ml-1 mr-1 px-5 max-w-[640px] mb-2.5 mx-auto"></div>
@@ -100,9 +100,9 @@ function TalkForm() {
       </div>
     );
   }
-  console.log("userQuery", user2Query);
-  console.log("userQuery Datta", user2Query?.data);
-  console.log(user2Query.data.username);
+  console.log("user2Query", user2Query);
+  console.log("user2Query Datta", user2Query?.data);
+  console.log("user2Query.dta.username", user2Query.data.username);
 
   if (status === "authenticated") {
     const email = session?.user?.email;
