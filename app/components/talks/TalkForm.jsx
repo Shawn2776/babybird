@@ -13,7 +13,7 @@ function TalkForm() {
   const user2Query = useQuery({
     queryKey: ["user2"],
     queryFn: async () => {
-      try {
+ 
         const response = await fetch("/api/user2/", {
           method: "GET",
           cache: "no-store",
@@ -22,12 +22,7 @@ function TalkForm() {
           const data = await response.json();
           console.log("data", data);
           return data;
-        } else {
-          return "error fetching user";
         }
-      } catch (error) {
-        return error;
-      }
     },
   });
 

@@ -25,6 +25,12 @@ const Homes = async () => {
     queryFn: getAllTalks(),
   });
 
+  const userQueryClient = new QueryClient();
+  await userQueryClient.prefetchQuery({
+    queryKey: ["user"],
+    queryFn: getUser(),
+  });
+
   return (
     <>
       <NavMenu />
