@@ -23,7 +23,9 @@ export async function GET() {
       return NextResponse.redirect("/Login");
     }
 
-    return NextResponse.json(user);
+    console.log("user in user2", user);
+
+    return NextResponse.json({ user });
   } catch (error) {
     console.log("error fetching user", error);
     return NextResponse.json(error);
