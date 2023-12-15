@@ -269,7 +269,7 @@ function TalkForm() {
               className="ml-2"
             >
               <Image
-                src={newPic}
+                src={srcProfilePic}
                 height={40}
                 width={40}
                 alt=""
