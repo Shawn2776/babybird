@@ -64,8 +64,6 @@ function Profile({ params }) {
   if (userQuery.data && talkQuery.data) {
     return (
       <div className="lg:max-w-2xl lg:mx-auto">
-      {console.log("userQuery", userQuery)}
-      {console.log("talkQuery", talkQuery)}
         <div className="flex items-center justify-between w-full py-1 pr-4 bg-white">
           <Link
             href={"/"}

@@ -5,15 +5,12 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 
 function Talker({ params }) {
   const { data: session, status } = useSession();
   const router = useRouter();
   const username = params.username;
-
-  console.log("username", username[0]);
 
   const {
     data: userData,
@@ -35,13 +32,6 @@ function Talker({ params }) {
       }
     },
   });
-
-  // useEffect for handling redirection
-  useEffect(() => {
-    if (status !== "authenticated") {
-      router.replace("/");
-    }
-  }, [status, router]);
 
   if (status === "loading") return <div>Loading...</div>;
 

@@ -9,7 +9,6 @@ const defaultImage = "/defaultProfilePic.jpg";
 function ProfileImageHolder({ link, image }) {
   return (
     <>
-      {console.log("image", image)}
       <Link href={link}>
         {image ? (
           <Image

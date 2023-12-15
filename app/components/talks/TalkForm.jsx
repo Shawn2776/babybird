@@ -9,7 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ProfileImageHolder from "../linkAndImage/ProfileImageHolder";
 
-function TalkForm() {
+export const TalkForm = () => {
   const {
     data: user,
     error,
@@ -234,7 +234,6 @@ function TalkForm() {
 
   return (
     <div className="flex w-full gap-2 pt-2 pb-2 mb-2 text-white bg-gray-600 border border-gray-600 md:p-4 border-b-transparent border-l-transparent border-r-transparent md:border-none md:my-6 md:rounded-lg">
-      {console.log("data in talkform", user)}
       <form className="w-full">
         <div className="flex w-full gap-2">
           <div className="flex items-center justify-center">
@@ -323,6 +322,6 @@ function TalkForm() {
       </form>
     </div>
   );
-}
+};
 
 export default TalkForm;

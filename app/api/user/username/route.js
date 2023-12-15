@@ -26,7 +26,6 @@ export async function GET(request) {
       return NextResponse.json({ message: "No user found" });
     }
 
-    console.log("user in api/user/username", user);
     return NextResponse.json({ user });
   } catch (error) {
     return NextResponse.error(new Error("No user found"));
