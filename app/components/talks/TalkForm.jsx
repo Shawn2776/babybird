@@ -21,24 +21,22 @@ function TalkForm() {
 
   const router = useRouter();
 
-  console.log("1. before userQuery", session?.user?.email);
-
   const userQuery = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
       try {
-        console.log("2. inside userQuery");
         const response = await fetch("/api/user/", {
           method: "GET",
           cache: "no-store",
         });
         if (response.ok) {
           const data = await response.json();
-          console.log("data from userQuery", data);
           return data;
+        } else {
+          console.log("error fetching user");
         }
       } catch (error) {
-        console.log("error fetching user", error);
+        console.log("error fetching user");
       }
     },
   });
@@ -49,7 +47,7 @@ function TalkForm() {
       textAreaRef.current.style.height =
         textAreaRef.current.scrollHeight + "px";
     }
-  }, [inText, router, userQuery]);
+  }, [inText]);
 
   if (status === "loading") {
     return (
@@ -101,16 +99,11 @@ function TalkForm() {
     );
   }
 
-  console.log(
-    "7 - after status if statement in TalkForm",
-    userQuery?.data?.username
-  );
-
   const email = session?.user?.email;
-  console.log("8 - email in TalkForm", email);
+  console.log(userQuery.data);
 
   const srcProfilePic =
-    userQuery.data.profilePic === null
+    userQuery?.data?.profilePic === null
       ? defaultProfilePic
       : userQuery.data.profilePic;
 
