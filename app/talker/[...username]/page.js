@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 
-function Profile({ params }) {
+function Talker({ params }) {
   const { data: session, status } = useSession();
   const router = useRouter();
   const username = params.username;
@@ -16,7 +16,7 @@ function Profile({ params }) {
   const { data, error, isLoading } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
-      const response = await fetch(`/api/user?username=${username}`, {
+      const response = await fetch(`/api/user/?username=${username}`, {
         method: "GET",
         cache: "no-store",
       });
@@ -74,4 +74,4 @@ function Profile({ params }) {
   );
 }
 
-export default Profile;
+export default Talker;
