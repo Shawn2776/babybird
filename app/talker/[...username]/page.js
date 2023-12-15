@@ -13,7 +13,7 @@ function Talker({ params }) {
   const router = useRouter();
   const username = params.username;
 
-  const { data, error, isLoading } = useQuery({
+  const userQuery = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
       const response = await fetch(`/api/user/?username=${username}`, {
@@ -44,7 +44,7 @@ function Talker({ params }) {
           className="flex items-center gap-2 my-1 ml-4 text-xl font-bold"
         >
           <FaLongArrowAltLeft />
-          {data.name}
+          {userQuery?.data?.name}
         </Link>
         <Link href={"/api/auth/signout?callbackUrl=/"} className="font-bold">
           Sign Out
@@ -52,14 +52,14 @@ function Talker({ params }) {
       </div>
       <div className="w-full pt-4 ml-5">
         <Image
-          src={data?.profilePic}
+          src={userQuery?.data?.profilePic}
           width={100}
           height={100}
           alt={""}
           className="rounded-full"
         />
-        <p className="mt-2 text-xl font-bold">{data?.name}</p>
-        <p className="mb-2">@{data?.username}</p>
+        <p className="mt-2 text-xl font-bold">{userQuery?.data?.name}</p>
+        <p className="mb-2">@{userQuery?.data?.username}</p>
       </div>
       <hr />
       <div className="flex px-2 mt-2 text-xl justify-evenly">
