@@ -68,7 +68,7 @@ function TalkForm() {
   //   router.replace("/Login");
   // }
 
-  if (user2Query.isLoading) {
+  if (user2Query?.isLoading) {
     return (
       <div role="status" className="animate-pulse">
         <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 ml-1 mr-1 px-5 max-w-[640px] mb-2.5 mx-auto"></div>
@@ -257,7 +257,7 @@ function TalkForm() {
         <div className="flex w-full gap-2">
           <div className="flex items-center justify-center">
             <Link
-              href={`/talker/${user2Query.data.user.username}/?username=${user2Query.data.user.username}`}
+              href={`/talker/${user2Query?.data?.user?.username}/?username=${user2Query?.data?.user?.username}`}
               className="ml-2"
             >
               <Image
