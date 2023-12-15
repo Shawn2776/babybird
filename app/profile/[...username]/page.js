@@ -4,20 +4,18 @@ import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+// import { useRouter } from "next/navigation";
+// import { useEffect, useState } from "react";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 import defaultProfilePic from "../../../public/defaultProfilePic.jpg";
 import ProfileTalk from "@/app/components/talks/ProfileTalkCard";
 
 function Profile({ params }) {
   const { status } = useSession();
-  const router = useRouter();
+  // const router = useRouter();
   const username = params.username;
   const newUsername = username[0].replace(":", "");
-
-  const [about, setAbout] = useState(true);
-
+  
   const userQuery = useQuery({
     queryKey: ["userProfile"],
     queryFn: async () => {
@@ -50,21 +48,26 @@ function Profile({ params }) {
       }
     },
   });
+  // const [about, setAbout] = useState(true);
 
-  // useEffect for handling redirection
-  useEffect(() => {
-    if (status !== "authenticated") {
-      router.replace("/");
-    }
-  }, [status, router]);
 
   if (status === "loading") return <div>Loading...</div>;
+
+  if (status === "unauthenticated") {
+    return (
+      <div>
+        <p>Access Denied</p>
+      </div>
+    );
+  }
 
   if (userQuery.isLoading || talkQuery.isLoading) return <div>Loading...</div>;
 
   if (userQuery.data && talkQuery.data) {
     return (
       <div className="lg:max-w-2xl lg:mx-auto">
+      {console.log("userQuery", userQuery)}
+      {console.log("talkQuery", talkQuery)}
         <div className="flex items-center justify-between w-full py-1 pr-4 bg-white">
           <Link
             href={"/"}
