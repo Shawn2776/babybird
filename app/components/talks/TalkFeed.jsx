@@ -2,9 +2,12 @@
 
 import { useQuery } from "@tanstack/react-query";
 import Talk from "./TalkCard";
+import { useSession } from "next-auth/react";
 
 function TalkFeed() {
-  const { data, error, isLoading } = useQuery({
+  const { data: session, status } = useSession();
+
+  const talkQuery = useQuery({
     queryKey: ["talks"],
     queryFn: async () => {
       const response = await fetch("/api/talks/", {
@@ -22,13 +25,19 @@ function TalkFeed() {
     },
   });
 
-  if (error) {
+  if (!session) {
+    return <div>Not authenticated</div>;
+  }
+
+  if (status === "loading") return <div>Loading...</div>;
+
+  if (talkQuery.error) {
     return <div>Error Fetching Talks</div>;
   }
 
-  if (isLoading) return <div>Loading...</div>;
+  if (talkQuery.isLoading) return <div>Loading...</div>;
 
-  if (data) {
+  if (talkQuery.data) {
     return (
       <div>
         {data.map((talk) => (

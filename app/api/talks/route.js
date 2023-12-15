@@ -20,7 +20,7 @@ const s3Client = new S3Client({
 export async function GET() {
   const session = await getServerSession(options);
 
-  if (!session?.user) {
+  if (!session) {
     res.status(401).json({
       message: "Error. User not authenticated. Please log in and try again.",
     });

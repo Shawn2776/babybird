@@ -9,7 +9,7 @@ export async function GET(request) {
 
   const email = session?.user?.email;
 
-  if (!session?.user) {
+  if (!session) {
     res.status(401).json({
       message: "Error. User not authenticated. Please log in and try again.",
     });

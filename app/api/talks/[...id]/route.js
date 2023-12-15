@@ -7,14 +7,14 @@ const prisma = new PrismaClient();
 export async function GET(request, { params }) {
   const session = await getServerSession(options);
 
-  const email = session?.user?.email;
-
-  if (!session?.user) {
+  
+  if (!session) {
     // res.status(401).json({
     //   message: "Error. User not authenticated. Please log in and try again.",
     // });
     console.log("Error. User not authenticated. Please log in and try again.");
   }
+  const email = session?.user?.email;
 
   const searchParams = request.nextUrl.searchParams;
   const talkId = searchParams.get("query");
