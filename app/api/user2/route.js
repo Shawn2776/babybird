@@ -23,6 +23,8 @@ export async function GET() {
       return NextResponse.json({ message: "Error. User not found." });
     }
 
+    console.log("user", user);
+
     return NextResponse.json({ user });
   } catch (error) {
     console.log("error fetching user", error);

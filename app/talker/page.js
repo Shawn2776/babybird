@@ -12,7 +12,7 @@ function Talker() {
   const userQuery = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
-      const response = await fetch(`/api/user/`, {
+      const response = await fetch(`/api/user2/`, {
         method: "GET",
         cache: "no-store",
       });
