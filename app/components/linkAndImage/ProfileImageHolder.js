@@ -11,7 +11,7 @@ const defaultImage = defaultProfilePic;
 
 function ProfileImageHolder({ link }) {
   const { data, error, isLoading } = useQuery({
-    queryKey: ["user"],
+    queryKey: ["user2"],
     queryFn: async () => {
       const response = await fetch("/api/user2/", {
         method: "GET",

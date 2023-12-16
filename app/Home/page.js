@@ -29,6 +29,12 @@ const Homes = async () => {
     queryFn: getUser(),
   });
 
+  const user2QueryClient = new QueryClient();
+  await user2QueryClient.prefetchQuery({
+    queryKey: ["user2"],
+    queryFn: getUser2(),
+  });
+
   return (
     <>
       <NavMenu />
