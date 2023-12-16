@@ -7,7 +7,9 @@ import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
-import ProfileImageHolder from "../linkAndImage/ProfileImageHolder";
+import defaultProfilePic from "../../../public/defaultProfilePic.jpg";
+
+const defaultImage = defaultProfilePic;
 
 export const TalkForm = () => {
   const {
@@ -234,6 +236,7 @@ export const TalkForm = () => {
     <div className="flex w-full gap-2 pt-2 pb-2 mb-2 text-white bg-gray-600 border border-gray-600 md:p-4 border-b-transparent border-l-transparent border-r-transparent md:border-none md:my-6 md:rounded-lg">
       <form className="w-full">
         <div className="flex w-full gap-2">
+          {console.log("user", user)}
           <div className="flex items-center justify-center">
             <>
               <Link href={"/talker/"}>
