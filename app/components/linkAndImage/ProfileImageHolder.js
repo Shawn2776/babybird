@@ -34,10 +34,11 @@ function ProfileImageHolder({ link }) {
   if (data) {
     return (
       <>
+        {console.log("image", data.user.profilePic)}
         <Link href={link}>
-          {data?.user?.profilePic ? (
+          {data.user.profilePic ? (
             <Image
-              src={`${data?.user?.profilePic}`}
+              src={`${data.user.profilePic}`}
               alt="profile image"
               width={40}
               height={40}
