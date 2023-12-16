@@ -32,7 +32,6 @@ function ProfileImageHolder({ link }) {
   if (data) {
     return (
       <>
-        {console.log("image", data?.user?.profilePic)}
         <Link href={"/talker/"}>
           {data?.user?.profilePic ? (
             <Image

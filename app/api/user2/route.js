@@ -15,15 +15,13 @@ export async function GET() {
 
     const user = await prisma.user.findUnique({
       where: {
-        email: email,
+        email,
       },
     });
 
     if (!user) {
       return NextResponse.json({ message: "Error. User not found." });
     }
-
-    console.log("user", user);
 
     return NextResponse.json({ user });
   } catch (error) {
