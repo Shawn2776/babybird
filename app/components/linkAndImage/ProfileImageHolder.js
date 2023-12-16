@@ -23,9 +23,7 @@ function ProfileImageHolder({ link }) {
         return data;
       }
 
-      if (response.status === 401) {
-        return null;
-      }
+      return null;
     },
   });
 
@@ -35,7 +33,7 @@ function ProfileImageHolder({ link }) {
     return (
       <>
         {console.log("image", data?.user?.profilePic)}
-        <Link href={link}>
+        <Link href={"/talker/"}>
           {data?.user?.profilePic ? (
             <Image
               src={`${data?.user?.profilePic}`}
