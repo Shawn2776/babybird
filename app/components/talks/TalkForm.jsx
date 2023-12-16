@@ -15,7 +15,7 @@ export const TalkForm = () => {
     error,
     isLoading: dataIsLoading,
   } = useQuery({
-    queryKey: ["user"],
+    queryKey: ["user2"],
     queryFn: async () => {
       const response = await fetch("/api/user2/", {
         method: "GET",
@@ -235,7 +235,27 @@ export const TalkForm = () => {
       <form className="w-full">
         <div className="flex w-full gap-2">
           <div className="flex items-center justify-center">
-            <ProfileImageHolder link={`/talker/`} />
+            <>
+              <Link href={"/talker/"}>
+                {user?.user?.profilePic ? (
+                  <Image
+                    src={`${user?.user?.profilePic}`}
+                    alt="profile image"
+                    width={40}
+                    height={40}
+                    className="rounded-full"
+                  />
+                ) : (
+                  <Image
+                    src={defaultImage}
+                    alt="profile image"
+                    width={40}
+                    height={40}
+                    className="rounded-full"
+                  />
+                )}
+              </Link>
+            </>
           </div>
           <label htmlFor="talk" className="sr-only">
             What do you want to say?
