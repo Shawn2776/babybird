@@ -46,7 +46,7 @@ function ProfileImageHolder({ link }) {
             />
           ) : (
             <Image
-              src={`${defaultImage}`}
+              src={defaultImage}
               alt="profile image"
               width={40}
               height={40}
