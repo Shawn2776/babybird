@@ -15,7 +15,7 @@ function RightNavbar() {
     e.preventDefault();
 
     try {
-      const response = await fetch("/api/gemini/", {
+      const response = await fetch(`${process.env.MAIN_URL}/api/gemini/`, {
         method: "POST",
         headers: {
           "Content-Type": "multipart/form-data",
@@ -63,7 +63,7 @@ function RightNavbar() {
                 value={prompt}
               ></textarea>
               <button
-                className="flex-shrink-0 px-2 py-1 text-sm text-white transition duration-300 bg-teal-500 border-4 border-teal-500 rounded hover:bg-teal-700 hover:border-teal-700  "
+                className="flex-shrink-0 px-2 py-1 text-sm text-white transition duration-300 bg-teal-500 border-4 border-teal-500 rounded hover:bg-teal-700 hover:border-teal-700 "
                 type="submit"
                 onClick={handleSubmit}
               >

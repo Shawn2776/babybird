@@ -10,10 +10,13 @@ export default function Page({ params }) {
   const profileQuery = useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
-      const response = await fetch(`/api/userProfile/${username}?${username}`, {
-        method: "GET",
-        cache: "no-store",
-      });
+      const response = await fetch(
+        `${process.env.MAIN_URL}/api/userProfile/${username}?${username}`,
+        {
+          method: "GET",
+          cache: "no-store",
+        }
+      );
 
       if (!response.ok) {
         return "Error fetching user profile";
