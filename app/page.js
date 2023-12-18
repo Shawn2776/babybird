@@ -21,9 +21,11 @@ export default async function Home() {
   return (
     <>
       <TopNavbar />
-      <div className={`flex justify-between w-full mx-auto`}>
-        <LeftNavbar />
-        <main className="sm:min-w-[460] w-full">
+      <div className={`flex justify-center w-full mx-auto`}>
+        <div>
+          <LeftNavbar />
+        </div>
+        <main className="sm:min-w-[460] w-full md:max-w-lg lg:max-w-2xl">
           <Feed />
         </main>
         {/* <RightNavbar /> */}

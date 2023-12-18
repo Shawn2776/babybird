@@ -14,6 +14,8 @@ export const ProfileCard = (user) => {
     return <div>Loading...</div>;
   }
 
+  console.log("user in ProfileCard", user);
+
   const { name, username, profilePic, talks } = user.userProfile;
 
   return (
