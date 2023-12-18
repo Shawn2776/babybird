@@ -69,14 +69,14 @@ export async function GET() {
         message: "Error! Talks not found.",
       });
     }
+
+    return NextResponse.json(talks);
   } catch (error) {
     return NextResponse.error({
       status: 500,
       message: "Error! Talks not found!",
     });
   }
-
-  return NextResponse.json(talks);
 }
 
 // export async function HEAD(request) {}

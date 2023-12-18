@@ -11,10 +11,24 @@ export async function GET() {
 
   const email = session.user.email;
 
-  const user = await prisma.user.findUnique({
-    where: { email },
-    include: { talks: true },
-  });
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email },
+      include: { talks: true },
+    });
 
-  return NextResponse.json(user);
+    if (!user) {
+      return NextResponse.error({
+        status: 500,
+        message: "Error! User not found.",
+      });
+    }
+
+    return NextResponse.json(user);
+  } catch (error) {
+    return NextResponse.error({
+      status: 500,
+      message: "Error! User not found!",
+    });
+  }
 }
