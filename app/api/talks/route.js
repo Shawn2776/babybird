@@ -25,41 +25,55 @@ export async function GET() {
     });
   }
 
-  const talks = await prisma.talk.findMany({
-    include: {
-      owner: true, // Includes the owner details
-      likes: true, // Includes the likes details
-      dislikes: true, // Includes the dislikes details
-      _count: {
-        select: {
-          likes: true,
-          dislikes: true,
+  try {
+    const talks = await prisma.talk.findMany({
+      include: {
+        owner: true, // Includes the owner details
+        likes: true, // Includes the likes details
+        dislikes: true, // Includes the dislikes details
+        _count: {
+          select: {
+            likes: true,
+            dislikes: true,
+          },
         },
       },
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
 
-  for (const talk of talks) {
-    if (talk.image) {
-      const getObjectParams = {
-        Bucket: process.env.AWS_S3_BUCKET_NAME,
-        Key: talk.image,
-      };
-      const command = new GetObjectCommand(getObjectParams);
-      const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
-      talk.imageUrl = url;
-    } else if (talk.video) {
-      const getObjectParams = {
-        Bucket: process.env.AWS_S3_BUCKET_NAME,
-        Key: talk.video,
-      };
-      const command = new GetObjectCommand(getObjectParams);
-      const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
-      talk.videoUrl = url;
+    for (const talk of talks) {
+      if (talk.image) {
+        const getObjectParams = {
+          Bucket: process.env.AWS_S3_BUCKET_NAME,
+          Key: talk.image,
+        };
+        const command = new GetObjectCommand(getObjectParams);
+        const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+        talk.imageUrl = url;
+      } else if (talk.video) {
+        const getObjectParams = {
+          Bucket: process.env.AWS_S3_BUCKET_NAME,
+          Key: talk.video,
+        };
+        const command = new GetObjectCommand(getObjectParams);
+        const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+        talk.videoUrl = url;
+      }
     }
+
+    if (!talks) {
+      return NextResponse.error({
+        status: 500,
+        message: "Error! Talks not found.",
+      });
+    }
+  } catch (error) {
+    return NextResponse.error({
+      status: 500,
+      message: "Error! Talks not found!",
+    });
   }
 
   return NextResponse.json(talks);
