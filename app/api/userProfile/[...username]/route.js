@@ -21,6 +21,8 @@ export async function GET(request) {
   let parts = url.split("?");
   const username = parts.length > 1 ? parts[1] : "";
 
+  console.log("username in /api/userProfile/[...username]: ", username);
+
   try {
     const user = await prisma.user.findUnique({
       where: { username },
