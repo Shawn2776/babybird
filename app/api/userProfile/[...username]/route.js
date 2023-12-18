@@ -55,6 +55,8 @@ export async function GET(request) {
       return NextResponse.json({ error: "Unable to fetch user." });
     }
 
+    console.log("user in /api/userProfile/[...username]: ", user);
+
     return NextResponse.json(user);
   } catch (error) {
     return NextResponse.json({ error: "Unable to fetch user." });
