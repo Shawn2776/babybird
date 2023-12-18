@@ -14,7 +14,7 @@ export const ProfileCard = (user) => {
     return <div>Loading...</div>;
   }
 
-  const { name, username, profilePic, talks } = user?.userProfile;
+  const { name, username, profilePic, talks } = user.userProfile;
 
   return (
     <>
