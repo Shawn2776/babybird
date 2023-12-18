@@ -4,6 +4,8 @@ import ProfileCard from "@/components/talkComponents/ProfileCard";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
+const url = process.env.MAIN_URL;
+
 export default function Page({ params }) {
   const username = params.username;
 
@@ -11,7 +13,7 @@ export default function Page({ params }) {
     queryKey: ["profile"],
     queryFn: async () => {
       const response = await fetch(
-        `${process.env.MAIN_URL}/api/userProfile/${username}?${username}`,
+        `${url}/api/userProfile/${username}?${username}`,
         {
           method: "GET",
           cache: "no-store",

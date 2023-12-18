@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { LuSearch } from "react-icons/lu";
 
+const url = process.env.MAIN_URL;
+
 function RightNavbar() {
   const [prompt, setPrompt] = useState("");
   const [result, setResult] = useState("");
@@ -15,7 +17,7 @@ function RightNavbar() {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${process.env.MAIN_URL}/api/gemini/`, {
+      const response = await fetch(`${url}/api/gemini/`, {
         method: "POST",
         headers: {
           "Content-Type": "multipart/form-data",
