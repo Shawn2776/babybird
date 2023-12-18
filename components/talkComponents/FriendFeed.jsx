@@ -9,7 +9,7 @@ export const FriendFeed = () => {
   const talkQuery = useQuery({
     queryKey: ["talks"],
     queryFn: async () => {
-      const response = await fetch(`${url}/api/talks/`, {
+      const response = await fetch(`/api/talks/`, {
         method: "GET",
         cache: "no-store",
       });

@@ -17,7 +17,7 @@ function RightNavbar() {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${url}/api/gemini/`, {
+      const response = await fetch(`/api/gemini/`, {
         method: "POST",
         headers: {
           "Content-Type": "multipart/form-data",
