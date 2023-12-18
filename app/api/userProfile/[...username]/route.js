@@ -19,7 +19,12 @@ export async function GET(request) {
 
   let url = request.url;
   let parts = url.split("?");
-  const username = parts.length > 1 ? parts[1] : "";
+  let username = parts.length > 1 ? parts[1] : "";
+
+  if (process.env.NODE_ENV === "production") {
+    let newStr = username.replace(/=/g, "");
+    username = newStr;
+  }
 
   console.log("username in /api/userProfile/[...username]: ", username);
 
