@@ -22,15 +22,21 @@ export const FriendFeed = () => {
     },
   });
 
-  return (
-    <>
-      {talkQuery?.data?.map((talk) => (
-        <div key={talk.id}>
-          <Talk talk={talk} owner={talk.owner} />
-        </div>
-      ))}
-    </>
-  );
+  if (talkQuery.isLoading) return <div>Loading...</div>;
+
+  if (talkQuery.isError) return <div>Error fetching talks</div>;
+
+  if (talkQuery.isSuccess) {
+    return (
+      <>
+        {talkQuery?.data?.map((talk) => (
+          <div key={talk.id}>
+            <Talk talk={talk} owner={talk.owner} />
+          </div>
+        ))}
+      </>
+    );
+  }
 };
 
 export default FriendFeed;
