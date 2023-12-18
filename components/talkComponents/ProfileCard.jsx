@@ -14,7 +14,7 @@ export const ProfileCard = (user) => {
     return <div>Loading...</div>;
   }
 
-  const { name, username, profilePic, talks } = user.userProfile;
+  const { name, username, profilePic, talks } = user?.userProfile;
 
   return (
     <>
@@ -24,7 +24,7 @@ export const ProfileCard = (user) => {
           <div>{name}</div>
         </div>
       </Link>
-      {talks.map((talk) => {
+      {talks?.map((talk) => {
         return (
           <div key={talk.id}>
             <Talk
