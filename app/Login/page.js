@@ -1,13 +1,13 @@
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
-import Image from "next/image";
+import DevelopmentModal from "@/components/dev/DevModal";
+import { signOut, useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 import mobileLogo from "../../public/logos/uTalkTo-logos_white.png";
 import logo from "../../public/logos/uTalkTo-logos_black.png";
+import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
-import DevModal from "../components/dev/DevModal";
 
 const Login = () => {
   const { data: session, status } = useSession();
@@ -15,13 +15,13 @@ const Login = () => {
 
   const handleSignOut = async () => {
     await signOut({ redirect: false });
-    window.location.href = "/Login"; // Change to your sign-in page
+    window.location.href = "/Login";
   };
 
   useEffect(() => {
     if (!sessionStorage.getItem("modalShown")) {
       setShowModal(true);
-      sessionStorage.setItem("modalShown", "true");
+      sessionStorage.setItem("modalShown", true);
     }
   }, []);
 
@@ -29,7 +29,6 @@ const Login = () => {
     setShowModal(false);
   };
 
-  // Optional: handle loading status
   if (status === "loading") {
     return <p>Loading...</p>;
   }
@@ -40,7 +39,7 @@ const Login = () => {
 
   return (
     <>
-      {showModal && <DevModal onClose={handleCloseModal} />}
+      {showModal && <DevelopmentModal onClose={handleCloseModal} />}
       <main>
         <div className="flex flex-col w-full sm:flex-row">
           <div className="w-full">

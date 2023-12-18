@@ -1,50 +1,34 @@
 import { getServerSession } from "next-auth";
-// import Nav from "../components/Nav/tempNav";
-
-// import TalkFeed from "../components/talks/TalkFeed";
-import {
-  HydrationBoundary,
-  QueryClient,
-  dehydrate,
-} from "@tanstack/react-query";
-import { redirect } from "next/navigation";
-import TalkForm from "./components/talks/TalkForm";
+import Image from "next/image";
 import { options } from "./api/auth/[...nextauth]/options";
-import TalkFeed from "./components/talks/TalkFeed";
+import { redirect } from "next/navigation";
+import Link from "next/link";
+import { signOut } from "next-auth/react";
+import ProfileCard from "@/components/talkComponents/ProfileCard";
+import TopNavbar from "@/components/nav/TopNavbar";
+import Feed from "@/components/talkComponents/Feed";
+import RightNavbar from "@/components/nav/RightNavbar";
+import LeftNavbar from "@/components/nav/LeftNavbar";
+import BottomNavbar from "@/components/nav/BottomNavbar";
 
-const Home = async () => {
+export default async function Home() {
   const session = await getServerSession(options);
 
   if (!session) {
     redirect("/Login");
   }
 
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({
-    queryKey: ["talks"],
-    queryFn: async () => {
-      const response = await fetch("/api/talks", {
-        method: "GET",
-        cache: "no-store",
-      });
-      if (response.ok) {
-        const data = await response.json();
-        return data;
-      }
-    },
-  });
-
   return (
     <>
-      {/* <Nav session={session} /> */}
-      <div className="w-full max-w-2xl mx-auto">
-        <HydrationBoundary state={dehydrate(queryClient)}>
-          <TalkForm session={session} />
-          <TalkFeed />
-        </HydrationBoundary>
+      <TopNavbar />
+      <div className={`flex justify-between w-full mx-auto`}>
+        <LeftNavbar />
+        <main className="sm:min-w-[460] w-full">
+          <Feed />
+        </main>
+        {/* <RightNavbar /> */}
       </div>
+      <BottomNavbar />
     </>
   );
-};
-
-export default Home;
+}

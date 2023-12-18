@@ -1,12 +1,12 @@
-export const dynamic = "force-dynamic";
-
-import AuthProvider from "../utils/providers/auth/AuthProvider";
 import { Roboto } from "next/font/google";
 import "./globals.css";
+import AuthProvider from "@/utils/providers/auth/AuthProvider";
+import TopNavbar from "@/components/nav/TopNavbar";
+import LeftNavbar from "@/components/nav/LeftNavbar";
+import Feed from "@/components/talkComponents/Feed";
+import RightNavbar from "@/components/nav/RightNavbar";
+import BottomNavbar from "@/components/nav/BottomNavbar";
 import QueryProvider from "@/utils/providers/query/QueryProvider";
-import NavMenu from "./components/nav/NavMenu";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from "@vercel/analytics/react";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -26,12 +26,7 @@ export default function RootLayout({ children }) {
         <body
           className={`${roboto.className} bg-gradient-to-b from-oxford via-cambridge to-bittersweet min-h-screen`}
         >
-          <QueryProvider>
-            <NavMenu />
-            {children}
-            <SpeedInsights />
-            <Analytics />
-          </QueryProvider>
+          <QueryProvider>{children}</QueryProvider>
         </body>
       </AuthProvider>
     </html>

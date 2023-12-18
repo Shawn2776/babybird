@@ -1,6 +1,5 @@
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import createUniqueUsername from "@/utils/createUniqueUsername";
 import defaultProfilePic from "@/public/defaultProfilePic.jpg";
 import { compare, hash } from "bcrypt";
 import prisma from "@/lib/prisma";
