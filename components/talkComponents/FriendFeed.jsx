@@ -3,11 +3,13 @@
 import { useQuery } from "@tanstack/react-query";
 import Talk from "./TalkCard";
 
+const url = process.env.MAIN_URL;
+
 export const FriendFeed = () => {
   const talkQuery = useQuery({
     queryKey: ["talks"],
     queryFn: async () => {
-      const response = await fetch(`${MAIN_URL}/api/talks/`, {
+      const response = await fetch(`${url}/api/talks/`, {
         method: "GET",
         cache: "no-store",
       });
