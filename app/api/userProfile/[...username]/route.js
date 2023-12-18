@@ -26,8 +26,6 @@ export async function GET(request) {
     username = newStr;
   }
 
-  console.log("username in /api/userProfile/[...username]: ", username);
-
   try {
     const user = await prisma.user.findUnique({
       where: { username },
@@ -59,8 +57,6 @@ export async function GET(request) {
     if (!user) {
       return NextResponse.json({ error: "Unable to fetch user." });
     }
-
-    console.log("user in /api/userProfile/[...username]: ", user);
 
     return NextResponse.json(user);
   } catch (error) {
