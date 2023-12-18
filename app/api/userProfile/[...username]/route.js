@@ -21,36 +21,40 @@ export async function GET(request) {
   let parts = url.split("?");
   const username = parts.length > 1 ? parts[1] : "";
 
-  const user = await prisma.user.findUnique({
-    where: { username },
-    include: {
-      talks: true,
-    },
-  });
+  try {
+    const user = await prisma.user.findUnique({
+      where: { username },
+      include: {
+        talks: true,
+      },
+    });
 
-  for (const talk of user.talks) {
-    if (talk.image) {
-      const getObjectParams = {
-        Bucket: process.env.AWS_S3_BUCKET_NAME,
-        Key: talk.image,
-      };
-      const command = new GetObjectCommand(getObjectParams);
-      const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
-      talk.imageUrl = url;
-    } else if (talk.video) {
-      const getObjectParams = {
-        Bucket: process.env.AWS_S3_BUCKET_NAME,
-        Key: talk.video,
-      };
-      const command = new GetObjectCommand(getObjectParams);
-      const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
-      talk.videoUrl = url;
+    for (const talk of user.talks) {
+      if (talk.image) {
+        const getObjectParams = {
+          Bucket: process.env.AWS_S3_BUCKET_NAME,
+          Key: talk.image,
+        };
+        const command = new GetObjectCommand(getObjectParams);
+        const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+        talk.imageUrl = url;
+      } else if (talk.video) {
+        const getObjectParams = {
+          Bucket: process.env.AWS_S3_BUCKET_NAME,
+          Key: talk.video,
+        };
+        const command = new GetObjectCommand(getObjectParams);
+        const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+        talk.videoUrl = url;
+      }
     }
-  }
 
-  if (!user) {
+    if (!user) {
+      return NextResponse.json({ error: "Unable to fetch user." });
+    }
+
+    return NextResponse.json(user);
+  } catch (error) {
     return NextResponse.json({ error: "Unable to fetch user." });
   }
-
-  return NextResponse.json(user);
 }
