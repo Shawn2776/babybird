@@ -40,7 +40,7 @@ function Talk({
       >
         <div className="flex gap-4">
           <div className="pl-2 md:p-0">
-            <Link prefetch={false} href={`/Profile/${owner.username}/`}>
+            <Link href={`/Profile/${owner.username}/`}>
               <Image
                 src={
                   owner.profilePic === null
@@ -54,14 +54,15 @@ function Talk({
               />
             </Link>
           </div>
-          <div className="leading-4">
-            <p className="text-md">{owner.name}</p>
-            <p className="text-sm text-gray-600">@{owner.username}</p>
+          <div className="flex flex-col gap-4">
+            <div className="leading-4">
+              <p className="text-md">{owner.name}</p>
+              <p className="text-sm text-gray-600">@{owner.username}</p>
+            </div>
+            <div className="text-sm text-gray-600">{readableDate}</div>
           </div>
         </div>
-        <div>
-          <BiDotsHorizontal className="text-2xl text-gray-400" />
-        </div>
+        <BiDotsHorizontal className="text-2xl text-gray-400" />
       </div>
 
       <div id="talkContent" className="pt-4 pr-4">

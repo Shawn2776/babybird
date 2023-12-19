@@ -60,7 +60,7 @@ function Talk({
           </div>
         </div>
         <div>
-          <BiDotsHorizontal className="text-2xl text-gray-400" />
+          {readableDate} <BiDotsHorizontal className="text-2xl text-gray-400" />
         </div>
       </div>
 

@@ -19,14 +19,15 @@ export const ProfileCard = (user) => {
   return (
     <>
       <Link href={`/`}>
-        <div className="flex items-center gap-4 py-2 pl-4 text-xl">
+        <div className="flex items-center gap-4 py-2 pl-4 text-xl text-white">
           <FaLongArrowAltLeft />
           <div>{name}</div>
         </div>
       </Link>
+      <hr />
       {talks?.map((talk) => {
         return (
-          <div key={talk.id}>
+          <div key={talk.id} className="max-w-2xl mx-auto mt-2">
             <Talk
               talk={talk}
               username={username}

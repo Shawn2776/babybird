@@ -21,7 +21,7 @@ export default async function Home() {
   return (
     <>
       <TopNavbar />
-      <div className={`flex justify-center w-full mx-auto`}>
+      <div className={`flex justify-center w-full mx-auto gap-1`}>
         <div>
           <LeftNavbar />
         </div>

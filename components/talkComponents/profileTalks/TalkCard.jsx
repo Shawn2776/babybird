@@ -51,12 +51,14 @@ function Talk({
       </div>
 
       <div id="talkContent" className="pt-4 pr-4">
-        <div id="talkText" className="pb-4 pl-16 whitespace-break-spaces">
+        <div id="talkText" className="pb-2 pl-16 whitespace-break-spaces">
           <p className="pb-4">{text}</p>
         </div>
         <div
           id="talkImage"
-          className={`${inImage ? "max-w-2xl h-64 relative ml-14" : "hidden"}`}
+          className={`${
+            inImage ? "max-w-2xl h-96 relative ml-14 rounded-2xl" : "hidden"
+          }`}
         >
           {inImage ? (
             <Image
