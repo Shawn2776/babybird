@@ -74,7 +74,7 @@ function Talk({
         >
           {inImage ? (
             <Image
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "contain" }}
               src={imageUrl}
               fill={true}
               alt=""
