@@ -70,11 +70,13 @@ function Talk({
         </div>
         <div
           id="talkImage"
-          className={`${inImage ? "max-w-2xl h-64 relative ml-14" : "hidden"}`}
+          className={`${
+            inImage ? "max-w-2xl h-96 relative ml-14 rounded-2xl" : "hidden"
+          }`}
         >
           {inImage ? (
             <Image
-              style={{ objectFit: "contain" }}
+              style={{ objectFit: "cover" }}
               src={imageUrl}
               fill={true}
               alt=""
