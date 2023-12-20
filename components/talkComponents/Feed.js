@@ -11,7 +11,7 @@ function Feed({ children }) {
   const [friendsActive, setFriendsActive] = useState(true);
 
   return (
-    <div className="flex flex-col w-full min-h-screen">
+    <div className="flex flex-col w-full min-h-screen pr-1 md:pr-0">
       <div className="flex w-full bg-[rgb(24,25,26)] mt-1 rounded-lg">
         <div className="flex justify-around p-4 w-[90%]">
           <button

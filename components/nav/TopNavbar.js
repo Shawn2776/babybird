@@ -6,7 +6,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 
 function TopNavbar() {
   return (
-    <div className="sticky top-0 flex justify-between p-4 md:hidden z-10 backdrop-blur ">
+    <div className="sticky top-0 z-10 flex justify-between p-4 md:hidden backdrop-blur ">
       <Link href="/" className="text-2xl">
         <CgProfile />
       </Link>

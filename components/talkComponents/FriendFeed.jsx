@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import Talk from "./TalkCard";
+import SkeletonComp from "../ui/SkeletonComp";
 
 const url = process.env.MAIN_URL;
 
@@ -22,7 +23,12 @@ export const FriendFeed = () => {
     },
   });
 
-  if (talkQuery.isLoading) return <div>Loading...</div>;
+  if (talkQuery.isLoading)
+    return (
+      <div className="h-screen bg-neutral-700">
+        <SkeletonComp />
+      </div>
+    );
 
   if (talkQuery.isError) return <div>Error fetching talks</div>;
 
