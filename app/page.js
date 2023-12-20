@@ -30,7 +30,7 @@ export default async function Home() {
         </main>
         {/* <RightNavbar /> */}
       </div>
-      <BottomNavbar />
+      {/* <BottomNavbar /> */}
     </>
   );
 }
