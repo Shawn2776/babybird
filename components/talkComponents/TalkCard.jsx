@@ -66,7 +66,7 @@ function Talk({
                     height={40}
                     width={40}
                     alt=""
-                    className="bg-black rounded-full"
+                    className="bg-black rounded-full shadow-md shadow-black"
                   />
                 </div>
                 <div className="text-sm">
@@ -96,7 +96,7 @@ function Talk({
         <div className="flex justify-center">
           <Image
             alt="Card background"
-            className="object-cover rounded-xl"
+            className="object-cover shadow-md rounded-xl shadow-black"
             src={inImage}
           />
         </div>
