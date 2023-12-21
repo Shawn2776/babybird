@@ -27,7 +27,7 @@ function LeftNavbar() {
           </Link>
         </div>
 
-        <div className="flex items-center w-full gap-4 p-2 cursor-pointer hover:bg-white hover:text-black hover:rounded-lg">
+        {/* <div className="flex items-center w-full gap-4 p-2 cursor-pointer hover:bg-white hover:text-black hover:rounded-lg">
           <Link href="/">
             <div className="flex gap-4">
               <LuSearch className="text-2xl" />
@@ -88,7 +88,7 @@ function LeftNavbar() {
               <span className="text-xl">Premium</span>
             </div>
           </Link>
-        </div>
+        </div> */}
 
         <div className="flex items-center w-full gap-4 p-2 cursor-pointer hover:bg-white hover:text-black hover:rounded-lg">
           <Link href="/">
