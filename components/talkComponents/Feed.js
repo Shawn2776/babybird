@@ -94,6 +94,7 @@ export const Feed = ({ children }) => {
                   key="logout"
                   color="danger"
                   className="text-danger"
+                  href="/api/auth/signout"
                 >
                   Sign out
                 </DropdownItem>
