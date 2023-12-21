@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Talk from "./TalkCard";
 import SkeletonComp from "../ui/SkeletonComp";
+import TalkForm from "./talkForm/TalkForm";
 
 const url = process.env.MAIN_URL;
 
@@ -35,6 +36,7 @@ export const FriendFeed = () => {
   if (talkQuery.isSuccess) {
     return (
       <>
+        <TalkForm talkQuery={talkQuery} />
         {talkQuery?.data?.map((talk) => (
           <div key={talk.id}>
             <Talk talk={talk} owner={talk.owner} />

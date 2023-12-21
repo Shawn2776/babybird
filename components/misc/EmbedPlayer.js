@@ -6,7 +6,7 @@ function EmbedPlayer({ src }) {
       <video
         controls
         width="100%"
-        className="rounded-md shadow-md shadow-black"
+        className="bg-black rounded-md shadow-md max-h-[75vh] shadow-black py-2"
       >
         <source src={src} type="video/webm" />
 

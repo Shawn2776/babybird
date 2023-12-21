@@ -5,8 +5,9 @@ import { GrImage } from "react-icons/gr";
 import { TbPhotoVideo } from "react-icons/tb";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@nextui-org/react";
+import { Tooltip } from "@nextui-org/react";
 
-export const TalkForm = () => {
+export const TalkForm = (talkQuery) => {
   const [inText, setInText] = useState("");
   const [image, setImage] = useState(null);
   const [video, setVideo] = useState(null);
@@ -143,6 +144,7 @@ export const TalkForm = () => {
         setInText("");
         setImage(null);
         setVideo(null);
+        talkQuery.talkQuery.refetch();
         router.refresh();
         router.push("/");
       } else {
@@ -178,12 +180,13 @@ export const TalkForm = () => {
     <div className="flex w-full gap-2 pt-2 pb-2 mb-2 text-white bg-[rgb(24,25,26)] md:p-4 border-none">
       <form className="w-full">
         <Textarea
+          variant="underlined"
           id="talk"
-          label="What do you wnt to say?"
+          label="What do you want to say?"
           labelPlacement="inside"
           value={inText}
           onChange={handleTextChange}
-          className="border-none outline-none focus:ring-0 focus:outline-none bg-[rgb(24,25,26)]"
+          className="dark text-white border-none outline-none focus:ring-0 focus:outline-none bg-[rgb(24,25,26)]"
         />
 
         <div className="flex items-center justify-between pt-4 pl-12 pr-4">
@@ -197,21 +200,23 @@ export const TalkForm = () => {
                 className="hidden"
                 accept="image/png, image/jpeg, image/jpg, image/webp, image/gif"
               />
-              <button
-                type="button"
-                onClick={triggerImageInput}
-                className={`${
-                  image !== null ? "bg-oxford p-1 px-2 rounded-md" : "p-1"
-                }`}
-              >
-                <GrImage
-                  className={`text-xl hover:text-bittersweet ${
-                    image !== null
-                      ? "text-bittersweet hover:text-white"
-                      : "text-white"
+              <Tooltip content="Upload a Picture">
+                <button
+                  type="button"
+                  onClick={triggerImageInput}
+                  className={`${
+                    image !== null ? "bg-oxford p-1 px-2 rounded-md" : "p-1"
                   }`}
-                />
-              </button>
+                >
+                  <GrImage
+                    className={`text-xl hover:text-bittersweet ${
+                      image !== null
+                        ? "text-bittersweet hover:text-white"
+                        : "text-white"
+                    }`}
+                  />
+                </button>
+              </Tooltip>
             </label>
             <label htmlFor="videoToUpload">
               <input
@@ -222,21 +227,23 @@ export const TalkForm = () => {
                 className="hidden"
                 accept="video/mp4, video/avi, video/mov"
               />
-              <button
-                type="button"
-                onClick={triggerVideoInput}
-                className={`${
-                  video !== null ? "bg-oxford p-1 px-2 rounded-md" : "p-1"
-                } flex flex-col`}
-              >
-                <TbPhotoVideo
-                  className={`text-xl hover:text-bittersweet ${
-                    video !== null
-                      ? "text-bittersweet hover:text-white"
-                      : "text-white"
-                  }`}
-                />
-              </button>
+              <Tooltip content="Upload a Video">
+                <button
+                  type="button"
+                  onClick={triggerVideoInput}
+                  className={`${
+                    video !== null ? "bg-oxford p-1 px-2 rounded-md" : "p-1"
+                  } flex flex-col`}
+                >
+                  <TbPhotoVideo
+                    className={`text-xl hover:text-bittersweet ${
+                      video !== null
+                        ? "text-bittersweet hover:text-white"
+                        : "text-white"
+                    }`}
+                  />
+                </button>
+              </Tooltip>
             </label>
           </div>
           <button

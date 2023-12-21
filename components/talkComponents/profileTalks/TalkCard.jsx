@@ -4,6 +4,9 @@ import { BiDotsHorizontal } from "react-icons/bi";
 import defaultProfilePic from "../../../public/defaultProfilePic.jpg";
 import Link from "next/link";
 import EmbedPlayer from "../../misc/EmbedPlayer";
+import readableDate from "@/utils/misc/readableDate";
+import dateToDaysHours from "@/utils/misc/dateToDaysHours";
+import { Tooltip } from "@nextui-org/react";
 
 function Talk({
   talk,
@@ -15,14 +18,7 @@ function Talk({
   const inImage = image ? imageUrl : null;
   const inVideo = video ? videoUrl : null;
 
-  const readableDate = new Date(createdAt).toLocaleString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
+  console.log("createdAt", createdAt);
 
   return (
     <div className="md:p-4 border border-b-transparent border-l-transparent border-r-transparent md:border-none md:my-1 text-white border-gray-600 md:rounded-lg bg-[rgb(24,25,26)] ">
@@ -43,6 +39,9 @@ function Talk({
           <div className="leading-4">
             <p className="text-md">{name}</p>
             <p className="text-sm text-gray-600">@{username}</p>
+            <Tooltip content="hi">
+              <p>hi</p>
+            </Tooltip>
           </div>
         </div>
         <div>
