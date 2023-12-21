@@ -75,7 +75,7 @@ const Login = () => {
             ) : (
               <Link
                 className="px-6 py-4 text-6xl text-white transition duration-300 rounded-full shadow-xl shadow-black bg-oxford hover:bg-cambridge hover:text-bittersweet"
-                href={"/api/auth/signin/google?callbackUrl=/Login"}
+                href={"/api/auth/signin/google"}
               >
                 Sign In
               </Link>

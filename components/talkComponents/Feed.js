@@ -91,7 +91,7 @@ export const Feed = ({ children }) => {
                   Help & Feedback
                 </DropdownItem>
                 <DropdownItem
-                  onClick={() => signOut()}
+                  href={"/api/auth/signout/google?callbackUrl=/"}
                   key="logout"
                   color="danger"
                   className="text-danger"
