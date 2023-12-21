@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <AuthProvider>
         <body
-          className={`${roboto.className} bg-gradient-to-b from-[#55BCC9] to-oxford min-h-screen`}
+          className={`${roboto.className} bg-gradient-to-b from-[#55BCC9] to-oxford min-h-screen w-full`}
         >
           <QueryProvider>{children}</QueryProvider>
         </body>

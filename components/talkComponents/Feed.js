@@ -13,7 +13,7 @@ function Feed({ children }) {
   const [friendsActive, setFriendsActive] = useState(true);
 
   return (
-    <div className="bg-[rgb(24,25,26)] ml-0">
+    <div className="bg-[rgb(24,25,26)] ml-0 mr-0 w-full">
       <Navbar shouldHideOnScroll className="bg-[#18191A] dark w-full">
         <NavbarContent className="w-full">
           <div className="flex w-full justify-evenly">
