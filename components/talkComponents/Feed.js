@@ -5,14 +5,16 @@ import { IoFolderOpenOutline, IoSettingsOutline } from "react-icons/io5";
 import { useState } from "react";
 import Friends from "./Friends";
 import Following from "./Following";
+import TalkForm from "./talkForm/TalkForm";
 
 function Feed({ children }) {
   const [followingActive, setFollowingActive] = useState(false);
   const [friendsActive, setFriendsActive] = useState(true);
 
   return (
-    <div className="flex flex-col w-full min-h-screen pr-1 md:pr-0">
-      <div className="flex w-full bg-[rgb(24,25,26)] mt-1 rounded-lg">
+    <div className="flex flex-col w-full min-h-screen px-1 md:pr-0 bg-[rgb(24,25,26)] mx-auto">
+      <TalkForm />
+      <div className="flex w-full bg-[rgb(24,25,26)] ">
         <div className="flex justify-around p-4 w-[90%]">
           <button
             onClick={() => {

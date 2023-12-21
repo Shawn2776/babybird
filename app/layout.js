@@ -1,11 +1,6 @@
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/utils/providers/auth/AuthProvider";
-import TopNavbar from "@/components/nav/TopNavbar";
-import LeftNavbar from "@/components/nav/LeftNavbar";
-import Feed from "@/components/talkComponents/Feed";
-import RightNavbar from "@/components/nav/RightNavbar";
-import BottomNavbar from "@/components/nav/BottomNavbar";
 import QueryProvider from "@/utils/providers/query/QueryProvider";
 
 const roboto = Roboto({
@@ -24,7 +19,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <AuthProvider>
         <body
-          className={`${roboto.className} bg-gradient-to-b from-oxford via-cambridge to-bittersweet min-h-screen`}
+          className={`${roboto.className} bg-gradient-to-b from-[#55BCC9] to-oxford min-h-screen`}
         >
           <QueryProvider>{children}</QueryProvider>
         </body>

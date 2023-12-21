@@ -50,12 +50,12 @@ function Talk({
   }
 
   return (
-    <Card className="py-4 bg-[rgb(24,25,26)] rounded-md mb-[1px] mt-[1px]">
+    <Card className="mx-auto sm:ml-0 py-4 bg-neutral-700  mb-[1px] my-5 shadow-md shadow-black">
       <CardHeader className="flex-col items-start px-4 pt-2 pb-0">
         <div className="w-full">
           <div className="flex items-center justify-between w-full">
             <Link href={`/Profile/${owner.username}/`}>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 ">
                 <div>
                   <Image
                     src={
@@ -66,7 +66,7 @@ function Talk({
                     height={40}
                     width={40}
                     alt=""
-                    className="bg-black rounded-full shadow-md shadow-black"
+                    className="bg-black rounded-full shadow-inner shadow-black"
                   />
                 </div>
                 <div className="text-sm">
@@ -77,7 +77,7 @@ function Talk({
                 </div>
               </div>
             </Link>
-            <div className="text-white">
+            <div className="text-black">
               <DropDownComp
                 menuIcon={<BiDotsHorizontal />}
                 items={["Not Interested", "Follow", "Report"]}

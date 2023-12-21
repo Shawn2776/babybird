@@ -1,10 +1,6 @@
 import { getServerSession } from "next-auth";
-import Image from "next/image";
 import { options } from "./api/auth/[...nextauth]/options";
 import { redirect } from "next/navigation";
-import Link from "next/link";
-import { signOut } from "next-auth/react";
-import ProfileCard from "@/components/talkComponents/ProfileCard";
 import TopNavbar from "@/components/nav/TopNavbar";
 import Feed from "@/components/talkComponents/Feed";
 import RightNavbar from "@/components/nav/RightNavbar";
@@ -21,14 +17,14 @@ export default async function Home() {
   return (
     <>
       <TopNavbar />
-      <div className={`flex justify-center w-full mx-auto gap-1`}>
+      <div className={`flex justify-center w-full`}>
         <div>
           <LeftNavbar />
         </div>
-        <main className="sm:min-w-[460] w-full md:max-w-lg lg:max-w-2xl">
+        <main className="sm:min-w-[460] mx-auto w-full md:max-w-lg lg:max-w-2xl">
           <Feed />
         </main>
-        {/* <RightNavbar /> */}
+        <RightNavbar />
       </div>
       {/* <BottomNavbar /> */}
     </>
