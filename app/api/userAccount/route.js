@@ -18,7 +18,7 @@ export async function GET() {
     });
 
     if (!user) {
-      return NextResponse.error({
+      return NextResponse.json({
         status: 500,
         message: "Error! User not found.",
       });
@@ -26,7 +26,7 @@ export async function GET() {
 
     return NextResponse.json(user);
   } catch (error) {
-    return NextResponse.error({
+    return NextResponse.json({
       status: 500,
       message: "Error! User not found!",
     });
