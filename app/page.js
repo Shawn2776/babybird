@@ -15,18 +15,32 @@ export default async function Home() {
   }
 
   return (
-    <>
-      <TopNavbar />
-      <div className={`flex justify-center w-full`}>
-        <div>
-          <LeftNavbar />
-        </div>
-        <main className="sm:min-w-[460] mx-auto w-full md:max-w-lg lg:max-w-2xl">
-          <Feed />
-        </main>
+    <div className="flex justify-center w-full">
+      <div className="flex justify-end ">
+        <LeftNavbar />
+      </div>
+      <div className="sm:min-w-[460] w-full md:max-w-lg lg:max-w-2xl">
+        <Feed />
+      </div>
+      <div>
         <RightNavbar />
       </div>
-      {/* <BottomNavbar /> */}
-    </>
+    </div>
+    // <div className="flex justify-center w-full mx-auto">
+    //   <TopNavbar />
+
+    //   <div className={`flex justify-center w-full`}>
+    //     <div className="flex justify-end w-full">
+    //       <LeftNavbar />
+    //     </div>
+    //     <main className="sm:min-w-[460] w-full md:max-w-lg lg:max-w-2xl">
+    //       <Feed />
+    //     </main>
+    //     <div className="flex justify-start w-full">
+    //       <RightNavbar className="sm:hidden" />
+    //     </div>
+    //   </div>
+    //   {/* <BottomNavbar /> */}
+    // </div>
   );
 }
