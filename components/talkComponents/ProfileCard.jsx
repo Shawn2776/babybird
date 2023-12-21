@@ -1,7 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import Talk from "./profileTalks/TalkCard";
-import Image from "next/image";
+
 import { FaLongArrowAltLeft } from "react-icons/fa";
 import Link from "next/link";
 

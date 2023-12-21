@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { BiDotsHorizontal } from "react-icons/bi";
 // import TalkInteractRow from "./TalkInteractRow";
-import defaultProfilePic from "../../public/defaultProfilePic.jpg";
+import defaultProfilePic from "../../../public/defaultProfilePic.jpg";
 import Link from "next/link";
-import EmbedPlayer from "../misc/EmbedPlayer";
+import EmbedPlayer from "../../misc/EmbedPlayer";
 
 function Talk({
   talk,
