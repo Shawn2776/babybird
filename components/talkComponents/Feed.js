@@ -60,7 +60,7 @@ export const Feed = ({ children }) => {
             >
               <DropdownTrigger>
                 <Avatar
-                  src={userQuery.data.profilePic}
+                  src={userQuery?.data?.profilePic}
                   className="hover:border-white hover:cursor-pointer"
                 />
               </DropdownTrigger>
@@ -74,11 +74,11 @@ export const Feed = ({ children }) => {
                   className="gap-2 text-white h-14 dark"
                 >
                   <p className="font-semibold">Signed in as</p>
-                  <p className="font-semibold">{userQuery.data.username}</p>
+                  <p className="font-semibold">{userQuery?.data?.username}</p>
                 </DropdownItem>
                 <DropdownItem key="settings" className="text-white">
                   <Link
-                    href={`/UserAccount/${userQuery.data.username}?${userQuery.data.username}`}
+                    href={`/UserAccount/${userQuery?.data?.username}?${userQuery?.data?.username}`}
                   >
                     My Account
                   </Link>
