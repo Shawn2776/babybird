@@ -100,6 +100,9 @@ function Talk({
             src={inImage}
           />
         </div>
+        <div className="w-full">
+          {inVideo ? <EmbedPlayer src={videoUrl} /> : <></>}
+        </div>
       </CardBody>
     </Card>
     // <div
