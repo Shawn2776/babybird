@@ -24,7 +24,7 @@ const AccountCard = () => {
   if (userQuery.isSuccess) {
     const user = userQuery.data;
 
-    return <div>{userQuery.data.name}</div>;
+    return <div>{user.name}</div>;
   }
 };
 
