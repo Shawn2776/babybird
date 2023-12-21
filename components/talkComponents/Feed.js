@@ -91,7 +91,6 @@ export const Feed = ({ children }) => {
                   Help & Feedback
                 </DropdownItem>
                 <DropdownItem
-                  onClick={() => signOut()}
                   key="logout"
                   color="danger"
                   className="text-danger"
