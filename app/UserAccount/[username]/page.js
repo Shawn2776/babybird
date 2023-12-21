@@ -4,11 +4,16 @@ import { useQuery } from "@tanstack/react-query";
 
 const url = process.env.MAIN_URL;
 
-export const Page = ({ params }) => {
+export default function Page({ params }) {
+  const username = params.username;
+
   const userQuery = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
-      const response = await fetch("/api/userAccount/");
+      const response = await fetch("/api/userAccount/", {
+        method: "GET",
+        cache: "no-store",
+      });
 
       if (!response.ok) {
         router.replace("/Login");
@@ -28,5 +33,4 @@ export const Page = ({ params }) => {
 
     return <div>{user.name}</div>;
   }
-};
-
+}
