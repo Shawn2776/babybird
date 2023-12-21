@@ -66,7 +66,7 @@ function Talk({
                     height={40}
                     width={40}
                     alt=""
-                    className="bg-black rounded-full shadow-inner shadow-black"
+                    className="bg-black rounded-full shadow-md shadow-black"
                   />
                 </div>
                 <div className="text-sm">
