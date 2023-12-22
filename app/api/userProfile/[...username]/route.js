@@ -20,7 +20,7 @@ export async function GET(request) {
   // const session = await getServerSession(options);
 
   // if (!session || session.user === "unathenticated") {
-  //   return redirect("/Login");
+  //   return redirect("/");
   // }
 
   // const { searchParams } = new URL(request.NextResponse);

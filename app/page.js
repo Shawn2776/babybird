@@ -30,12 +30,12 @@ export default async function Home() {
     <>
       <main>
         <div className="flex flex-col w-full sm:flex-row">
-          <div className="w-full">
+          <div className="flex justify-center mx-auto sm:w-full">
             <Image
               className="sm:hidden"
               src={mobileLogo}
               style={{
-                maxWidth: "100%",
+                maxWidth: "80%",
                 height: "auto",
               }}
               alt="photo"
@@ -52,12 +52,14 @@ export default async function Home() {
             />
           </div>
 
-          <div className="flex flex-col items-center justify-center w-full min-h-screen">
-            <div className="flex flex-col items-center p-10 mt-10 divide-y rounded-lg shadow-md bg-neutral-700 shadow-black divide-solid">
-              <h1 className="mb-4 text-4xl font-bold text-white">Sign In</h1>
+          <div className="flex flex-col items-center w-full min-h-screen sm:justify-center">
+            <div className="flex flex-col items-center p-5 mt-0 divide-y rounded-lg shadow-md sm:p-10 sm:mt-10 bg-neutral-700 shadow-black divide-solid">
+              <h1 className="text-4xl font-bold text-white sm:mb-4 ms:mt-10">
+                Sign In
+              </h1>
               <GoogleSignInButton />
               <AppleSignInButton />
-              <span className="text-2xl font-semibold text-center text-white">
+              <span className="mt-8 text-2xl font-semibold text-center text-white">
                 <hr className="text-white" />
               </span>
               {/* <CredentialsSignInButton /> */}
