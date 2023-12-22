@@ -9,7 +9,7 @@ const AccountCard = () => {
       const response = await fetch("/api/userAccount/");
 
       if (!response.ok) {
-        router.replace("/Login");
+        router.replace("/");
       }
 
       const data = await response.json();

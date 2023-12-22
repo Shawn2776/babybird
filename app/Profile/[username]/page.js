@@ -2,11 +2,19 @@
 
 import ProfileCard from "@/components/talkComponents/ProfileCard";
 import { useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const url = process.env.MAIN_URL;
 
 export default function Page({ params }) {
+  const router = useRouter();
+  const session = useSession();
+  if (!session || session?.status === "unauthenticated") {
+    router.replace("/");
+  }
+
   const username = params.username;
 
   const profileQuery = useQuery({

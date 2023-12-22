@@ -5,11 +5,11 @@ function DevelopmentModal({ onClose }) {
     <>
       <div className="fixed top-0 left-0 right-0 bottom-0 flex justify-center z-[100] items-center backdrop-blur-3xl">
         <div className="p-10 rounded-xl max-w-[500px] w-full bg-neutral-900 text-white">
-          <h2 className="py-2 text-4xl font-bold text-red-700 flex justify-center">
+          <h2 className="flex justify-center py-2 text-4xl font-bold text-red-700">
             Notice
           </h2>
           <hr />
-          <p className="pb-2 pt-4">
+          <p className="pt-4 pb-2">
             &emsp;uTalkTo is currently in development. While your text/ video/
             images are protected from access outside the web application, any
             registered user can view and download all text/ video/ images
@@ -36,12 +36,12 @@ function DevelopmentModal({ onClose }) {
           <hr />
           <br />
 
-          <button
-            className="px-4 py-1 border-2 font-bold text-lg border-black rounded-2xl text-white bg-slate-900 w-full hover:text-lime-500 hover:border-white transition duration-300"
-            onClick={onClose}
+          <Link
+            href="/"
+            className="w-full px-4 py-1 text-lg font-bold text-white transition duration-300 border-2 border-black rounded-2xl bg-slate-900 hover:text-lime-500 hover:border-white"
           >
             Understood
-          </button>
+          </Link>
         </div>
       </div>
     </>

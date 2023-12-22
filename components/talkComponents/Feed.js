@@ -17,8 +17,15 @@ import {
 } from "@nextui-org/react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export const Feed = ({ children }) => {
+  const router = useRouter();
+  const session = useSession();
+  if (!session) {
+    router.replace("/");
+  }
+
   const userQuery = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
@@ -31,7 +38,7 @@ export const Feed = ({ children }) => {
 
       if (!response.ok) {
         console.log("response not ok", response);
-        router.replace("/Login");
+        router.replace("/");
       }
 
       const data = await response.json();
@@ -41,8 +48,6 @@ export const Feed = ({ children }) => {
   });
   const [followingActive, setFollowingActive] = useState(false);
   const [friendsActive, setFriendsActive] = useState(true);
-
-  const router = useRouter();
 
   if (userQuery.isLoading) {
     return <div className="w-full h-screen bg-[#18191A]">Loading...</div>;

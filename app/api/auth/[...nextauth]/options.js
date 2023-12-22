@@ -1,75 +1,37 @@
 import GoogleProvider from "next-auth/providers/google";
+import AppleProvider from "next-auth/providers/apple";
 import CredentialsProvider from "next-auth/providers/credentials";
-import defaultProfilePic from "@/public/defaultProfilePic.jpg";
 import { compare, hash } from "bcrypt";
 import prisma from "@/lib/prisma";
+import createUniqueUsername from "@/utils/createUniqueUsername";
 
 export const options = {
   providers: [
+    AppleProvider({
+      clientId: process.env.APPLE_CLIENT_ID,
+      clientSecret: process.env.APPLE_CLIENT_SECRET,
+    }),
     GoogleProvider({
       profile(profile) {
-        let roleName;
-        if (profile.email === process.env.ADMIN_EMAIL) {
-          roleName = "admin";
-        } else {
-          roleName = "user";
-        }
         return {
           ...profile,
           id: profile.sub,
-          googleRoleName: roleName,
         };
       },
-      async signIn({ user, account, profile }) {
-        const adminEmail = process.env.ADMIN_EMAIL;
+      async signIn({ user }) {
+        // Simplify role assignment
+        const roleName = getRoleForUser(user.email);
 
-        let roleName = user.email === adminEmail ? "admin" : "user";
+        // Initialize profile picture
+        const profilePic = user.picture || "https://placehold.co/600x400/png";
 
-        const email = user.email;
-        const profilePic =
-          user.picture === user.picture ? user.picture : defaultProfilePic;
-        const emailVerified = profile.email_verified;
+        // Ensure role exists and get its ID
+        const roleId = await ensureRoleExists(roleName);
 
-        // Check if role exists in db
-        const userRole = user.googleRoleName;
-        let roleInDb = await prisma.role.findUnique({
-          where: {
-            name: userRole,
-          },
-        });
+        // Handle user in database
+        const isUserHandled = await handleUserInDb(user, roleId, profilePic);
 
-        // create role if it doesn't exist
-        if (!roleInDb) {
-          roleInDb = await prisma.role.create({
-            data: {
-              name: userRole,
-            },
-          });
-        }
-
-        // Check if user exists in your database
-        let userInDb = await prisma.user.findUnique({
-          where: { email },
-        });
-
-        // If user doesn't exist, create a new user record
-        if (!userInDb) {
-          const username = await createUniqueUsername();
-          const roleId = roleInDb.id;
-          const usersActualName = user.name;
-          userInDb = await prisma.user.create({
-            data: {
-              name: usersActualName,
-              email,
-              profilePic,
-              roleId: roleId, // Assuming 'name' is the unique field in your `Role` model
-              emailVerified,
-              username,
-              // Add other fields as necessary
-            },
-            // select: { id: true, role: true },
-          });
-        }
+        return isUserHandled;
       },
 
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -90,7 +52,7 @@ export const options = {
         },
       },
       async authorize(credentials) {
-        if (!credentials.email || !credentials.password) {
+        if (!credentials || !credentials.email || !credentials.password) {
           return null;
         }
 
@@ -112,7 +74,7 @@ export const options = {
               roleId: newRoleId,
               username: newUsername,
               emailVerified: false,
-              profilePic: defaultProfilePic,
+              profilePic: "https://placehold.co/600x400/png",
             },
           });
           return {
@@ -163,4 +125,47 @@ export const options = {
 
     secret: process.env.NEXTAUTH_SECRET,
   },
+  debug: process.env.NODE_ENV === "development",
 };
+
+async function getRoleForUser(email) {
+  return roleName === process.env.ADMIN_EMAIL ? "admin" : "user";
+}
+
+async function ensureRoleExists(roleName) {
+  let role = await prisma.role.findUnique({ where: { name: roleName } });
+
+  if (!role) {
+    role = await prisma.role.create({ data: { name: roleName } });
+  }
+
+  return role.id;
+}
+
+async function handleUserInDb(user, roleId, profilePic) {
+  try {
+    let userInDb = await prisma.user.findUnique({
+      where: { email: user.email },
+    });
+
+    if (!userInDb) {
+      const username = await createUniqueUsername();
+      userInDb = await prisma.user.create({
+        data: {
+          name: user.name,
+          email: user.email,
+          profilePic,
+          roleId,
+          emailVerified: user.email_verified,
+          username,
+          // ... other necessary fields ...
+        },
+      });
+    }
+
+    return Boolean(userInDb);
+  } catch (error) {
+    console.log("error creating user in auth", error);
+    return false;
+  }
+}

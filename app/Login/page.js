@@ -15,7 +15,7 @@ const Login = () => {
 
   const handleSignOut = async () => {
     await signOut({ redirect: false });
-    window.location.href = "/Login";
+    window.location.href = "/";
   };
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const Login = () => {
   }
 
   if (session) {
-    redirect("/");
+    redirect("/Default");
   }
 
   return (
@@ -68,7 +68,7 @@ const Login = () => {
             {session ? (
               <Link
                 className="text-6xl"
-                href={"/api/auth/signout/google?callbackUrl=/Home"}
+                href={"/api/auth/signout/google?callbackUrl=/"}
               >
                 <button onClick={handleSignOut}>Sign Out</button>
               </Link>

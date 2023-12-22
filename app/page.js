@@ -1,43 +1,71 @@
+import { signOut, useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
+import mobileLogo from "../public/logos/uTalkTo-logos_white.png";
+import {
+  AppleSignInButton,
+  GoogleSignInButton,
+  CredentialsSignInButton,
+} from "@/components/auth/authButtons/AuthButtons";
+import logo from "../public/logos/uTalkTo-logos_black.png";
+import Image from "next/image";
+import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { options } from "./api/auth/[...nextauth]/options";
-import { redirect } from "next/navigation";
-import Feed from "@/components/talkComponents/Feed";
-import RightNavbar from "@/components/nav/RightNavbar";
-import LeftNavbar from "@/components/nav/LeftNavbar";
+import { useStorage, setStorage } from "@/utils/misc/useStorage";
+import DevelopmentModal2 from "@/components/dev/DevModal2";
+import { CredentialsForm } from "@/components/auth/authButtons/credentialsForm/CredentialsForm";
 
 export default async function Home() {
   const session = await getServerSession(options);
-  if (!session) {
-    redirect("/Login");
+
+  const getItem = useStorage("modalShown");
+
+  if (!getItem) {
+    setStorage("modalShown", true);
   }
 
-  return (
-    <div className="flex justify-center w-full">
-      <div className="flex justify-end ">
-        <LeftNavbar />
-      </div>
-      <div className="sm:min-w-[460] w-full md:max-w-lg lg:max-w-2xl">
-        <Feed />
-      </div>
-      <div>
-        <RightNavbar />
-      </div>
-    </div>
-    // <div className="flex justify-center w-full mx-auto">
-    //   <TopNavbar />
+  if (session) return redirect("/Default");
 
-    //   <div className={`flex justify-center w-full`}>
-    //     <div className="flex justify-end w-full">
-    //       <LeftNavbar />
-    //     </div>
-    //     <main className="sm:min-w-[460] w-full md:max-w-lg lg:max-w-2xl">
-    //       <Feed />
-    //     </main>
-    //     <div className="flex justify-start w-full">
-    //       <RightNavbar className="sm:hidden" />
-    //     </div>
-    //   </div>
-    //   {/* <BottomNavbar /> */}
-    // </div>
+  return (
+    <>
+      <main>
+        <div className="flex flex-col w-full sm:flex-row">
+          <div className="w-full">
+            <Image
+              className="sm:hidden"
+              src={mobileLogo}
+              style={{
+                maxWidth: "100%",
+                height: "auto",
+              }}
+              alt="photo"
+            />
+
+            <Image
+              className="hidden sm:flex"
+              src={logo}
+              style={{
+                maxWidth: "100%",
+                height: "auto",
+              }}
+              alt="photo"
+            />
+          </div>
+
+          <div className="flex flex-col items-center justify-center w-full min-h-screen">
+            <div className="flex flex-col items-center p-10 mt-10 divide-y rounded-lg shadow-md bg-neutral-700 shadow-black divide-solid">
+              <h1 className="mb-4 text-4xl font-bold text-white">Sign In</h1>
+              <GoogleSignInButton />
+              <AppleSignInButton />
+              <span className="text-2xl font-semibold text-center text-white">
+                <hr className="text-white" />
+              </span>
+              {/* <CredentialsSignInButton /> */}
+              <CredentialsForm />
+            </div>
+          </div>
+        </div>
+      </main>
+    </>
   );
 }

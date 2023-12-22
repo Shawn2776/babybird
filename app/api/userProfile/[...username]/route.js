@@ -3,7 +3,10 @@ export const dynamic = "force-dynamic";
 import prisma from "@/lib/prisma";
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
+import { options } from "../../auth/[...nextauth]/options";
+import { redirect } from "next/navigation";
 
 const s3Client = new S3Client({
   region: process.env.AWS_S3_REGION,
@@ -14,6 +17,12 @@ const s3Client = new S3Client({
 });
 
 export async function GET(request) {
+  // const session = await getServerSession(options);
+
+  // if (!session || session.user === "unathenticated") {
+  //   return redirect("/Login");
+  // }
+
   // const { searchParams } = new URL(request.NextResponse);
   // const username = searchParams.get("username");
 
@@ -34,6 +43,10 @@ export async function GET(request) {
       },
     });
 
+    if (!user) {
+      return NextResponse.json({ error: "Unable to fetch user." });
+    }
+
     for (const talk of user.talks) {
       if (talk.image) {
         const getObjectParams = {
@@ -52,10 +65,6 @@ export async function GET(request) {
         const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
         talk.videoUrl = url;
       }
-    }
-
-    if (!user) {
-      return NextResponse.json({ error: "Unable to fetch user." });
     }
 
     return NextResponse.json(user);
