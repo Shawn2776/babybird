@@ -10,11 +10,11 @@ export async function GET() {
   }
 
   const email = session.user.email;
+  console.log("email", email);
 
   try {
     const user = await prisma.user.findUnique({
       where: { email },
-      include: { talks: true },
     });
 
     if (!user) {
