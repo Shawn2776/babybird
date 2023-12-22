@@ -1,11 +1,8 @@
 "use client";
 
-import { IoFolderOpenOutline, IoSettingsOutline } from "react-icons/io5";
-import { signOut } from "next-auth/react";
 import { useState } from "react";
 import Friends from "./Friends";
 import Following from "./Following";
-import TalkForm from "./talkForm/TalkForm";
 import {
   Avatar,
   Button,
@@ -25,13 +22,20 @@ export const Feed = ({ children }) => {
   const userQuery = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
-      const response = await fetch("/api/userAccount/");
+      const response = await fetch("/api/userAccount/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!response.ok) {
+        console.log("response not ok", response);
         router.replace("/Login");
       }
 
       const data = await response.json();
+      console.log("data", data);
       return data;
     },
   });

@@ -18,8 +18,6 @@ function Talk({
   const inImage = image ? imageUrl : null;
   const inVideo = video ? videoUrl : null;
 
-  console.log("createdAt", createdAt);
-
   return (
     <div className="md:p-4 border border-b-transparent border-l-transparent border-r-transparent md:border-none md:my-1 text-white border-gray-600 md:rounded-lg bg-[rgb(24,25,26)] ">
       <div

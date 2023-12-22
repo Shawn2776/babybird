@@ -1,15 +1,12 @@
 import { getServerSession } from "next-auth";
 import { options } from "./api/auth/[...nextauth]/options";
 import { redirect } from "next/navigation";
-import TopNavbar from "@/components/nav/TopNavbar";
 import Feed from "@/components/talkComponents/Feed";
 import RightNavbar from "@/components/nav/RightNavbar";
 import LeftNavbar from "@/components/nav/LeftNavbar";
-import BottomNavbar from "@/components/nav/BottomNavbar";
 
 export default async function Home() {
   const session = await getServerSession(options);
-
   if (!session) {
     redirect("/Login");
   }
