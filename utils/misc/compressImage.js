@@ -20,7 +20,6 @@ async function handleImageUpload(image) {
       return;
     }
 
-    console.log("compressedFile", compressedFile);
     return compressedFile;
   } catch (error) {
     console.log(error);

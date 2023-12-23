@@ -7,8 +7,6 @@ export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const { fileName, fileType } = Object.fromEntries(searchParams.entries());
 
-  console.log("fileName", fileName);
-
   const session = await getServerSession(options);
 
   if (!session) {

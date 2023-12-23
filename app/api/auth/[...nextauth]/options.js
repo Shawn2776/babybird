@@ -17,8 +17,6 @@ export const options = {
         const randomNumber = Math.floor(Math.random() * 1000000) + 1;
         const newStringNumber = randomNumber.toString();
         const newusername = "talker" + newStringNumber;
-        console.log("newusername", newusername);
-        console.log("typeofnewusername", typeof newusername);
         return {
           id: profile.sub,
           name: `${profile.given_name} ${profile.family_name}`,
