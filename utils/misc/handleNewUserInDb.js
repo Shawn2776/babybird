@@ -9,7 +9,7 @@ const handleNewUserInDb = async (user, email) => {
     });
 
     if (userInDb) {
-      return "Error! User already exists.";
+      return "Error! User already exists!";
     }
 
     if (!userInDb) {
