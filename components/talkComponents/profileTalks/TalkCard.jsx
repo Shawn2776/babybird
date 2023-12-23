@@ -37,9 +37,6 @@ function Talk({
           <div className="leading-4">
             <p className="text-md">{name}</p>
             <p className="text-sm text-gray-600">@{username}</p>
-            <Tooltip content="hi">
-              <p>hi</p>
-            </Tooltip>
           </div>
         </div>
         <div>
