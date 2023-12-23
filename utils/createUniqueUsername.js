@@ -38,7 +38,7 @@ async function createUniqueUsername() {
 
 export default createUniqueUsername;
 
-const nouns = [
+export const nouns = [
   "Able",
   "Active",
   "Adaptable",

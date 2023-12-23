@@ -9,12 +9,12 @@ datasource db {
 }
 
 model BackTalk {
-  id        Int       @id @default(autoincrement())
+id            String    @id @default(cuid())
   createdAt DateTime  @default(now())
   updatedAt DateTime?
   content   String
-  talkId    Int
-  ownerId   Int
+  talkId    String
+  ownerId   String
   tags      String
   isNSFW    Boolean
   is18Plus  Boolean
@@ -25,16 +25,16 @@ model BackTalk {
 }
 
 model Category {
-  id   Int    @id @default(autoincrement())
+id            String    @id @default(cuid())
   name String @unique
 }
 
 model Dislike {
-  id        Int       @id @default(autoincrement())
+id            String    @id @default(cuid())
   createdAt DateTime  @default(now())
   updatedAt DateTime?
-  ownerId   Int
-  talkId    Int
+  ownerId   String
+  talkId    String
   talk      Talk      @relation(fields: [talkId], references: [id])
 
   @@index([ownerId])
@@ -42,33 +42,25 @@ model Dislike {
 }
 
 model Like {
-  id        Int       @id @default(autoincrement())
+id            String    @id @default(cuid())
   createdAt DateTime  @default(now())
   updatedAt DateTime?
-  ownerId   Int
-  talkId    Int
+  ownerId   String
+  talkId    String
   talk      Talk      @relation(fields: [talkId], references: [id])
 
   @@index([ownerId])
   @@index([talkId])
 }
 
-model Role {
-  id        Int       @id @default(autoincrement())
-  createdAt DateTime  @default(now())
-  updatedAt DateTime?
-  name      String    @unique
-  userId    String?
-}
-
 model Talk {
-  id        Int        @id @unique @default(autoincrement())
+id            String    @id @default(cuid())
   createdAt DateTime   @default(now())
   updatedAt DateTime?
   text      String?
   image     String?
   video     String?
-  ownerId   Int
+  ownerId   String
   tags      String?
   isNSFW    Boolean    @default(false)
   is18Plus  Boolean    @default(false)
@@ -82,15 +74,15 @@ model Talk {
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
+id            String    @id @default(cuid())
   createdAt     DateTime  @default(now())
   updatedAt     DateTime?
   email         String    @unique
   hPassword      String? 
   name          String
   profilePic    String?
-  emailVerified Boolean
-  roleId        Int
+  emailVerified Boolean?  @default(false)
+  role  String
   username      String    @unique
   location      String?
   description   String?
@@ -98,14 +90,48 @@ model User {
   lang          String    @default("en")
   talks         Talk[]
   retalks       Retalks[]
+  accounts      Account[]
+  sessions      Session[]
 
-  @@index([roleId])
+  @@map("users")
+}
+
+model Account {
+id            String    @id @default(cuid())
+  userId             String  @map("user_id")
+  type               String
+  provider           String
+  providerAccountId  String  @map("provider_account_id")
+  refresh_token      String? @db.Text
+  access_token       String? @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+  @@index([userId])
 }
 
 model Retalks {
-  id     Int  @id @default(autoincrement())
-  talkId Int
-  userId Int
+id            String    @id @default(cuid())
+  talkId String
+  userId String
   talk   Talk @relation(fields: [talkId], references: [id])
   user   User @relation(fields: [userId], references: [id])
 

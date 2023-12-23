@@ -1,41 +1,34 @@
 import GoogleProvider from "next-auth/providers/google";
-import AppleProvider from "next-auth/providers/apple";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare, hash } from "bcrypt";
 import prisma from "@/lib/prisma";
-import createUniqueUsername from "@/utils/createUniqueUsername";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 export const options = {
+  session: {
+    strategy: "jwt",
+  },
+  adapter: PrismaAdapter(prisma),
   providers: [
-    AppleProvider({
-      clientId: process.env.APPLE_CLIENT_ID,
-      clientSecret: process.env.APPLE_CLIENT_SECRET,
-    }),
     GoogleProvider({
-      profile(profile) {
-        return {
-          ...profile,
-          id: profile.sub,
-        };
-      },
-      async signIn({ user }) {
-        // Simplify role assignment
-        const roleName = getRoleForUser(user.email);
-
-        // Initialize profile picture
-        const profilePic = user.picture || "https://placehold.co/600x400/png";
-
-        // Ensure role exists and get its ID
-        const roleId = await ensureRoleExists(roleName);
-
-        // Handle user in database
-        const isUserHandled = await handleUserInDb(user, roleId, profilePic);
-
-        return isUserHandled;
-      },
-
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_SECRET_ID,
+      profile(profile) {
+        const randomNumber = Math.floor(Math.random() * 1000000) + 1;
+        const newStringNumber = randomNumber.toString();
+        const newusername = "talker" + newStringNumber;
+        console.log("newusername", newusername);
+        console.log("typeofnewusername", typeof newusername);
+        return {
+          id: profile.sub,
+          name: `${profile.given_name} ${profile.family_name}`,
+          email: profile.email,
+          profilePic: profile.picture,
+          role: "user",
+          emailVerified: profile.email_verified,
+          username: newusername,
+        };
+      },
     }),
     CredentialsProvider({
       name: "Email",
@@ -101,31 +94,7 @@ export const options = {
       },
     }),
   ],
-  callbacks: {
-    session: ({ session, token }) => {
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          id: token.id,
-        },
-      };
-    },
-    jwt: ({ token, user }) => {
-      if (user) {
-        return {
-          ...token,
-          id: user.id,
-          email: user.email,
-          name: user.name,
-        };
-      }
-      return token;
-    },
-
-    secret: process.env.NEXTAUTH_SECRET,
-  },
-  debug: process.env.NODE_ENV === "development",
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 async function getRoleForUser(email) {
@@ -169,3 +138,28 @@ async function handleUserInDb(user, roleId, profilePic) {
     return false;
   }
 }
+
+// session: ({ session, token }) => {
+//   return {
+//     ...session,
+//     user: {
+//       ...session.user,
+//       id: token.id,
+//     },
+//   };
+// },
+// jwt: ({ token, user }) => {
+//   if (user) {
+//     return {
+//       ...token,
+//       id: user.id,
+//       email: user.email,
+//       name: user.name,
+//     };
+//   }
+//   return token;
+// },
+
+// secret: process.env.NEXTAUTH_SECRET,
+// },
+// debug: process.env.NODE_ENV === "development",
