@@ -6,6 +6,7 @@ import { TbPhotoVideo } from "react-icons/tb";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@nextui-org/react";
 import { Tooltip } from "@nextui-org/react";
+import handleImageUpload from "@/utils/misc/compressImage";
 
 export const TalkForm = (talkQuery) => {
   const [inText, setInText] = useState("");
@@ -51,13 +52,19 @@ export const TalkForm = (talkQuery) => {
         if (response.ok) {
           const { uploadURL } = await response.json();
 
+          // compress image
+          const compImage = await handleImageUpload(image, {
+            maxSizeMB: 1,
+            maxWidthOrHeight: 1920,
+          });
+
           // post image directly to s3 bucket
           await fetch(uploadURL, {
             method: "PUT",
             headers: {
               "Content-Type": "multipart/form-data",
             },
-            body: image,
+            body: compImage || image,
           });
 
           const imageUrl = uploadURL.split("?")[0];
