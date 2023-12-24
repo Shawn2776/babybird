@@ -2,8 +2,15 @@
 
 import AccountCard from "@/components/accountComponents/AccountCard";
 import { useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 export default function Page({ params }) {
+  const session = useSession();
+
+  if (!session || session?.status === "unauthenticated") {
+    redirect("/");
+  }
   const userQuery = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
@@ -23,7 +30,7 @@ export default function Page({ params }) {
 
   if (userQuery.isLoading) return <div>Loading...</div>;
 
-  if (userQuery.isError) return <div>Error fetching user profile</div>;
+  if (userQuery.isError) return <div>Error fetching user abc profile</div>;
 
   if (userQuery.isSuccess) {
     const user = userQuery.data;

@@ -15,6 +15,8 @@ export default function Page({ params }) {
     router.replace("/");
   }
 
+  console.log("session", session);
+
   const username = params.username;
 
   const profileQuery = useQuery({
@@ -26,7 +28,7 @@ export default function Page({ params }) {
       });
 
       if (!response.ok) {
-        return "Error fetching user profile";
+        return "Error fetching 456 user profile";
       }
 
       const data = await response.json();
@@ -36,7 +38,7 @@ export default function Page({ params }) {
 
   if (profileQuery.isLoading) return <div>Loading...</div>;
 
-  if (profileQuery.isError) return <div>Error fetching user profile</div>;
+  if (profileQuery.isError) return <div>Error fetching user 123 profile</div>;
 
   if (profileQuery.isSuccess) {
     const user = profileQuery.data;

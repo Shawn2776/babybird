@@ -3,20 +3,55 @@ import { options } from "../auth/[...nextauth]/options";
 import { NextResponse } from "next/server";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
+import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+
+const s3Client = new S3Client({
+  region: process.env.AWS_S3_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY,
+  },
+});
 
 export async function GET() {
   const session = await getServerSession(options);
 
-  if (!session || session.user === "unathenticated") {
+  if (!session || session.user === "unauthenticated") {
     return redirect("/");
   }
+
+  console.log("session", session);
 
   const email = session.user.email;
 
   try {
     const user = await prisma.user.findUnique({
       where: { email },
+      include: {
+        talks: true,
+      },
     });
+
+    for (const talk of user.talks) {
+      if (talk.image) {
+        const getObjectParams = {
+          Bucket: process.env.AWS_S3_BUCKET_NAME,
+          Key: talk.image,
+        };
+        const command = new GetObjectCommand(getObjectParams);
+        const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+        talk.imageUrl = url;
+      } else if (talk.video) {
+        const getObjectParams = {
+          Bucket: process.env.AWS_S3_BUCKET_NAME,
+          Key: talk.video,
+        };
+        const command = new GetObjectCommand(getObjectParams);
+        const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+        talk.videoUrl = url;
+      }
+    }
 
     if (!user) {
       return NextResponse.json({
@@ -40,13 +75,13 @@ export async function PUT(request) {
   const newUsername = requestUrl.searchParams.get("username");
 
   const session = await getServerSession(options);
+  console.log("session", session);
 
-  if (!session || session.user === "unathenticated") {
+  if (!session || session.user === "unauthenticated") {
     return redirect("/");
   }
 
   const email = session.user.email;
-  console.log("email", email);
 
   try {
     const res = await prisma.user.update({
@@ -57,8 +92,6 @@ export async function PUT(request) {
         username: newUsername,
       },
     });
-
-    console.log("res", res);
   } catch (error) {
     console.log("error", error);
   }

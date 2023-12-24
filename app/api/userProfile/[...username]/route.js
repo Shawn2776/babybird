@@ -19,7 +19,7 @@ const s3Client = new S3Client({
 export async function GET(request) {
   // const session = await getServerSession(options);
 
-  // if (!session || session.user === "unathenticated") {
+  // if (!session || session.user === "unauthenticated") {
   //   return redirect("/");
   // }
 

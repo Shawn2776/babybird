@@ -19,12 +19,12 @@ const AccountCard = () => {
 
   if (userQuery.isLoading) return <div>Loading...</div>;
 
-  if (userQuery.isError) return <div>Error fetching user profile</div>;
+  if (userQuery.isError) return <div>Error fetching user xzy profile</div>;
 
   if (userQuery.isSuccess) {
     const user = userQuery.data;
 
-    return <div>{user.name}</div>;
+    return <div className="w-full min-h-screen bg-neutral-700"></div>;
   }
 };
 
