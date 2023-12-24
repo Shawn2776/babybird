@@ -9,7 +9,7 @@ datasource db {
 }
 
 model BackTalk {
-id            String    @id @default(cuid())
+  id        String    @id @default(cuid())
   createdAt DateTime  @default(now())
   updatedAt DateTime?
   content   String
@@ -25,12 +25,12 @@ id            String    @id @default(cuid())
 }
 
 model Category {
-id            String    @id @default(cuid())
+  id   String @id @default(cuid())
   name String @unique
 }
 
 model Dislike {
-id            String    @id @default(cuid())
+  id        String    @id @default(cuid())
   createdAt DateTime  @default(now())
   updatedAt DateTime?
   ownerId   String
@@ -42,7 +42,7 @@ id            String    @id @default(cuid())
 }
 
 model Like {
-id            String    @id @default(cuid())
+  id        String    @id @default(cuid())
   createdAt DateTime  @default(now())
   updatedAt DateTime?
   ownerId   String
@@ -54,7 +54,7 @@ id            String    @id @default(cuid())
 }
 
 model Talk {
-id            String    @id @default(cuid())
+  id        String     @id @default(cuid())
   createdAt DateTime   @default(now())
   updatedAt DateTime?
   text      String?
@@ -74,15 +74,15 @@ id            String    @id @default(cuid())
 }
 
 model User {
-id            String    @id @default(cuid())
+  id            String    @id @default(cuid())
   createdAt     DateTime  @default(now())
   updatedAt     DateTime?
   email         String    @unique
-  hPassword      String? 
+  hPassword     String?
   name          String
   profilePic    String?
   emailVerified Boolean?  @default(false)
-  role  String
+  role          String
   username      String    @unique
   location      String?
   description   String?
@@ -97,24 +97,23 @@ id            String    @id @default(cuid())
 }
 
 model Account {
-id            String    @id @default(cuid())
-  userId             String  @map("user_id")
-  type               String
-  provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String? @db.Text
-  access_token       String? @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? @db.Text
-  session_state      String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
-  @@map("accounts")
   @@index([userId])
+  @@map("accounts")
 }
 
 model Session {
@@ -124,16 +123,16 @@ model Session {
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@map("sessions")
   @@index([userId])
+  @@map("sessions")
 }
 
 model Retalks {
-id            String    @id @default(cuid())
+  id     String @id @default(cuid())
   talkId String
   userId String
-  talk   Talk @relation(fields: [talkId], references: [id])
-  user   User @relation(fields: [userId], references: [id])
+  talk   Talk   @relation(fields: [talkId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
 
   @@unique([talkId, userId], name: "retalks_user_talk_unique")
   @@index([userId])

@@ -1,21 +1,9 @@
 "use client";
 
+import AccountCard from "@/components/accountComponents/AccountCard";
 import { useQuery } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
-
-const url = process.env.MAIN_URL;
 
 export default function Page({ params }) {
-  // const { data: session } = useSession({
-  //   required: true,
-  //   onUnauthenticated() {
-  //     redirect("/api/auth/signin?callbackUrl=/");
-  //   },
-  // });
-
-  const username = params.username;
-
   const userQuery = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
@@ -40,6 +28,10 @@ export default function Page({ params }) {
   if (userQuery.isSuccess) {
     const user = userQuery.data;
 
-    return <div>{user.name}</div>;
+    return (
+      <div className="bg-[#18191A] min-h-screen w-full text-white">
+        <AccountCard user={user} />
+      </div>
+    );
   }
 }
