@@ -14,10 +14,17 @@ import {
   NavbarContent,
   NavbarItem,
   Link,
+  Image,
+  DropdownSection,
+  User,
+  Select,
+  SelectItem,
 } from "@nextui-org/react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { ThemeProvider } from "@/utils/providers/nextUI/ThemeProvider";
+import { ThemeSwitcher } from "../ui/ThemeSwitcher";
 
 export const Feed = ({ children }) => {
   const router = useRouter();
@@ -45,6 +52,12 @@ export const Feed = ({ children }) => {
       return data;
     },
   });
+
+  const [theme, setTheme] = useState("System");
+  const handleSelectionChange = (e) => {
+    setTheme(e.target.value);
+  };
+
   const [followingActive, setFollowingActive] = useState(false);
   const [friendsActive, setFriendsActive] = useState(true);
 
@@ -61,51 +74,54 @@ export const Feed = ({ children }) => {
       <div className="bg-[rgb(24,25,26)] ml-0 mr-0 w-full dark">
         <Navbar shouldHideOnScroll className="bg-[#18191A] dark w-full">
           <NavbarContent as={"div"}>
-            <Dropdown
-              placement="bottom-start"
-              className="dark bg-neutral-600 hover:cursor-pointer"
-              backdrop="blur"
-            >
+            <Dropdown backdrop="blur">
               <DropdownTrigger>
                 <Avatar
+                  isBordered
+                  classNames={
+                    "transition-transform duration-300 hover:scale-110 rounded-full"
+                  }
                   src={userQuery?.data?.profilePic}
                   className="hover:border-white hover:cursor-pointer"
                 />
               </DropdownTrigger>
-              <DropdownMenu
-                aria-label="Profile Actions"
-                variant="bordered"
-                className="dark"
-              >
-                <DropdownItem
-                  key="profile"
-                  className="gap-2 text-white h-14 dark"
-                >
-                  <p className="font-semibold">Signed in as</p>
-                  <p className="font-semibold">{userQuery?.data?.username}</p>
-                </DropdownItem>
-                <DropdownItem key="settings" className="text-white">
-                  <Link
-                    href={`/UserAccount/${userQuery?.data?.username}?${userQuery?.data?.username}`}
+              <DropdownMenu aria-label="Static Actions">
+                <DropdownSection aria-label="Profile & Actions" showDivider>
+                  <DropdownItem
+                    isReadOnly
+                    key="profile"
+                    className="gap-2 opacity-100 h-14"
+                    textValue={userQuery?.data?.name}
                   >
-                    My Account
-                  </Link>
-                </DropdownItem>
-                {/* <DropdownItem key="team_settings">Team Settings</DropdownItem>
-                <DropdownItem key="analytics">Analytics</DropdownItem>
-                <DropdownItem key="system">System</DropdownItem>
-                <DropdownItem key="configurations">Configurations</DropdownItem> */}
-                <DropdownItem key="help_and_feedback" className="text-white">
-                  Help & Feedback
-                </DropdownItem>
-                <DropdownItem
-                  key="logout"
-                  color="danger"
-                  className="text-danger"
-                  href="/api/auth/signout"
-                >
-                  Sign out
-                </DropdownItem>
+                    <User
+                      name={userQuery?.data?.name}
+                      description={`@${userQuery?.data?.username}`}
+                      classNames={{
+                        name: "text-default-600",
+                        description: "text-default-500",
+                      }}
+                      avatarProps={{
+                        src: `${userQuery?.data?.profilePic}`,
+                      }}
+                    />
+                  </DropdownItem>
+                  <DropdownItem key="new">Settings</DropdownItem>
+                  <DropdownItem key="copy">Account</DropdownItem>
+                </DropdownSection>
+
+                <DropdownSection aria-label="Help & Feedback">
+                  <DropdownItem key="help_and_feedback">
+                    Help & Feedback
+                  </DropdownItem>
+                  <DropdownItem
+                    href="/api/auth/signout"
+                    key="logout"
+                    className="text-danger"
+                    color="danger"
+                  >
+                    Log Out
+                  </DropdownItem>
+                </DropdownSection>
               </DropdownMenu>
             </Dropdown>
           </NavbarContent>
@@ -153,53 +169,6 @@ export const Feed = ({ children }) => {
           <Following>{children}</Following>
         </div>
       </div>
-      // <div className="flex flex-col w-full min-h-screen px-1 md:pr-0 bg-[rgb(24,25,26)] mx-auto">
-      //   <div className="flex w-full bg-[rgb(24,25,26)] ">
-      //     <div className="flex justify-around p-4 w-[90%]">
-      //       <button
-      //         onClick={() => {
-      //           setFollowingActive(false);
-      //           setFriendsActive(true);
-      //         }}
-      //         className={
-      //           friendsActive
-      //             ? "flex items-center justify-center w-full h-10 p-1 cursor-pointer hover:bg-bittersweet hover:text-white transition duration-300 text-zomp underline-offset-8 font-extrabold text-lg decoration-4 underline"
-      //             : "flex items-center justify-center w-full h-10 p-1 cursor-pointer hover:bg-gray-500 hover:text-black text-slate-600 transition duration-300"
-      //         }
-      //       >
-      //         Friends
-      //       </button>
-
-      //       <button
-      //         onClick={() => {
-      //           setFollowingActive(true);
-      //           setFriendsActive(false);
-      //         }}
-      //         className={
-      //           followingActive
-      //             ? "flex items-center justify-center w-full h-10 p-1 cursor-pointer hover:bg-bittersweet hover:text-white transition duration-300 text-zomp underline-offset-8 font-extrabold text-lg decoration-4 underline"
-      //             : "flex items-center justify-center w-full h-10 p-1 cursor-pointer hover:bg-gray-500 hover:text-black text-slate-600 transition duration-300"
-      //         }
-      //       >
-      //         Following
-      //       </button>
-      //     </div>
-
-      //     <div className="flex justify-around p-2 w-[10%]">
-      //       <div className="flex items-center justify-center w-full h-10 p-2 m-2 hover:bg-gray-500 hover:text-black hover:rounded-full">
-      //         <Link href="#settings">
-      //           <IoSettingsOutline className="text-2xl text-slate-600" />
-      //         </Link>
-      //       </div>
-      //     </div>
-      //   </div>
-      //   <div className={friendsActive ? "" : "hidden"}>
-      //     <Friends>{children}</Friends>
-      //   </div>
-      //   <div className={followingActive ? "" : "hidden"}>
-      //     <Following>{children}</Following>
-      //   </div>
-      // </div>
     );
   }
 };

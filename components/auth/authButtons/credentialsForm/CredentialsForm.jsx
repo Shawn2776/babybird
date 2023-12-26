@@ -21,7 +21,7 @@ export function CredentialsForm() {
 
     if (signInResponse && !signInResponse.error) {
       //Redirect to homepage (/timeline)
-      router.push("/Default");
+      router.push("/Home");
     } else {
       console.log("Error: ", signInResponse);
       setError("Your Email or Password is wrong!");

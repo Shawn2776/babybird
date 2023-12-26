@@ -34,7 +34,7 @@ const Login = () => {
   }
 
   if (session) {
-    redirect("/Default");
+    redirect("/Home");
   }
 
   return (

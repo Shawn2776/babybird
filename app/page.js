@@ -24,7 +24,7 @@ export default async function Home() {
     setStorage("modalShown", true);
   }
 
-  if (session) return redirect("/Default");
+  if (session) return redirect("/Home");
 
   return (
     <>
@@ -35,7 +35,7 @@ export default async function Home() {
               className="sm:hidden"
               src={mobileLogo}
               style={{
-                maxWidth: "80%",
+                maxWidth: "60%",
                 height: "auto",
               }}
               alt="photo"
@@ -54,12 +54,12 @@ export default async function Home() {
 
           <div className="flex flex-col items-center w-full min-h-screen sm:justify-center">
             <div className="flex flex-col items-center p-5 mt-0 divide-y rounded-lg shadow-md sm:p-10 sm:mt-10 bg-neutral-700 shadow-black divide-solid">
-              <h1 className="text-4xl font-bold text-white sm:mb-4 ms:mt-10">
+              <h1 className="mb-0 text-2xl text-white sm:mb-4 md:mt-10">
                 Sign In
               </h1>
               <GoogleSignInButton />
               <AppleSignInButton />
-              <span className="mt-8 text-2xl font-semibold text-center text-white">
+              <span className="mt-8 text-xl font-semibold text-center text-white">
                 <hr className="text-white" />
               </span>
               {/* <CredentialsSignInButton /> */}
