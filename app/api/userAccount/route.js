@@ -21,8 +21,6 @@ export async function GET() {
     return redirect("/");
   }
 
-  console.log("session", session);
-
   const email = session.user.email;
 
   try {
@@ -75,7 +73,6 @@ export async function PUT(request) {
   const newUsername = requestUrl.searchParams.get("username");
 
   const session = await getServerSession(options);
-  console.log("session", session);
 
   if (!session || session.user === "unauthenticated") {
     return redirect("/");

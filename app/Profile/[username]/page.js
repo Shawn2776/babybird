@@ -15,8 +15,6 @@ export default function Page({ params }) {
     router.replace("/");
   }
 
-  console.log("session", session);
-
   const username = params.username;
 
   const profileQuery = useQuery({
