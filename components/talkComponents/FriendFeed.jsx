@@ -26,7 +26,7 @@ export const FriendFeed = () => {
 
   if (talkQuery.isLoading)
     return (
-      <div className="h-screen bg-neutral-700">
+      <div className="h-screen bg-neutral-700 flex justify-center align-middle">
         <SkeletonComp />
       </div>
     );

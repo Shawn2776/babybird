@@ -1,5 +1,6 @@
 "use client";
 
+import { Spinner } from "@nextui-org/react";
 import { useQuery } from "@tanstack/react-query";
 
 const AccountCard = () => {
@@ -17,7 +18,12 @@ const AccountCard = () => {
     },
   });
 
-  if (userQuery.isLoading) return <div>Loading...</div>;
+  if (userQuery.isLoading)
+    return (
+      <div className="flex justify-center w-full align-middle">
+        <Spinner />
+      </div>
+    );
 
   if (userQuery.isError) return <div>Error fetching user xzy profile</div>;
 

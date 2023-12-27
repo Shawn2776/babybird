@@ -19,6 +19,7 @@ import {
   User,
   Select,
   SelectItem,
+  Spinner,
 } from "@nextui-org/react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -62,7 +63,11 @@ export const Feed = ({ children }) => {
   const [friendsActive, setFriendsActive] = useState(true);
 
   if (userQuery.isLoading) {
-    return <div className="w-full h-screen bg-[#18191A]">Loading...</div>;
+    return (
+      <div className="w-full h-screen bg-[#18191A] flex justify-center align-middle">
+        <Spinner />
+      </div>
+    );
   }
 
   if (userQuery.isError) {
@@ -88,6 +93,7 @@ export const Feed = ({ children }) => {
               <DropdownMenu aria-label="Static Actions">
                 <DropdownSection aria-label="Profile & Actions" showDivider>
                   <DropdownItem
+                    href={`/UserAccount/${userQuery?.data?.username}`}
                     isReadOnly
                     key="profile"
                     className="gap-2 opacity-100 h-14"

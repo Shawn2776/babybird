@@ -1,6 +1,7 @@
 "use client";
 
 import AccountCard from "@/components/accountComponents/AccountCard";
+import { Spinner } from "@nextui-org/react";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
@@ -28,7 +29,12 @@ export default function Page({ params }) {
     },
   });
 
-  if (userQuery.isLoading) return <div>Loading...</div>;
+  if (userQuery.isLoading)
+    return (
+      <div className="flex justify-center w-full align-middle">
+        <Spinner />
+      </div>
+    );
 
   if (userQuery.isError) return <div>Error fetching user abc profile</div>;
 
@@ -36,7 +42,7 @@ export default function Page({ params }) {
     const user = userQuery.data;
 
     return (
-      <div className="bg-[#18191A] min-h-screen w-full text-white">
+      <div className="bg-[#18191A] min-h-screen max-w-4xl mx-auto w-full text-white">
         <AccountCard user={user} />
       </div>
     );

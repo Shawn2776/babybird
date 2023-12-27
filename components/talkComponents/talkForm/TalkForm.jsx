@@ -4,7 +4,7 @@ import { useState } from "react";
 import { GrImage } from "react-icons/gr";
 import { TbPhotoVideo } from "react-icons/tb";
 import { useRouter } from "next/navigation";
-import { Textarea } from "@nextui-org/react";
+import { Button, Image, Spinner, Textarea } from "@nextui-org/react";
 import { Tooltip } from "@nextui-org/react";
 import handleImageUpload from "@/utils/misc/compressImage";
 
@@ -13,6 +13,8 @@ export const TalkForm = (talkQuery) => {
   const [image, setImage] = useState(null);
   const [video, setVideo] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [preview, setPreview] = useState(null);
+  const [videoPreview, setVideoPreview] = useState(null);
 
   const router = useRouter();
 
@@ -23,11 +25,36 @@ export const TalkForm = (talkQuery) => {
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
     setVideo(null);
+    setVideoPreview(null);
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setPreview(reader.result);
+    };
+
+    reader.readAsDataURL(e.target.files[0]);
   };
 
   const handleVideoChange = (e) => {
     setVideo(e.target.files[0]);
     setImage(null);
+    setPreview(null);
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setVideoPreview(reader.result);
+    };
+
+    reader.readAsDataURL(e.target.files[0]);
+  };
+
+  const handleClear = (e) => {
+    e.preventDefault();
+    setInText("");
+    setImage(null);
+    setVideo(null);
+    setPreview(null);
+    setVideoPreview(null);
   };
 
   const handleSubmit = async (e) => {
@@ -184,7 +211,7 @@ export const TalkForm = (talkQuery) => {
   }
 
   return (
-    <div className="flex w-full gap-2 pt-2 pb-2 mb-2 text-white bg-[rgb(24,25,26)] md:p-4 border-none">
+    <div className="flex flex-col w-full gap-2 pt-2 pb-2 mb-2 text-white bg-[rgb(24,25,26)] md:p-4 border-none">
       <form className="w-full">
         <Textarea
           variant="underlined"
@@ -253,17 +280,51 @@ export const TalkForm = (talkQuery) => {
               </Tooltip>
             </label>
           </div>
-          <button
-            type="submit"
-            onClick={handleSubmit}
-            className={
-              "p-1 px-6 font-extrabold text-white bg-zomp  rounded-2xl hover:bg-bittersweet"
-            }
-          >
-            {uploading ? "talking..." : "Talk"}
-          </button>
+          {!inText && !image && !video ? (
+            <Button disabled>Talk</Button>
+          ) : (
+            <div className="flex gap-2">
+              <Button
+                type="submit"
+                onClick={handleSubmit}
+                className={
+                  "p-1 px-6 font-extrabold text-white bg-zomp  rounded-2xl hover:bg-bittersweet"
+                }
+              >
+                {uploading ? <Spinner /> : "Talk"}
+              </Button>
+              <Button variant="light" onClick={handleClear}>
+                Clear All
+              </Button>
+            </div>
+          )}
         </div>
       </form>
+      {videoPreview || preview ? (
+        <div className="flex justify-center w-40 px-2 py-1 mx-auto mt-2 bg-black rounded-md shadow-md shadow-black">
+          {preview && (
+            <Image
+              src={preview}
+              width={120}
+              className="flex justify-center w-full mx-auto rounded-lg"
+              alt="uploaded image"
+            />
+          )}
+          {videoPreview && (
+            <video
+              className="px-2 py-1 rounded-lg"
+              width="320"
+              height="240"
+              controls
+            >
+              <source src={videoPreview} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          )}
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

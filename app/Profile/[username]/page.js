@@ -1,6 +1,7 @@
 "use client";
 
 import ProfileCard from "@/components/talkComponents/ProfileCard";
+import { Spinner } from "@nextui-org/react";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -34,7 +35,12 @@ export default function Page({ params }) {
     },
   });
 
-  if (profileQuery.isLoading) return <div>Loading...</div>;
+  if (profileQuery.isLoading)
+    return (
+      <div className="flex justify-center w-full align-middle">
+        <Spinner />
+      </div>
+    );
 
   if (profileQuery.isError) return <div>Error fetching user 123 profile</div>;
 

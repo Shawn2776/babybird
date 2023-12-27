@@ -5,7 +5,7 @@ import { BsBookmark, BsListStars } from "react-icons/bs";
 import { LuSearch } from "react-icons/lu";
 import { MdOutlineNotificationsNone } from "react-icons/md";
 import { useQuery } from "@tanstack/react-query";
-import { Image } from "@nextui-org/react";
+import { Image, Spinner } from "@nextui-org/react";
 import defaultProfilePic from "../../public/defaultProfilePic.jpg";
 
 function Test() {
@@ -25,9 +25,19 @@ function Test() {
     },
   });
 
-  if (talkQuery.isLoading) return <div>Loading...</div>;
+  if (talkQuery.isLoading)
+    return (
+      <div>
+        <Spinner />
+      </div>
+    );
 
-  if (talkQuery.isError) return <div>Error fetching talks</div>;
+  if (talkQuery.isError)
+    return (
+      <div className="flex justify-center w-full align-middle">
+        Error fetching talks
+      </div>
+    );
 
   if (talkQuery.isSuccess) {
     return (
