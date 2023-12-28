@@ -14,7 +14,7 @@ const ReadableDate = (createdAt) => {
     timePassed = days > 1 ? days + " days ago" : days + " day ago";
   } else {
     timePassed =
-      Math.ceil(hours) < 1
+      Math.ceil(hours) <= 1
         ? "Just now"
         : Math.ceil(hours) > 1
         ? Math.ceil(hours) + " hours ago"
