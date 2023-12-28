@@ -13,7 +13,10 @@ const ReadableDate = (createdAt) => {
     const days = Math.ceil(hours / 24);
     timePassed = days > 1 ? days + " days ago" : days + " day ago";
   } else {
-    timePassed = Math.ceil(hours) + " hours ago";
+    timePassed =
+      Math.ceil(hours) > 1
+        ? Math.ceil(hours) + " hours ago"
+        : Math.ceil(hours) + " hour ago";
   }
 
   // Custom format for the date to abbreviate months and format time
