@@ -9,9 +9,9 @@ const ReadableDate = (createdAt) => {
   const hours = diffTime / (1000 * 60 * 60);
 
   let timePassed;
-  if (hours > 72) {
+  if (hours > 24) {
     const days = Math.ceil(hours / 24);
-    timePassed = days + " days ago";
+    timePassed = days > 1 ? +" days ago" : " day ago";
   } else {
     timePassed = Math.ceil(hours) + " hours ago";
   }
