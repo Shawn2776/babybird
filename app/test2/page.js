@@ -95,7 +95,7 @@ function Test() {
               {/* Post Grid */}
               <div className="grid grid-cols-1 gap-4 py-4 md:grid-cols-3">
                 {/* Repeat for each post */}
-                <div className="md:p-4 border border-b-transparent border-l-transparent border-r-transparent md:border-none md:my-1 text-white border-gray-600 md:rounded-lg bg-[rgb(24,25,26)] ">
+                <div className="md:p-4 border border-b-transparent border-l-transparent border-r-transparent md:border-none md:my-1 text-white border-gray-600 md:rounded-lg bg-[#333739] ">
                   <div
                     id="talkTopRow"
                     className="flex justify-between w-full pt-4 pr-4 md:p-0"

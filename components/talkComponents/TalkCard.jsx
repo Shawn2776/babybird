@@ -5,8 +5,16 @@ import Link from "next/link";
 import EmbedPlayer from "../misc/EmbedPlayer";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Card, CardHeader, CardBody, Image, Skeleton } from "@nextui-org/react";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  Image,
+  Skeleton,
+  Tooltip,
+} from "@nextui-org/react";
 import DropDownComp from "../ui/DropDown";
+import ReadableDate from "../../utils/misc/readableDate";
 
 function Talk({
   talk,
@@ -30,14 +38,7 @@ function Talk({
 
   const router = useRouter();
 
-  const readableDate = new Date(createdAt).toLocaleString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
+  const { readableDate, timePassed } = ReadableDate(createdAt);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -50,42 +51,42 @@ function Talk({
   }
 
   return (
-    <Card className="mx-auto sm:ml-0 py-4 bg-neutral-700  mb-[1px] my-5 shadow-md shadow-black">
+    <Card className="py-4 mx-auto my-1 mb-2 shadow-md sm:ml-0 bg-neutral-700 shadow-black">
       <CardHeader className="flex-col items-start px-4 pt-2 pb-0">
         <div className="w-full">
-          <div className="flex items-center justify-between w-full">
-            <Link href={`/Profile/${owner.username}/`}>
-              <div className="flex items-center gap-2 ">
-                <div>
-                  <Image
-                    src={
-                      owner.profilePic === null
-                        ? defaultProfilePic
-                        : owner.profilePic
-                    }
-                    height={40}
-                    width={40}
-                    alt=""
-                    className="bg-black rounded-full shadow-md shadow-black"
-                  />
+          <div className="flex items-center justify-between w-full ">
+            <Tooltip content={`View ${owner.name}'s Profile`}>
+              <Link href={`/Profile/${owner.username}/`}>
+                <div className="flex items-center gap-2 ">
+                  <div>
+                    <Image
+                      src={
+                        owner.profilePic === null
+                          ? defaultProfilePic
+                          : owner.profilePic
+                      }
+                      height={40}
+                      width={40}
+                      alt=""
+                      className="bg-black rounded-full shadow-md shadow-black"
+                    />
+                  </div>
+                  <div className="text-sm">
+                    <h4 className="text-sm text-white">{owner.name}</h4>
+                    <p className="text-neutral-400 text-tiny">
+                      @{owner.username}
+                    </p>
+                  </div>
                 </div>
-                <div className="text-sm">
-                  <h4 className="text-sm text-white">{owner.name}</h4>
-                  <p className="text-neutral-400 text-tiny">
-                    @{owner.username}
-                  </p>
-                </div>
-              </div>
-            </Link>
-            <div className="text-black">
+              </Link>
+            </Tooltip>
+            <small className="text-default-500">{timePassed}</small>
+            <div className="flex flex-col text-black ">
               <DropDownComp
                 menuIcon={<BiDotsHorizontal />}
                 items={["Not Interested", "Follow", "Report"]}
               />
             </div>
-          </div>
-          <div className="mb-2">
-            <small className="text-default-500">{readableDate}</small>
           </div>
         </div>
       </CardHeader>
@@ -106,7 +107,7 @@ function Talk({
       </CardBody>
     </Card>
     // <div
-    //   className="md:p-4 border border-b-transparent border-l-transparent border-r-transparent md:border-none md:my-1 text-white border-gray-600 rounded-lg md:rounded-lg bg-[rgb(24,25,26)] cursor-pointer hover:bg-[rgb(29,30,31)] transition duration-200 ease-in-out mr-1 mb-1 mt-1 md:mr-0"
+    //   className="md:p-4 border border-b-transparent border-l-transparent border-r-transparent md:border-none md:my-1 text-white border-gray-600 rounded-lg md:rounded-lg bg-[#333739] cursor-pointer hover:bg-[rgb(29,30,31)] transition duration-200 ease-in-out mr-1 mb-1 mt-1 md:mr-0"
     //   onClick={(e) => handleClick(e)}
     // >
     //   <div

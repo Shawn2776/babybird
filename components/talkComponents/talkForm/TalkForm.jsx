@@ -211,19 +211,19 @@ export const TalkForm = (talkQuery) => {
   }
 
   return (
-    <div className="flex flex-col w-full gap-2 pt-2 pb-2 mb-2 text-white bg-[rgb(24,25,26)] md:p-4 border-none">
-      <form className="w-full">
+    <div className="flex flex-col w-full mt-0 text-white bg-[#333739] md:p-4 border-none rounded-r-lg rounded-b-lg ">
+      <form className="w-full mt-0 md:border md:border-black md:bg-black md:shadow-md md:shadow-black md:py-2 md:px-1 md:rounded-lg">
         <Textarea
           variant="underlined"
           id="talk"
-          label="What do you want to say?"
-          labelPlacement="inside"
+          aria-label="What do you want to say?"
+          placeholder="What do you want to say?"
           value={inText}
           onChange={handleTextChange}
-          className="dark text-white border-none outline-none focus:ring-0 focus:outline-none bg-[rgb(24,25,26)]"
+          className="dark text-white border-none outline-none focus:ring-0 focus:outline-none bg-[#333739] md:bg-black md:rounded-lg "
         />
 
-        <div className="flex items-center justify-between pt-4 pl-12 pr-4">
+        <div className="flex items-center justify-between pt-4 pb-2 pl-4 pr-4">
           <div className="flex gap-4">
             <label htmlFor="imageToUpload">
               <input

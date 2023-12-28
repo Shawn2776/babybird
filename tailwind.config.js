@@ -32,6 +32,15 @@ module.exports = {
             umber: "#725e54",
           },
         },
+        dark: {
+          colors: {
+            oxford: "#0A2342",
+            zomp: "#2CA58D",
+            cambridge: "#84bc9c",
+            bittersweet: "#FE5F55",
+            umber: "#725e54",
+          },
+        },
       },
     }),
   ],
