@@ -11,7 +11,7 @@ import FriendFeed from "../talkComponents/FriendFeed";
 
 export default function Navbar2({ feedOne, feedTwo }) {
   return (
-    <Navbar shouldHideOnScroll className="bg-[#333739] text-white">
+    <Navbar shouldHideOnScroll className="bg-[#222] text-white">
       <NavbarBrand>
         <p className="font-bold text-inherit">uTalkTo</p>
       </NavbarBrand>

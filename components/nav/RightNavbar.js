@@ -39,7 +39,7 @@ function RightNavbar() {
   };
 
   return (
-    <div className="sticky top-0 w-10 h-screen bg-[#333739] hidden sm:flex"></div>
+    <div className="sticky top-0 w-10 h-screen bg-[#222] hidden sm:flex"></div>
 
     // <div className="flex-col hidden w-full gap-8 p-4 text-black md:flex">
     //   <div className="max-w-[50%] gap-8 flex flex-col">

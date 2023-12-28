@@ -169,7 +169,7 @@ const AccountCard = ({ user }) => {
         />
       </div>
     </div>
-    // <div className="w-full bg-[#333739] text-white min-h-screen">
+    // <div className="w-full bg-[#222] text-white min-h-screen">
     //   <div className="flex justify-between w-full bg-white">
     //     <Link href={`/`} className="bg-white ">
     //       <Button className="flex items-center gap-4 py-2 pl-4 text-lg text-black bg-white">

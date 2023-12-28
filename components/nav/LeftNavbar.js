@@ -10,7 +10,7 @@ import { CgProfile } from "react-icons/cg";
 
 function LeftNavbar() {
   return (
-    <div className="flex-col items-end hidden w-full p-4 bg-[#333739] text-white md:flex rounded-l-lg h-screen sticky top-0">
+    <div className="flex-col items-end hidden w-full p-4 bg-[#222] text-white md:flex rounded-l-lg h-screen sticky top-0">
       <div className="flex flex-col gap-1">
         <div className="flex items-center w-full gap-4 p-2 ">
           <Link href="/">

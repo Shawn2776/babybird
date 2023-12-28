@@ -211,7 +211,7 @@ export const TalkForm = (talkQuery) => {
   }
 
   return (
-    <div className="flex flex-col w-full mt-0 text-white bg-[#333739] md:p-4 border-none rounded-r-lg rounded-b-lg ">
+    <div className="flex flex-col w-full mt-0 text-white bg-[#222] md:p-4 border-none">
       <form className="w-full mt-0 md:border md:border-black md:bg-black md:shadow-md md:shadow-black md:py-2 md:px-1 md:rounded-lg">
         <Textarea
           variant="underlined"
@@ -220,7 +220,7 @@ export const TalkForm = (talkQuery) => {
           placeholder="What do you want to say?"
           value={inText}
           onChange={handleTextChange}
-          className="dark text-white border-none outline-none focus:ring-0 focus:outline-none bg-[#333739] md:bg-black md:rounded-lg "
+          className="dark text-white border-none outline-none focus:ring-0 focus:outline-none bg-[#222] md:bg-black md:rounded-lg "
         />
 
         <div className="flex items-center justify-between pt-4 pb-2 pl-4 pr-4">

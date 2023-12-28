@@ -42,7 +42,7 @@ const Home2 = ({
   });
 
   return (
-    <div className="bg-[#333739] w-full min-h-screen">
+    <div className="bg-[#222] w-full min-h-screen">
       <div className="flex items-center justify-between w-full h-16 px-6 text-2xl text-white">
         <IoIosArrowBack />
         <Image src={profilePic} width="40px" height="40px" alt="" />

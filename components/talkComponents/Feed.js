@@ -79,7 +79,7 @@ export const Feed = ({ children }) => {
 
   if (userQuery.isLoading) {
     return (
-      <div className="w-full h-screen bg-[#333739] flex justify-center align-middle">
+      <div className="w-full h-screen bg-[#222] flex justify-center align-middle">
         <Spinner />
       </div>
     );
@@ -91,7 +91,7 @@ export const Feed = ({ children }) => {
 
   if (userQuery.isSuccess) {
     return (
-      <div className="w-full text-xl text-white dark md:bg-[#333739]">
+      <div className="w-full text-xl text-white dark md:bg-[#222]">
         <nav>
           <div className="flex items-center justify-between align-middle">
             <div className="flex items-center px-2 ml-2 align-middle rounded-md shadow-md bg-oxford shadow-black text-bittersweet">
@@ -152,11 +152,11 @@ export const Feed = ({ children }) => {
               </Dropdown>
             </div>
           </div>
-          <div className="flex w-full mt-2 justify-evenly">
+          <div className="flex w-full pt-2 justify-evenly">
             <div
-              className={`cursor-pointer ${
+              className={`cursor-pointer pt-2 transition duration-250 ${
                 friendsActive
-                  ? "text-bittersweet flex justify-center w-full pt-1 pb-2 ml-2 bg-[#333737] rounded-t-md"
+                  ? "text-bittersweet flex justify-center w-full pt-1 pb-2 ml-2 bg-[#222] rounded-t-md"
                   : "flex justify-center w-full pt-1 pb-2 ml-2 rounded-t-md text-gray-700 hover:text-white md:text-gray-400"
               }`}
               onClick={handleFriendsActive}
@@ -164,9 +164,9 @@ export const Feed = ({ children }) => {
               Friends
             </div>
             <div
-              className={`cursor-pointer ${
+              className={`cursor-pointer pt-2 transition duration-250 ${
                 followingActive
-                  ? "text-bittersweet flex justify-center w-full pt-1 pb-2 mr-2 bg-[#333737] rounded-t-md"
+                  ? "text-bittersweet flex justify-center w-full pt-1 pb-2 mr-2 bg-[#222] rounded-t-md"
                   : "flex justify-center w-full pt-1 pb-2 mr-2 rounded-t-md md:text-gray-400 text-gray-700 hover:text-white"
               }`}
               onClick={handleFollowingActive}
@@ -174,16 +174,12 @@ export const Feed = ({ children }) => {
               Following
             </div>
           </div>
-          <div
-            className={`min-h-screen px-2 ${
-              friendsActive ? "rounded-r-lg" : "hidden"
-            }`}
-          >
+          <div className={`min-h-screen ${friendsActive ? "" : "hidden"}`}>
             <FriendFeed />
           </div>
           <div
-            className={`min-h-screen px-2 bg-[#333737] ${
-              friendsActive ? "hidden" : "rounded-l-lg mr-2 ml-1"
+            className={`min-h-screen bg-[#222] ${
+              friendsActive ? "hidden" : " mr-2 ml-1"
             }`}
           >
             <Following />

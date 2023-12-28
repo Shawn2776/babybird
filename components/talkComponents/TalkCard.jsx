@@ -51,7 +51,7 @@ function Talk({
   }
 
   return (
-    <Card className="py-4 mx-auto my-1 mb-2 shadow-md sm:ml-0 bg-neutral-700 shadow-black">
+    <Card className="py-4 my-1 mb-2 bg-[#222] shadow-md sm:ml-0 shadow-black mx-1">
       <CardHeader className="flex-col items-start px-4 pt-2 pb-0">
         <div className="w-full">
           <div className="flex items-center justify-between w-full ">
@@ -107,7 +107,7 @@ function Talk({
       </CardBody>
     </Card>
     // <div
-    //   className="md:p-4 border border-b-transparent border-l-transparent border-r-transparent md:border-none md:my-1 text-white border-gray-600 rounded-lg md:rounded-lg bg-[#333739] cursor-pointer hover:bg-[rgb(29,30,31)] transition duration-200 ease-in-out mr-1 mb-1 mt-1 md:mr-0"
+    //   className="md:p-4 border border-b-transparent border-l-transparent border-r-transparent md:border-none md:my-1 text-white border-gray-600 rounded-lg md:rounded-lg bg-[#222] cursor-pointer hover:bg-[rgb(29,30,31)] transition duration-200 ease-in-out mr-1 mb-1 mt-1 md:mr-0"
     //   onClick={(e) => handleClick(e)}
     // >
     //   <div

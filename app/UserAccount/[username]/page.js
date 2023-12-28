@@ -42,7 +42,7 @@ export default function Page({ params }) {
     const user = userQuery.data;
 
     return (
-      <div className="bg-[#333739] min-h-screen max-w-4xl mx-auto w-full text-white">
+      <div className="bg-[#222] min-h-screen max-w-4xl mx-auto w-full text-white">
         <AccountCard user={user} />
       </div>
     );
