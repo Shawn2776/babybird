@@ -63,7 +63,7 @@ export const options = {
               email: credentials.email,
               name: newUsername,
               hPassword: newPassword,
-              roleId: newRoleId,
+              role: "user",
               username: newUsername,
               emailVerified: false,
               profilePic: "https://placehold.co/600x400/png",
