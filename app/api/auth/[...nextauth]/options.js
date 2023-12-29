@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { compare, hash } from "bcrypt";
 import prisma from "@/lib/prisma";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import createUniqueUsername from "@/utils/createUniqueUsername";
 
 export const options = {
   session: {
